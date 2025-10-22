@@ -182,7 +182,7 @@ orchestration:kubernetes`}
       </section>
 
       {/* CTA Section */}
-      <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.3)', paddingTop: '6rem', paddingBottom: '6rem' }} className="px-4 text-center">
+      <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.3)', paddingTop: '6rem', paddingBottom: '6rem' }} className="px-4">
         <div className="max-w-4xl mx-auto">
           <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#f0f0f0', marginBottom: '1.5rem', fontFamily: "'Jura', sans-serif" }}>
             Ready to get started?
@@ -190,7 +190,7 @@ orchestration:kubernetes`}
           <p style={{ fontSize: '1.25rem', color: '#f0f0f0', opacity: 0.8, marginBottom: '2rem', maxWidth: '800px', margin: '0 auto 2rem' }}>
             Learn the syntax, explore examples, and start using MOTH in your projects today.
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-start">
             <Link href="/docs" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
               Documentation
             </Link>
@@ -236,7 +236,7 @@ orchestration:kubernetes`}
               </ul>
             </div>
           </div>
-          <div className="text-center" style={{ color: '#555555', borderTopColor: 'rgba(0, 200, 255, 0.1)', borderTopWidth: '1px', paddingTop: '2rem' }}>
+          <div style={{ color: '#555555', borderTopColor: 'rgba(0, 200, 255, 0.1)', borderTopWidth: '1px', paddingTop: '2rem' }}>
             <p>© 2025 MOTH — Open notation standard. Created by <a href="https://alienrobot.com" target="_blank" rel="noopener noreferrer" style={{ color: '#00c8ff' }}>huikku</a></p>
           </div>
         </div>
