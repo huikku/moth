@@ -50,7 +50,7 @@ export default function Home() {
           {/* Stats */}
           <div style={{ display: 'flex', gap: '4rem', marginTop: '4rem' }}>
             <div>
-              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>91%</div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>70-90%</div>
               <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Compression</div>
             </div>
             <div>
@@ -76,7 +76,7 @@ export default function Home() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
                   <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
-                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>91% compression vs traditional markdown</span>
+                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>70-90% compression vs traditional markdown</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
                   <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
