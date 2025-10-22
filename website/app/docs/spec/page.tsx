@@ -4,42 +4,42 @@ import Link from 'next/link';
 
 export default function SpecPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
       {/* Header */}
-      <header className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition">
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center font-bold text-slate-900">
+            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
               M
             </div>
             <div>
-              <h1 className="text-xl font-bold">MOTH</h1>
-              <p className="text-xs text-slate-400">Minimal Overhead Technical Hierarchy</p>
+              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
+              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
             </div>
           </Link>
           <nav className="hidden md:flex gap-8">
-            <Link href="/" className="text-slate-300 hover:text-white transition">Home</Link>
-            <Link href="/docs" className="text-amber-400 font-semibold">Docs</Link>
-            <Link href="/examples" className="text-slate-300 hover:text-white transition">Examples</Link>
-            <Link href="/templates" className="text-slate-300 hover:text-white transition">Templates</Link>
+            <Link href="/" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#00c8ff' }} className="font-semibold">Docs</Link>
+            <Link href="/examples" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Examples</Link>
+            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
           </nav>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="mb-8">
-          <Link href="/docs" className="text-amber-400 hover:text-orange-500 transition">← Back to Docs</Link>
+          <Link href="/docs" style={{ color: '#00c8ff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <h1 className="text-5xl font-bold mb-6">MOTH v1.0 Specification</h1>
-        
-        <div className="bg-amber-400/10 border border-amber-400/30 rounded-lg p-6 mb-8">
-          <p className="text-slate-300">
+        <h1 className="text-5xl font-bold mb-6" style={{ color: '#f0f0f0' }}>MOTH v1.0 Specification</h1>
+
+        <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-6 mb-8">
+          <p style={{ color: '#f0f0f0', opacity: 0.9 }}>
             <strong>Full technical specification</strong> for implementers and advanced users. This document covers all syntax rules, type systems, validation requirements, and best practices.
           </p>
         </div>
 
-        <div className="space-y-8 text-slate-300">
+        <div className="space-y-8" style={{ color: '#f0f0f0', opacity: 0.9 }}>
           <section>
             <h2 className="text-3xl font-bold mb-4">Abstract</h2>
             <p>
@@ -133,8 +133,8 @@ key:"value:with:colons"       # Quotes for special chars`}
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700/50 bg-slate-900/50 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-slate-400">
+      <footer style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-t mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center" style={{ color: '#555555' }}>
           <p>© 2025 MOTH — Open notation standard. MIT License.</p>
         </div>
       </footer>

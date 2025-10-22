@@ -4,83 +4,83 @@ import Link from 'next/link';
 
 export default function QuickReferencePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
       {/* Header */}
-      <header className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition">
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center font-bold text-slate-900">
+            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
               M
             </div>
             <div>
-              <h1 className="text-xl font-bold">MOTH</h1>
-              <p className="text-xs text-slate-400">Minimal Overhead Technical Hierarchy</p>
+              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
+              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
             </div>
           </Link>
           <nav className="hidden md:flex gap-8">
-            <Link href="/" className="text-slate-300 hover:text-white transition">Home</Link>
-            <Link href="/docs" className="text-amber-400 font-semibold">Docs</Link>
-            <Link href="/examples" className="text-slate-300 hover:text-white transition">Examples</Link>
-            <Link href="/templates" className="text-slate-300 hover:text-white transition">Templates</Link>
+            <Link href="/" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#00c8ff' }} className="font-semibold">Docs</Link>
+            <Link href="/examples" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Examples</Link>
+            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
           </nav>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="mb-8">
-          <Link href="/docs" className="text-amber-400 hover:text-orange-500 transition">← Back to Docs</Link>
+          <Link href="/docs" style={{ color: '#00c8ff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <h1 className="text-5xl font-bold mb-4">Quick Reference</h1>
-        <p className="text-xl text-slate-300 mb-12">One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
+        <h1 className="text-5xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Quick Reference</h1>
+        <p className="text-xl mb-12" style={{ color: '#f0f0f0', opacity: 0.9 }}>One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
 
         <div className="space-y-8">
           {/* Syntax */}
-          <section className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Syntax Patterns</h2>
+          <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Syntax Patterns</h2>
             <div className="space-y-4 font-mono text-sm">
-              <div className="bg-slate-900/50 p-3 rounded">
-                <div className="text-amber-400"># Comments</div>
-                <div className="text-slate-300"># Full line comment</div>
-                <div className="text-slate-300">key:value  # Inline comment</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded">
+                <div style={{ color: '#00c8ff' }}># Comments</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}># Full line comment</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:value  # Inline comment</div>
               </div>
-              <div className="bg-slate-900/50 p-3 rounded">
-                <div className="text-amber-400">[SECTIONS]</div>
-                <div className="text-slate-300">[SECTION_NAME]</div>
-                <div className="text-slate-300">[SECTION.subsection]</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded">
+                <div style={{ color: '#00c8ff' }}>[SECTIONS]</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>[SECTION_NAME]</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>[SECTION.subsection]</div>
               </div>
-              <div className="bg-slate-900/50 p-3 rounded">
-                <div className="text-amber-400">Key-Value</div>
-                <div className="text-slate-300">key:value</div>
-                <div className="text-slate-300">key:"value:with:colons"</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded">
+                <div style={{ color: '#00c8ff' }}>Key-Value</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:value</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:"value:with:colons"</div>
               </div>
-              <div className="bg-slate-900/50 p-3 rounded">
-                <div className="text-amber-400">Lists</div>
-                <div className="text-slate-300">key:item1;item2;item3</div>
-                <div className="text-slate-300">key:[item1;item2;item3]</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded">
+                <div style={{ color: '#00c8ff' }}>Lists</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:item1;item2;item3</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:[item1;item2;item3]</div>
               </div>
-              <div className="bg-slate-900/50 p-3 rounded">
-                <div className="text-amber-400">Objects</div>
-                <div className="text-slate-300">key:{'{k=v;k2=v2}'}</div>
-                <div className="text-slate-300">key:{'{k=v;nested:{x=y}}'}</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded">
+                <div style={{ color: '#00c8ff' }}>Objects</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:{'{k=v;k2=v2}'}</div>
+                <div style={{ color: '#f0f0f0', opacity: 0.9 }}>key:{'{k=v;nested:{x=y}}'}</div>
               </div>
             </div>
           </section>
 
           {/* Types */}
-          <section className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Type System</h2>
+          <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Type System</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-slate-900/50 p-4 rounded">
-                <div className="font-bold text-amber-400 mb-2">Primitives</div>
-                <div className="font-mono text-sm space-y-1 text-slate-300">
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-4 rounded">
+                <div className="font-bold mb-2" style={{ color: '#00c8ff' }}>Primitives</div>
+                <div className="font-mono text-sm space-y-1" style={{ color: '#f0f0f0', opacity: 0.9 }}>
                   <div>str, int, float, bool</div>
                   <div>uuid, ts, hex, vec, bits</div>
                 </div>
               </div>
-              <div className="bg-slate-900/50 p-4 rounded">
-                <div className="font-bold text-amber-400 mb-2">Collections</div>
-                <div className="font-mono text-sm space-y-1 text-slate-300">
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-4 rounded">
+                <div className="font-bold mb-2" style={{ color: '#00c8ff' }}>Collections</div>
+                <div className="font-mono text-sm space-y-1" style={{ color: '#f0f0f0', opacity: 0.9 }}>
                   <div>[type] - Array</div>
                   <div>{'{key:type}'} - Object</div>
                   <div>type|type2 - Union</div>
@@ -90,33 +90,33 @@ export default function QuickReferencePage() {
           </section>
 
           {/* Status Codes */}
-          <section className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Status Codes</h2>
+          <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Status Codes</h2>
             <div className="grid md:grid-cols-2 gap-4 font-mono text-sm">
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">C</span> - Complete</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">P</span> - Planned</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">R</span> - Risk</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">D</span> - Deferred</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">X</span> - Deprecated</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>C</span> - Complete</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>P</span> - Planned</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>R</span> - Risk</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>D</span> - Deferred</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>X</span> - Deprecated</div>
             </div>
           </section>
 
           {/* Common Sections */}
-          <section className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Common Sections</h2>
+          <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Common Sections</h2>
             <div className="space-y-3 font-mono text-sm">
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">[SCHEMA.name]</span> - Data models</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">[API.category]</span> - API endpoints</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">[FEATURES]</span> - Product features</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">[STACK]</span> - Technology stack</div>
-              <div className="bg-slate-900/50 p-3 rounded"><span className="text-amber-400">[ARCHITECTURE]</span> - System design</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>[SCHEMA.name]</span> - Data models</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>[API.category]</span> - API endpoints</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>[FEATURES]</span> - Product features</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>[STACK]</span> - Technology stack</div>
+              <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)' }} className="p-3 rounded"><span style={{ color: '#00c8ff' }}>[ARCHITECTURE]</span> - System design</div>
             </div>
           </section>
 
           {/* Example */}
-          <section className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Quick Example</h2>
-            <pre className="bg-slate-900/50 p-4 rounded font-mono text-sm overflow-x-auto">
+          <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Quick Example</h2>
+            <pre style={{ backgroundColor: 'rgba(0, 12, 24, 0.8)', color: '#f0f0f0', opacity: 0.9 }} className="p-4 rounded font-mono text-sm overflow-x-auto">
 {`intent:product_requirements; audience:dev_team
 version:1.0.0; updated:2025-10-22
 
@@ -142,9 +142,9 @@ POST:/users -> req:{email;name} res:{user}`}
           </section>
 
           {/* Validation Checklist */}
-          <section className="bg-gradient-to-r from-amber-400/10 to-orange-500/10 border border-amber-400/30 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Validation Checklist</h2>
-            <ul className="space-y-2 text-slate-300">
+          <section style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Validation Checklist</h2>
+            <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.9 }}>
               <li>✓ File starts with header metadata</li>
               <li>✓ At least one [SECTION]</li>
               <li>✓ Valid key:value syntax</li>
@@ -157,8 +157,8 @@ POST:/users -> req:{email;name} res:{user}`}
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700/50 bg-slate-900/50 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-slate-400">
+      <footer style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-t mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center" style={{ color: '#555555' }}>
           <p>© 2025 MOTH — Open notation standard. MIT License.</p>
         </div>
       </footer>

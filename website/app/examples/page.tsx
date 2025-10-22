@@ -109,31 +109,31 @@ export default function ExamplesPage() {
   const [selectedExample, setSelectedExample] = useState(examples[0]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
       {/* Header */}
-      <header className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition">
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center font-bold text-slate-900">
+            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
               M
             </div>
             <div>
-              <h1 className="text-xl font-bold">MOTH</h1>
-              <p className="text-xs text-slate-400">Minimal Overhead Technical Hierarchy</p>
+              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
+              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
             </div>
           </Link>
           <nav className="hidden md:flex gap-8">
-            <Link href="/" className="text-slate-300 hover:text-white transition">Home</Link>
-            <Link href="/docs" className="text-slate-300 hover:text-white transition">Docs</Link>
-            <Link href="/examples" className="text-amber-400 font-semibold">Examples</Link>
-            <Link href="/templates" className="text-slate-300 hover:text-white transition">Templates</Link>
+            <Link href="/" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#00c8ff' }} className="font-semibold">Examples</Link>
+            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
           </nav>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-5xl font-bold mb-4">Examples</h1>
-        <p className="text-xl text-slate-300 mb-12">Real-world MOTH files to learn from and use as templates.</p>
+        <h1 className="text-5xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Examples</h1>
+        <p className="text-xl mb-12" style={{ color: '#f0f0f0', opacity: 0.9 }}>Real-world MOTH files to learn from and use as templates.</p>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Example List */}
@@ -143,14 +143,15 @@ export default function ExamplesPage() {
                 <button
                   key={example.id}
                   onClick={() => setSelectedExample(example)}
-                  className={`w-full text-left p-4 rounded-lg border transition ${
-                    selectedExample.id === example.id
-                      ? 'bg-amber-400/10 border-amber-400/50'
-                      : 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600'
-                  }`}
+                  style={{
+                    backgroundColor: selectedExample.id === example.id ? 'rgba(0, 200, 255, 0.1)' : 'rgba(0, 12, 24, 0.4)',
+                    borderColor: selectedExample.id === example.id ? 'rgba(0, 200, 255, 0.5)' : 'rgba(0, 200, 255, 0.2)',
+                    color: '#f0f0f0'
+                  }}
+                  className="w-full text-left p-4 rounded-lg border transition hover:opacity-90"
                 >
                   <div className="font-semibold">{example.title}</div>
-                  <div className="text-sm text-slate-400 mt-1">{example.category}</div>
+                  <div className="text-sm mt-1" style={{ color: '#555555' }}>{example.category}</div>
                 </button>
               ))}
             </div>
@@ -158,12 +159,12 @@ export default function ExamplesPage() {
 
           {/* Code Display */}
           <div className="lg:col-span-2">
-            <div className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden">
-              <div className="bg-slate-700/50 px-4 py-3 border-b border-slate-700">
-                <h3 className="font-semibold text-lg">{selectedExample.title}</h3>
-                <p className="text-sm text-slate-400 mt-1">{selectedExample.description}</p>
+            <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg overflow-hidden">
+              <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderBottomColor: 'rgba(0, 200, 255, 0.2)' }} className="px-4 py-3 border-b">
+                <h3 className="font-semibold text-lg" style={{ color: '#f0f0f0' }}>{selectedExample.title}</h3>
+                <p className="text-sm mt-1" style={{ color: '#555555' }}>{selectedExample.description}</p>
               </div>
-              <pre className="p-4 text-sm text-slate-300 overflow-x-auto font-mono max-h-96">
+              <pre style={{ color: '#f0f0f0', opacity: 0.9 }} className="p-4 text-sm overflow-x-auto font-mono max-h-96">
                 <code>{selectedExample.code}</code>
               </pre>
             </div>
@@ -171,20 +172,20 @@ export default function ExamplesPage() {
         </div>
 
         {/* More Examples CTA */}
-        <div className="mt-20 bg-gradient-to-r from-amber-400/10 to-orange-500/10 border border-amber-400/30 rounded-lg p-12 text-center">
-          <h3 className="text-2xl font-bold mb-4">Want more examples?</h3>
-          <p className="text-lg text-slate-300 mb-8">
+        <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="mt-20 border rounded-lg p-12 text-center">
+          <h3 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Want more examples?</h3>
+          <p className="text-lg mb-8" style={{ color: '#f0f0f0', opacity: 0.9 }}>
             Check out the full documentation and templates for more real-world MOTH files.
           </p>
-          <Link href="/templates" className="px-8 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition inline-block">
+          <Link href="/templates" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 font-semibold rounded-lg hover:opacity-90 transition inline-block">
             View Templates
           </Link>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700/50 bg-slate-900/50 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-slate-400">
+      <footer style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-t mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center" style={{ color: '#555555' }}>
           <p>© 2025 MOTH — Open notation standard. MIT License.</p>
         </div>
       </footer>
