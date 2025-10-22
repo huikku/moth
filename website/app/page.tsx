@@ -3,165 +3,189 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-const codeExamples = {
-  prd: `intent:product_requirements; audience:dev_team
-version:1.0.0; updated:2025-10-22
-
-[PRODUCT]
-name:TaskFlow; type:saas; domain:project_management
-
-[FEATURES]
-boards:kanban+list+calendar
-tasks:create;assign;track;comment
-realtime:websocket; notifications:email+push
-
-[STACK]
-frontend:react+typescript; backend:fastapi
-db:postgresql; realtime:pusher; auth:clerk`,
-  rules: `intent:coding_standards; audience:cursor+copilot
-
-[STYLE]
-lang:typescript; format:prettier; lint:eslint_strict
-naming:camelCase_vars;PascalCase_types
-quotes:single; semicolons:required
-
-[ARCHITECTURE]
-pattern:clean_architecture
-layers:domain;application;infrastructure
-testing:vitest; coverage:80%_min
-
-[FORBIDDEN]
-no:any_type;console.log;eval;var`,
-  arch: `intent:system_architecture; audience:implementation_team
-
-[SERVICES]
-api:fastapi+uvicorn; worker:celery+redis
-db:postgresql_16; cache:redis_7; queue:sqs
-storage:s3; cdn:cloudfront
-
-[DATA_FLOW]
-client -> cdn -> alb -> api_pods -> cache -> postgres
-api -> queue -> worker -> db
-
-[SCALING]
-api:horizontal_ecs; worker:auto_scale_queue_depth
-db:read_replicas_3; cache:cluster_mode`,
-};
-
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'prd' | 'rules' | 'arch'>('prd');
+  const [activeTab, setActiveTab] = useState('prd');
 
   return (
     <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
       {/* Header */}
-      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }} className="border-b backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
+            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm">
               M
             </div>
-            <div>
-              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
-              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
-            </div>
-          </div>
+            <h1 className="text-lg font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
+          </Link>
           <nav className="hidden md:flex gap-8">
-            <Link href="#features" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Features</Link>
-            <Link href="/docs" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Docs</Link>
-            <Link href="/examples" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Examples</Link>
-            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
+            <Link href="/" style={{ color: '#00c8ff' }} className="text-sm font-medium">Home</Link>
+            <Link href="/docs" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Examples</Link>
+            <Link href="/templates" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Templates</Link>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight" style={{ color: '#f0f0f0' }}>
-              Tiny specs for <span style={{ color: '#00c8ff' }}>big brains</span>
-            </h2>
-            <p className="text-xl mb-8 leading-relaxed" style={{ color: '#f0f0f0', opacity: 0.9 }}>
-              MOTH is a compact, human-readable notation for <strong>PRDs</strong>, <strong>rules</strong>, and <strong>architecture</strong> that AI coding agents can load always-on without hogging tokens.
-            </p>
-            <p className="text-lg mb-8" style={{ color: '#555555' }}>
-              Sister project to <strong>kablUI</strong> for complete application specifications.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/docs" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 font-semibold rounded-lg hover:opacity-90 transition">
-                Read the Spec
-              </Link>
-              <Link href="/examples" style={{ borderColor: '#00c8ff', color: '#00c8ff' }} className="px-8 py-3 border font-semibold rounded-lg hover:opacity-80 transition">
-                View Examples
-              </Link>
-            </div>
+      <section style={{ backgroundColor: '#080808', paddingTop: '8rem', paddingBottom: '4rem' }} className="px-4">
+        <div className="max-w-7xl mx-auto">
+          <div style={{ color: '#00c8ff', fontFamily: "'JetBrains Mono', monospace", fontSize: '1rem', marginBottom: '2rem', display: 'block' }}>
+            # COMPACT NOTATION FOR AI
+          </div>
+          <h1 style={{ fontSize: '4rem', lineHeight: 1.2, marginBottom: '1.5rem', maxWidth: '800px', fontFamily: "'Jura', sans-serif" }} className="font-bold">
+            Tiny specs for <span style={{ color: '#00c8ff' }}>big brains</span>
+          </h1>
+          <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '600px', color: '#f0f0f0', opacity: 0.9 }}>
+            MOTH is a compact, human-readable notation for PRDs, rules, and architecture that AI coding agents can load always-on without hogging tokens.
+          </p>
+          <div className="flex gap-4">
+            <Link href="/docs/quick-reference" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-6 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
+              Read the Spec
+            </Link>
+            <Link href="/examples" style={{ color: '#00c8ff', borderColor: 'rgba(0, 200, 255, 0.3)', borderWidth: '1px' }} className="px-6 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
+              View Examples
+            </Link>
           </div>
 
-          {/* Code Example Tabs */}
-          <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg overflow-hidden">
-            <div style={{ borderBottomColor: 'rgba(0, 200, 255, 0.2)' }} className="flex border-b">
-              {(['prd', 'rules', 'arch'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  style={{
-                    backgroundColor: activeTab === tab ? 'rgba(0, 200, 255, 0.1)' : 'transparent',
-                    color: activeTab === tab ? '#00c8ff' : '#555555',
-                    borderBottomColor: activeTab === tab ? '#00c8ff' : 'transparent',
-                  }}
-                  className="flex-1 px-4 py-3 font-semibold transition border-b-2"
-                >
-                  {tab.toUpperCase()}
-                </button>
-              ))}
+          {/* Stats */}
+          <div style={{ display: 'flex', gap: '4rem', marginTop: '4rem' }}>
+            <div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>91%</div>
+              <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Compression</div>
             </div>
-            <pre style={{ color: '#f0f0f0', opacity: 0.9 }} className="p-4 text-sm overflow-x-auto font-mono">
-              <code>{codeExamples[activeTab]}</code>
-            </pre>
+            <div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>LLM</div>
+              <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Native</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>Human</div>
+              <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Readable</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)' }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t">
-        <h3 className="text-3xl font-bold mb-12 text-center" style={{ color: '#f0f0f0' }}>Why MOTH?</h3>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8 hover:opacity-90 transition">
-            <div className="text-3xl mb-4">⚡</div>
-            <h4 className="text-xl font-bold mb-3" style={{ color: '#f0f0f0' }}>91% Compression</h4>
-            <p style={{ color: '#555555' }}>
-              Traditional PRD: 78K tokens. MOTH: 6.8K tokens. Same information, vastly more efficient.
-            </p>
-          </div>
-          <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8 hover:opacity-90 transition">
-            <div className="text-3xl mb-4">🧠</div>
-            <h4 className="text-xl font-bold mb-3" style={{ color: '#f0f0f0' }}>LLM-Native</h4>
-            <p style={{ color: '#555555' }}>
-              Designed for AI agents. Low-entropy tokens, deterministic structure, easy to parse.
-            </p>
-          </div>
-          <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.4)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-8 hover:opacity-90 transition">
-            <div className="text-3xl mb-4">📝</div>
-            <h4 className="text-xl font-bold mb-3" style={{ color: '#f0f0f0' }}>Human Readable</h4>
-            <p style={{ color: '#555555' }}>
-              Simple syntax: sections, key:value pairs, semicolon lists. No markdown overhead.
-            </p>
+      {/* Code Showcase */}
+      <section style={{ backgroundColor: 'rgba(0, 20, 40, 0.2)', paddingTop: '6rem', paddingBottom: '6rem' }} className="px-4">
+        <div className="max-w-7xl mx-auto">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'flex-start' }}>
+            <div>
+              <h2 style={{ fontSize: '3rem', color: '#00c8ff', marginBottom: '1.5rem', fontWeight: 500, fontFamily: "'Jura', sans-serif" }}>
+                Why MOTH?
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
+                  <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
+                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>91% compression vs traditional markdown</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
+                  <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
+                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>Optimized for LLM token efficiency</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
+                  <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
+                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>Human-readable syntax, no markdown</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1.25rem' }}>
+                  <div style={{ color: '#00c8ff', fontSize: '1.1rem', opacity: 0.95, fontFamily: "'JetBrains Mono', monospace", minWidth: '20px', textAlign: 'center' }}>✓</div>
+                  <span style={{ color: '#f0f0f0', fontSize: '1rem', opacity: 0.9, lineHeight: 1.4 }}>Perfect for AI agents and developers</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                <Link href="/docs" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-6 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
+                  Explore Docs
+                </Link>
+              </div>
+            </div>
+            <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', border: '1px solid rgba(0, 200, 255, 0.2)', borderRadius: '8px', padding: '2rem', position: 'relative', minHeight: '400px' }}>
+              <div style={{ display: 'flex', borderBottom: '1px solid rgba(0, 200, 255, 0.1)', marginBottom: '1rem' }}>
+                {['prd', 'rules', 'arch'].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    style={{
+                      backgroundColor: activeTab === tab ? 'rgba(0, 200, 255, 0.1)' : 'transparent',
+                      color: activeTab === tab ? '#00c8ff' : '#f0f0f0',
+                      borderBottomColor: activeTab === tab ? '#00c8ff' : 'transparent',
+                      borderBottomWidth: activeTab === tab ? '2px' : '0px',
+                      padding: '0.75rem 1.5rem',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.9rem',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    {tab.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <pre style={{ backgroundColor: 'transparent', color: '#f0f0f0', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.5, margin: 0, overflow: 'auto', maxHeight: '300px', opacity: 0.9 }}>
+{activeTab === 'prd' && `intent:product_requirements
+audience:dev_team; version:1.0.0
+
+[PRODUCT]
+name:TaskFlow; type:saas
+domain:project_management
+
+[FEATURES]
+boards:kanban+list+calendar
+tasks:create;assign;track
+realtime:websocket
+
+[STACK]
+frontend:react+typescript
+backend:fastapi; db:postgresql`}
+{activeTab === 'rules' && `intent:coding_rules
+audience:ai_agents; style:concise
+
+[ARCHITECTURE]
+pattern:modular; state:redux
+api:rest; auth:jwt
+
+[CONSTRAINTS]
+max_file_size:500_lines
+max_function:50_lines
+naming:snake_case
+
+[TESTING]
+coverage:80%; framework:jest`}
+{activeTab === 'arch' && `intent:system_architecture
+scope:full_stack; detail:high
+
+[COMPONENTS]
+frontend:react_spa
+backend:python_fastapi
+db:postgresql; cache:redis
+
+[DATA_FLOW]
+user_input -> api -> db
+cache -> response
+events -> queue -> workers
+
+[DEPLOYMENT]
+containers:docker
+orchestration:kubernetes`}
+              </pre>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)' }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t">
-        <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg p-12 text-center">
-          <h3 className="text-3xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Ready to get started?</h3>
-          <p className="text-lg mb-8" style={{ color: '#f0f0f0', opacity: 0.9 }}>
+      <section style={{ backgroundColor: 'rgba(0, 12, 24, 0.3)', paddingTop: '6rem', paddingBottom: '6rem' }} className="px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#f0f0f0', marginBottom: '1.5rem', fontFamily: "'Jura', sans-serif" }}>
+            Ready to get started?
+          </h2>
+          <p style={{ fontSize: '1.25rem', color: '#f0f0f0', opacity: 0.8, marginBottom: '2rem', maxWidth: '800px', margin: '0 auto 2rem' }}>
             Learn the syntax, explore examples, and start using MOTH in your projects today.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/docs" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 font-semibold rounded-lg hover:opacity-90 transition">
+          <div className="flex gap-4 justify-center">
+            <Link href="/docs" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
               Documentation
             </Link>
-            <Link href="/templates" style={{ borderColor: '#00c8ff', color: '#00c8ff' }} className="px-8 py-3 border font-semibold rounded-lg hover:opacity-80 transition">
+            <Link href="/templates" style={{ color: '#00c8ff', borderColor: 'rgba(0, 200, 255, 0.3)', borderWidth: '1px' }} className="px-8 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
               Download Templates
             </Link>
           </div>
@@ -173,38 +197,38 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="font-bold mb-4" style={{ color: '#f0f0f0' }}>Product</h4>
-              <ul className="space-y-2">
-                <li><Link href="/docs" style={{ color: '#555555' }} className="hover:opacity-80 transition">Documentation</Link></li>
-                <li><Link href="/examples" style={{ color: '#555555' }} className="hover:opacity-80 transition">Examples</Link></li>
-                <li><Link href="/templates" style={{ color: '#555555' }} className="hover:opacity-80 transition">Templates</Link></li>
+              <h4 className="font-bold mb-4" style={{ color: '#00c8ff' }}>Product</h4>
+              <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.8 }}>
+                <li><Link href="/docs" className="hover:opacity-100">Documentation</Link></li>
+                <li><Link href="/examples" className="hover:opacity-100">Examples</Link></li>
+                <li><Link href="/templates" className="hover:opacity-100">Templates</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4" style={{ color: '#f0f0f0' }}>Resources</h4>
-              <ul className="space-y-2">
-                <li><Link href="/docs/quick-reference" style={{ color: '#555555' }} className="hover:opacity-80 transition">Quick Reference</Link></li>
-                <li><Link href="/docs/spec" style={{ color: '#555555' }} className="hover:opacity-80 transition">Full Spec</Link></li>
-                <li><Link href="/docs/integration" style={{ color: '#555555' }} className="hover:opacity-80 transition">Integration Guide</Link></li>
+              <h4 className="font-bold mb-4" style={{ color: '#00c8ff' }}>Resources</h4>
+              <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.8 }}>
+                <li><Link href="/docs/quick-reference" className="hover:opacity-100">Quick Reference</Link></li>
+                <li><Link href="/docs/spec" className="hover:opacity-100">Full Spec</Link></li>
+                <li><Link href="/docs/integration" className="hover:opacity-100">Integration Guide</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4" style={{ color: '#f0f0f0' }}>Community</h4>
-              <ul className="space-y-2">
-                <li><a href="https://github.com/huikku/moth-spec" target="_blank" rel="noopener noreferrer" style={{ color: '#555555' }} className="hover:opacity-80 transition">GitHub</a></li>
-                <li><a href="https://huikku.github.io/kablUI/" target="_blank" rel="noopener noreferrer" style={{ color: '#555555' }} className="hover:opacity-80 transition">kablUI</a></li>
+              <h4 className="font-bold mb-4" style={{ color: '#00c8ff' }}>Community</h4>
+              <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.8 }}>
+                <li><a href="https://github.com/huikku/moth-spec" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">GitHub</a></li>
+                <li><a href="https://kablui.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">kablUI</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-4" style={{ color: '#f0f0f0' }}>Legal</h4>
-              <ul className="space-y-2">
-                <li><span style={{ color: '#555555' }} className="hover:opacity-80 transition cursor-pointer">MIT License</span></li>
-                <li><span style={{ color: '#555555' }} className="hover:opacity-80 transition cursor-pointer">Contributing</span></li>
+              <h4 className="font-bold mb-4" style={{ color: '#00c8ff' }}>Legal</h4>
+              <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.8 }}>
+                <li><a href="#" className="hover:opacity-100">MIT License</a></li>
+                <li><a href="#" className="hover:opacity-100">Contributing</a></li>
               </ul>
             </div>
           </div>
-          <div style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', color: '#555555' }} className="border-t pt-8 text-center">
-            <p>© 2025 MOTH — Open notation standard. Created by <a href="https://github.com/huikku" target="_blank" rel="noopener noreferrer" style={{ color: '#00c8ff' }} className="hover:opacity-80 transition">huikku</a></p>
+          <div className="text-center" style={{ color: '#555555', borderTopColor: 'rgba(0, 200, 255, 0.1)', borderTopWidth: '1px', paddingTop: '2rem' }}>
+            <p>© 2025 MOTH — Open notation standard. Created by <a href="https://alienrobot.com" target="_blank" rel="noopener noreferrer" style={{ color: '#00c8ff' }}>huikku</a></p>
           </div>
         </div>
       </footer>
