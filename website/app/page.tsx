@@ -18,10 +18,10 @@ export default function Home() {
             <h1 className="text-lg font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
           </Link>
           <nav className="hidden md:flex gap-8">
-            <Link href="/" style={{ color: '#00c8ff' }} className="text-sm font-medium">Home</Link>
-            <Link href="/docs" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Docs</Link>
-            <Link href="/examples" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Examples</Link>
-            <Link href="/templates" style={{ color: '#f0f0f0' }} className="text-sm font-medium hover:opacity-80 transition">Templates</Link>
+            <Link href="/" style={{ color: '#00c8ff', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#f0f0f0', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#f0f0f0', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Examples</Link>
+            <Link href="/templates" style={{ color: '#f0f0f0', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Templates</Link>
           </nav>
         </div>
       </header>
@@ -32,9 +32,10 @@ export default function Home() {
           <div style={{ color: '#00c8ff', fontFamily: "'JetBrains Mono', monospace", fontSize: '1rem', marginBottom: '2rem', display: 'block' }}>
             # MACHINE-OPTIMIZED TEXT HIERARCHY
           </div>
-          <h1 style={{ fontSize: '4rem', lineHeight: 1.2, marginBottom: '1.5rem', maxWidth: '800px', fontFamily: "'Jura', sans-serif" }} className="font-bold">
+          <h1 style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', lineHeight: 1.2, marginBottom: '1rem', maxWidth: '800px', fontFamily: "'Jura', sans-serif" }} className="font-bold">
             Tiny specs for <span style={{ color: '#00c8ff' }}>big brains</span>
           </h1>
+          <div style={{ width: '140px', height: '2px', background: 'linear-gradient(90deg, transparent, #00c8ff, transparent)', opacity: 0.4, marginBottom: '1.5rem' }} />
           <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '700px', color: '#f0f0f0', opacity: 0.9 }}>
             Convert and validate .moth specification files — the compact format for PRDs, rules, and architecture in AI-assisted development. Mothify compresses product knowledge into structured context that coding agents can keep always-on.
           </p>
@@ -48,17 +49,19 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: 'flex', gap: '4rem', marginTop: '4rem' }}>
+          <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-16 mt-16">
             <div>
-              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>70-90%</div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.25rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '-1px' }}>70-90%</div>
               <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Compression</div>
             </div>
+            <div className="hidden md:block" style={{ width: '1px', height: '2.5rem', backgroundColor: 'rgba(0, 200, 255, 0.15)' }} />
             <div>
-              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>LLM</div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.25rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '-1px' }}>LLM</div>
               <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Native</div>
             </div>
+            <div className="hidden md:block" style={{ width: '1px', height: '2.5rem', backgroundColor: 'rgba(0, 200, 255, 0.15)' }} />
             <div>
-              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.5rem', fontFamily: "'JetBrains Mono', monospace" }}>Human</div>
+              <div style={{ fontSize: '2.5rem', color: '#00c8ff', fontWeight: 700, marginBottom: '0.25rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '-1px' }}>Human</div>
               <div style={{ color: '#f0f0f0', opacity: 0.6, fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Readable</div>
             </div>
           </div>
@@ -68,7 +71,7 @@ export default function Home() {
       {/* Code Showcase */}
       <section style={{ backgroundColor: 'rgba(0, 20, 40, 0.2)', paddingTop: '6rem', paddingBottom: '6rem' }} className="px-4">
         <div className="max-w-7xl mx-auto">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'flex-start' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 style={{ fontSize: '3rem', color: '#00c8ff', marginBottom: '1.5rem', fontWeight: 500, fontFamily: "'Jura', sans-serif" }}>
                 Why MOTH?
@@ -98,6 +101,11 @@ export default function Home() {
               </div>
             </div>
             <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', border: '1px solid rgba(0, 200, 255, 0.2)', borderRadius: '8px', padding: '2rem', position: 'relative', minHeight: '400px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.75rem' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ff5f56', display: 'inline-block' }} />
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ffbd2e', display: 'inline-block' }} />
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#27c93f', display: 'inline-block' }} />
+              </div>
               <div style={{ display: 'flex', borderBottom: '1px solid rgba(0, 200, 255, 0.1)', marginBottom: '1rem' }}>
                 {['prd', 'rules', 'arch'].map((tab) => (
                   <button
@@ -121,6 +129,7 @@ export default function Home() {
                 ))}
               </div>
               <pre style={{ backgroundColor: 'transparent', color: '#f0f0f0', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.5, margin: 0, overflow: 'auto', maxHeight: '300px', opacity: 0.9 }}>
+
 {activeTab === 'prd' && `intent:product_requirements
 audience:dev_team; version:1.0.0
 
