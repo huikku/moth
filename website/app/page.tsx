@@ -30,13 +30,13 @@ export default function Home() {
       <section style={{ backgroundColor: '#080808', paddingTop: '8rem', paddingBottom: '4rem' }} className="px-4">
         <div className="max-w-7xl mx-auto">
           <div style={{ color: '#00c8ff', fontFamily: "'JetBrains Mono', monospace", fontSize: '1rem', marginBottom: '2rem', display: 'block' }}>
-            # COMPACT NOTATION FOR AI
+            # MACHINE-OPTIMIZED TEXT HIERARCHY
           </div>
           <h1 style={{ fontSize: '4rem', lineHeight: 1.2, marginBottom: '1.5rem', maxWidth: '800px', fontFamily: "'Jura', sans-serif" }} className="font-bold">
             Tiny specs for <span style={{ color: '#00c8ff' }}>big brains</span>
           </h1>
-          <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '600px', color: '#f0f0f0', opacity: 0.9 }}>
-            MOTH is a compact, human-readable notation for PRDs, rules, and architecture that AI coding agents can load always-on without hogging tokens.
+          <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '700px', color: '#f0f0f0', opacity: 0.9 }}>
+            Convert and validate .moth specification files — the compact format for PRDs, rules, and architecture in AI-assisted development. Mothify compresses product knowledge into structured context that coding agents can keep always-on.
           </p>
           <div className="flex gap-4">
             <Link href="/docs/quick-reference" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-6 py-3 rounded font-semibold hover:opacity-90 transition inline-block">
@@ -222,8 +222,8 @@ orchestration:kubernetes`}
             <div>
               <h4 className="font-bold mb-4" style={{ color: '#00c8ff' }}>Legal</h4>
               <ul className="space-y-2" style={{ color: '#f0f0f0', opacity: 0.8 }}>
-                <li><a href="#" className="hover:opacity-100">MIT License</a></li>
-                <li><a href="#" className="hover:opacity-100">Contributing</a></li>
+                <li><a href="https://github.com/huikku/moth-spec/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">MIT License</a></li>
+                <li><a href="https://github.com/huikku/moth-spec/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">Contributing</a></li>
               </ul>
             </div>
           </div>
