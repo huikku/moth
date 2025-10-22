@@ -1,0 +1,156 @@
+# System Architecture Document
+intent:system_architecture; audience:engineering_team; style:technical
+version:1.0.0; updated:YYYY-MM-DD; origin:your_project
+
+[OVERVIEW]
+type:monolith|microservices|serverless
+deployment:vm|containers|kubernetes|serverless
+cloud:aws|azure|gcp|on_prem
+scale:X_dau; traffic:X_rps_peak; data:X_total
+
+[SERVICES]
+# List all services/components
+service1:tech_stack; deployment:method; replicas:min_max
+service2:tech_stack; deployment:method; replicas:min_max
+service3:tech_stack; deployment:method; replicas:min_max
+
+[SERVICES.service_name]
+# Detailed service spec
+tech:framework+language+version
+deployment:deployment_method; replicas:min_max
+dependencies:service1;service2
+db:database_type; cache:cache_type
+scaling:scaling_trigger
+timeout:X_seconds; retry:N_attempts
+
+[DATA_STORES]
+# All data storage systems
+relational:database; cache:cache_system
+search:search_engine; analytics:analytics_db
+queue:message_queue; object:object_storage
+sessions:session_store; logs:log_storage
+
+[DATA_FLOW.read]
+# Read path
+client -> component1 -> component2 -> data_store
+cache_hit:action; cache_miss:action
+
+[DATA_FLOW.write]
+# Write path
+client -> component1 -> data_store -> queue -> consumers
+async:background_processing; sync:immediate_response
+
+[DATABASES]
+# Database details
+db_name:database_type; size:X_gb; iops:X_k
+replication:pattern; replicas:N
+backup:frequency; retention:N_days
+disaster_recovery:strategy
+
+[DATABASES.replication]
+pattern:primary_replica|multi_primary
+replicas:N; lag:max_X_seconds
+failover:auto|manual; promotion:strategy
+
+[CACHING]
+# Caching layers
+layers:cdn;application;database
+cdn:cdn_service; ttl:X_time
+application:cache_type; ttl:varies
+strategy:cache_aside|write_through|refresh_ahead
+
+[MESSAGING]
+# Message queue/streaming
+system:kafka|rabbitmq|sqs; brokers:N
+topics:topic1;topic2; partitions:N_per_topic
+replication:N; retention:X_days
+consumer_groups:group_strategy
+
+[SCALING]
+# Scaling strategy
+strategy:horizontal|vertical; orchestrator:system
+metrics:cpu;memory;latency;queue_depth
+targets:cpu<X%;latency_pY<Xms
+autoscale:method; min_replicas:N; max_replicas:N
+
+[SECURITY]
+# Security measures
+auth:authentication_method; provider:auth_provider
+tokens:token_type; signing:algorithm
+api:api_security; rate_limit:limits
+encryption:tls_version; at_rest:encryption_method
+
+[SECURITY.network]
+vpc:network_isolation; subnets:subnet_types
+ingress:entry_point; egress:exit_strategy
+firewall:firewall_type; rules:rule_strategy
+waf:waf_service; rules:rule_sets
+
+[SECURITY.secrets]
+manager:secret_manager; rotation:frequency
+access:access_control; injection:injection_method
+encryption:encryption_method; audit:audit_method
+
+[OBSERVABILITY]
+# Monitoring and logging
+metrics:metrics_system; logs:log_system
+traces:tracing_system; errors:error_tracking
+dashboards:dashboard_tool; alerts:alert_system
+
+[OBSERVABILITY.metrics]
+system:cpu;memory;disk;network
+application:request_rate;latency;error_rate
+business:business_metric1;metric2
+
+[OBSERVABILITY.logging]
+format:log_format; level:log_level
+retention:X_days; search:search_method
+sensitive:redaction_policy; correlation:trace_id
+
+[OBSERVABILITY.alerts]
+latency:pX>Xms; error_rate:>X%; availability:<X%
+notification:notification_method; escalation:escalation_policy
+sla:response_time
+
+[PERFORMANCE]
+# Performance targets
+targets:p50<Xms;p95<Xms;p99<Xms
+availability:X%; error_rate:<X%
+throughput:X_rps_sustained;X_rps_burst
+
+[PERFORMANCE.optimizations]
+cdn:cdn_usage; compression:compression_methods
+db:db_optimizations; cache:cache_strategy
+lazy_load:lazy_loading_strategy
+
+[DISASTER_RECOVERY]
+rto:recovery_time; rpo:recovery_point
+backup:backup_strategy; retention:X_days
+failover:failover_strategy; restore:restore_method
+
+[DEPLOYMENT]
+strategy:deployment_strategy; rollback:rollback_method
+environments:dev;staging;prod
+ci_cd:ci_cd_tool; build:build_method
+
+[DEPLOYMENT.pipeline]
+trigger:trigger_event; build:build_step
+test:test_step; scan:security_scan
+deploy:deployment_tool; rollout:rollout_strategy
+
+[COSTS]
+# Cost breakdown
+compute:$X_month; db:$X_month
+cache:$X_month; storage:$X_month
+cdn:$X_month; monitoring:$X_month
+total:$X_month_baseline; peak:$X_month
+
+[DECISIONS]
+# Architecture decisions
+YYYY-MM-DD:decision; reason:rationale
+YYYY-MM-DD:decision; reason:rationale
+
+[RISKS]
+# Architecture risks
+risk:description; mitigation:strategy; status:R|D
+risk:description; mitigation:strategy; status:R|D

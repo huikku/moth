@@ -1,0 +1,196 @@
+# TaskFlow SaaS - Product Requirements
+intent:product_requirements; audience:developers+llms; style:technical
+version:1.0.0; updated:2025-10-22; status:stable; scope:mvp
+
+[META]
+product_name:TaskFlow; owner:product_team
+tagline:Modern task management for distributed teams
+launch_date:2025-Q1; priority:P0
+
+[PROBLEM]
+user_pain:teams_lose_context_across_async_work
+current_solution:slack+notion+trello_scattered
+impact:users:5000_potential;revenue:500k_arr;strategic:market_entry
+
+[SOLUTION]
+approach:unified_task_workspace_with_context
+core_value:single_source_of_truth_for_work
+differentiation:ai_context_summaries;deep_integrations
+success_metrics:dau:1000;retention_d7:60%;nps:50+
+
+[USERS]
+primary:role:engineering_manager;needs:visibility;frequency:daily
+secondary:role:individual_contributor;needs:clarity;frequency:hourly
+personas:[startup_founder;remote_manager;product_lead]
+
+[FEATURES.workspace]
+goal:organize_tasks_by_project_team
+hierarchy:workspace->project->board->task
+permissions:workspace_admin;project_owner;board_member
+state:{enabled=true;rollout=100%;priority:must}
+
+[FEATURES.tasks]
+goal:track_work_items_with_full_context
+fields:title;description;assignee;status;priority;due_date;labels
+status_flow:backlog->todo->in_progress->review->done
+comments:threaded;mentions;attachments
+state:{enabled=true;rollout=100%;priority:must}
+
+[FEATURES.ai_summaries]
+goal:auto_summarize_task_context_for_handoffs
+trigger:assignee_change;status_change;24h_idle
+content:recent_comments;linked_docs;related_tasks
+llm:claude_haiku; cost:$0.001_per_summary
+state:{enabled=false;rollout=0%;priority:should}
+
+[FEATURES.integrations]
+goal:connect_external_tools
+github:sync_prs_to_tasks;auto_update_status
+slack:notifications;create_tasks_from_messages
+linear:import_issues;sync_statuses
+state:{enabled=true;rollout=100%;priority:must}
+
+[FEATURES.auth]
+goal:secure_user_authentication
+methods:email_password;google_oauth;github_oauth
+sessions:jwt_tokens;expiry:7d;refresh:enabled
+security:bcrypt;rate_limit:5/min;2fa:optional
+state:{enabled=true;rollout=100%;priority:must}
+
+[FEATURES.billing]
+goal:subscription_management
+tiers:free:5_users;pro:$10_per_user;enterprise:custom
+payment:stripe; methods:card;ach
+billing_cycle:monthly;annual_20%_discount
+state:{enabled=false;rollout=0%;priority:should}
+
+[TECH_STACK]
+frontend:nextjs_14;react_18;typescript_5;tailwind_3
+backend:fastapi_0.109;python_3.11;pydantic_2
+database:postgres_16;redis_7;s3
+queue:sqs; worker:celery; cron:temporal
+search:meilisearch; analytics:posthog
+infrastructure:aws_ecs;rds;elasticache;alb
+monitoring:datadog; errors:sentry; logs:cloudwatch
+
+[ARCHITECTURE]
+pattern:clean_architecture
+layers:domain;application;infrastructure;presentation
+frontend:app_router;server_components;react_query
+backend:dependency_injection;repository_pattern;use_cases
+communication:rest_api;websocket_realtime;sse_notifications
+
+[API.workspaces]
+GET:/workspaces -> req:{} res:[{workspace}]
+POST:/workspaces -> req:{name:str;slug:str} res:{workspace}
+GET:/workspaces/:id -> req:{id:uuid} res:{workspace}
+PUT:/workspaces/:id -> req:{id:uuid;name:str} res:{workspace}
+DELETE:/workspaces/:id -> req:{id:uuid} res:{success:bool}
+auth:bearer_token; rate_limit:100/min; cache:30s
+
+[API.tasks]
+GET:/projects/:project_id/tasks -> req:{project_id:uuid;filters?:{}} res:[{task}]
+POST:/projects/:project_id/tasks -> req:{project_id:uuid;...task} res:{task}
+GET:/tasks/:id -> req:{id:uuid} res:{task}
+PUT:/tasks/:id -> req:{id:uuid;...task} res:{task}
+DELETE:/tasks/:id -> req:{id:uuid} res:{success:bool}
+PATCH:/tasks/:id/assign -> req:{id:uuid;assignee_id:uuid} res:{task}
+PATCH:/tasks/:id/status -> req:{id:uuid;status:str} res:{task}
+auth:bearer_token; rate_limit:1000/hour; cache:none
+
+[API.comments]
+GET:/tasks/:task_id/comments -> req:{task_id:uuid} res:[{comment}]
+POST:/tasks/:task_id/comments -> req:{task_id:uuid;content:str} res:{comment}
+PUT:/comments/:id -> req:{id:uuid;content:str} res:{comment}
+DELETE:/comments/:id -> req:{id:uuid} res:{success:bool}
+auth:bearer_token; rate_limit:500/hour; realtime:websocket
+
+[SCHEMAS.workspace]
+id:uuid_pk; name:str; slug:str_unique; owner_id:uuid_fk_users
+settings:{theme:str;timezone:str;locale:str}
+created_at:ts; updated_at:ts; deleted_at:ts?
+
+[SCHEMAS.project]
+id:uuid_pk; workspace_id:uuid_fk; name:str; key:str
+description:str?; status:enum[active;archived]; visibility:enum[public;private]
+created_by:uuid_fk_users; created_at:ts; updated_at:ts
+
+[SCHEMAS.task]
+id:uuid_pk; project_id:uuid_fk; title:str; description:str?
+assignee_id:uuid_fk_users?; reporter_id:uuid_fk_users
+status:enum[backlog;todo;in_progress;review;done]
+priority:enum[low;medium;high;urgent]
+due_date:date?; labels:[str]; attachments:[{url:str;name:str}]
+created_at:ts; updated_at:ts; completed_at:ts?
+
+[SCHEMAS.comment]
+id:uuid_pk; task_id:uuid_fk; author_id:uuid_fk_users
+content:str; mentions:[uuid]; attachments:[{url:str;name:str}]
+parent_id:uuid_fk_comments?; edited:bool
+created_at:ts; updated_at:ts; deleted_at:ts?
+
+[SCHEMAS.user]
+id:uuid_pk; email:str_unique; name:str; avatar_url:str?
+role:enum[user;admin]; status:enum[active;suspended;deleted]
+settings:{theme:str;notifications:bool;timezone:str}
+last_login:ts?; created_at:ts; updated_at:ts
+
+[DATA]
+isolation:workspace_id; rls:enabled
+retention:tasks:indefinite;comments:indefinite;analytics:90d;logs:30d
+privacy:pii_encrypted;gdpr_compliant
+migrations:alembic; strategy:blue_green
+
+[SECURITY]
+authentication:jwt_bearer; session:7d_expiry
+authorization:rbac; enforcement:api+db+frontend
+encryption:at_rest:aes256;in_transit:tls13;kms:aws
+secrets:aws_secrets_manager; rotation:90d
+compliance:soc2_type2; audit:all_mutations
+rate_limits:api:1000/hour/user;websocket:100_concurrent
+
+[OBSERVABILITY]
+metrics:latency_p50_p95_p99;error_rate;task_throughput
+logs:structured_json;level:info;retention:30d
+traces:opentelemetry;sampling:10%;export:datadog
+alerts:error_rate>1%;latency_p99>1s;cpu>80%
+dashboards:health;business;performance
+
+[TESTING]
+unit:pytest;coverage:80%;pattern:arrange_act_assert
+integration:testcontainers;postgres+redis;api_tests
+e2e:playwright;critical_paths:auth;create_task;comment
+performance:locust;load:1000_rps;duration:10min
+
+[DEPLOYMENT]
+environments:dev;staging;prod
+strategy:blue_green; rollback:automatic_on_error_rate>5%
+feature_flags:launchdarkly; default:off
+ci_cd:github_actions; deploy:on_merge_to_main
+
+[PHASES]
+m0:auth+workspaces+projects; timeline:4w; deliverables:user_signup;workspace_crud;project_crud
+m1:tasks+comments+realtime; timeline:6w; deliverables:task_crud;comments;websocket_updates
+m2:integrations+search; timeline:4w; deliverables:github_sync;slack_notifs;meilisearch
+m3:ai_summaries+billing; timeline:6w; deliverables:llm_summaries;stripe_integration;tiers
+
+[METRICS]
+north_star:weekly_active_workspaces; target:500_by_q1
+engagement:dau:1000;wau:3000;retention_d7:60%;retention_d30:40%
+performance:p50_api<100ms;p99_api<500ms;uptime>99.9%
+business:mrr:50k;churn<5%;cac<100;ltv>1200
+
+[RISKS]
+technical:risk:realtime_scale;likelihood:medium;impact:high;mitigation:redis_pub_sub+websocket_pooling
+business:risk:stripe_approval;likelihood:low;impact:high;mitigation:parallel_paypal_integration
+operational:risk:data_loss;likelihood:low;impact:critical;mitigation:automated_backups+point_in_time_recovery
+
+[OUT_OF_SCOPE]
+features:time_tracking;gantt_charts;resource_planning;reason:future_phases
+integrations:jira;asana;monday;reason:post_launch
+platforms:mobile_native_apps;reason:m4+
+
+[SUCCESS_CRITERIA]
+launch:zero_p0_bugs;p99_latency<1s;100_beta_users_signed_up
+adoption:500_workspaces;1000_dau;60%_d7_retention
+quality:uptime>99.9%;error_rate<0.1%;customer_satisfaction>4.5/5

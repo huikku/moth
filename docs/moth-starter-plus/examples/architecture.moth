@@ -1,0 +1,22 @@
+intent:system_design; audience:implementation_llms; version:1.0
+style:technical; scope:service_topology
+
+[SERVICES]
+api:fastapi+uvicorn; worker:temporal_workers; db:postgres_16; cache:redis_7
+object_store:s3; cdn:cloudfront; metrics:datadog; logs:cloudwatch
+
+[DATA_FLOW]
+client->cloudfront->alb->api->postgres
+client->api->sqs->worker->s3->cdn
+api->opensearch(index/search); worker->opensearch(index)
+
+[SCHEMAS.asset_v1]
+id:uuid_pk; tenant_id:uuid_fk; hash:sha256_unique
+type:enum[video;image;doc;three_d]; bytes:int64
+created_at:timestamptz; created_by:uuid; deleted_at:timestamptz?
+
+[SECURITY]
+auth:jwt_bearer; rbac:roles[admin;editor;viewer]
+rls:tenant_id_match
+encryption:at_rest_kms+s3; in_transit_tls12+
+audit:all_mutations_hash_chained

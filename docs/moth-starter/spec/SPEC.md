@@ -1,0 +1,29 @@
+# MOTH Specification (v1.0)
+
+**MOTH (Minimal Overhead Technical Hierarchy)** is a compact, human-readable format for PRDs, rules, and architecture docs intended to be loaded into coding LLMs as always-on context.
+
+## Syntax
+- Sections: `[SECTION]` or `[SECTION.sub]`
+- Key/value: `key:value`
+- Lists: `key:item1;item2;item3`
+- State maps: `key:{k=v;k2=v2}`
+- Comments: `#` at line start
+
+### Reserved sections
+- `[CORE]` fundamental product intent
+- `[STACK]` technology choices
+- `[FEATURES.*]` feature groups
+- `[API.*]` endpoint contracts
+- `[SCHEMAS.*]` data models
+- `[STYLE]`, `[CONVENTIONS]`, `[FORBIDDEN]` for rules files
+- `[SLO]`, `[SECURITY]` for ops/security targets
+
+## Validation
+- Duplicate keys in a section → error
+- Unknown top-level tags → warn (use prefix `X_` to extend)
+- `[API.*]` must follow: `METHOD:/path -> req:{{...}} res:{{...}}`
+- `[SCHEMAS.*]` model fields are `name:type` pairs separated by semicolons
+- Keys snake_case; Section tags UPPERCASE with optional `.sub`
+
+## Examples
+See `/examples` for PRD, rules, and architecture samples.

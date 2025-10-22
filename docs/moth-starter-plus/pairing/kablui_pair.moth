@@ -1,0 +1,22 @@
+intent:ui_contract; audience:kablui+coding_llm; version:1.0
+style:technical; scope:kablUI_pairing_demo
+
+[CORE]
+goal:ui_shell_with_left_right_sidebars_and_main
+
+[UI.contract]
+layout:@APP[theme:dark]
+header:@HEADER[h:64 sticky bg:gunmetal]
+sidebar_left:@SIDEBAR_LEFT[w:280 slide state:open bg:hull]
+sidebar_right:@SIDEBAR_RIGHT[w:320 slide state:closed bg:hull]
+main:@MAIN[bg:panel]
+footer:@FOOTER[h:40 bg:gunmetal]
+
+[UI.rules]
+header_contains:LOGO;NAV;SEARCH;ACTIONS
+left_sidebar:§PROJECTS_tree
+right_sidebar:§COMMENTS_inbox
+main:accepts:any_content_type
+
+[INTEGRATION]
+agent_bootstrap:load_ant_first_then_render_kablui

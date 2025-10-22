@@ -1,0 +1,144 @@
+# API Specification
+intent:api_specification; audience:developers; style:technical
+version:1.0.0; updated:YYYY-MM-DD; origin:your_api
+
+[API_INFO]
+name:API_Name; version:v1; base_url:https://api.example.com
+protocol:rest|graphql|grpc; format:json|xml|protobuf
+auth:auth_method; rate_limit:X_requests_per_period
+
+[AUTH]
+method:bearer|api_key|oauth2|basic
+token_type:jwt|opaque; expiry:X_time
+refresh:enabled|disabled; rotation:rotation_policy
+
+[RATE_LIMITING]
+global:X_requests_per_period
+per_user:X_requests_per_period
+per_endpoint:varies
+burst:burst_allowance
+
+[SCHEMA.resource_name]
+# Main resource schema
+id:uuid_pk; field1:type_constraints
+field2:type_constraints; field3:type_constraints?
+timestamps:created_at:ts;updated_at:ts
+
+[SCHEMA.related_resource]
+# Related resource schema
+id:uuid_pk; field1:type_constraints
+foreign_key:uuid_fk_resource_name
+
+[API.resource_name]
+# CRUD operations for resource
+GET:/resource -> req:{page?:int;limit?:int;filters?} res:{items:[resource];total:int} auth:public|bearer
+GET:/resource/:id -> req:{id:uuid} res:{resource} auth:public|bearer
+POST:/resource -> req:{field1;field2;field3?} res:{resource} auth:bearer
+PUT:/resource/:id -> req:{id;resource_partial} res:{resource} auth:bearer
+PATCH:/resource/:id -> req:{id;fields_to_update} res:{resource} auth:bearer
+DELETE:/resource/:id -> req:{id} res:{success:bool} auth:bearer
+
+[API.custom_endpoints]
+# Custom/action endpoints
+POST:/resource/:id/action -> req:{id;params} res:{result} auth:bearer
+GET:/resource/:id/related -> req:{id} res:{related:[related_resource]} auth:bearer
+
+[ERRORS]
+# Error response format
+400:bad_request; message:validation_error; fields:{field:error}
+401:unauthorized; message:authentication_required
+403:forbidden; message:insufficient_permissions
+404:not_found; message:resource_not_found
+429:too_many_requests; message:rate_limit_exceeded
+500:internal_server_error; message:something_went_wrong
+
+[ERRORS.format]
+# Standard error response structure
+status:http_status_code
+error:{
+  code:error_code;
+  message:human_readable_message;
+  details:error_details?;
+  field_errors:{field:error_message}?
+}
+
+[PAGINATION]
+method:offset|cursor; default_limit:20; max_limit:100
+request:page:int;limit:int|cursor:str;limit:int
+response:{items:[resource];total:int;next_cursor:str?}
+
+[FILTERING]
+# Query parameters for filtering
+supported:field1;field2;field3
+operators:eq;ne;gt;lt;gte;lte;in;like
+format:field__operator=value
+example:status__eq=active&created_at__gte=2025-01-01
+
+[SORTING]
+parameter:sort; format:field_name|-field_name
+default:sort_field; multiple:comma_separated
+example:sort=created_at,-priority
+
+[SEARCH]
+endpoint:GET:/search; parameter:q
+method:full_text|fuzzy|exact
+fields:searchable_fields
+example:q=search_term
+
+[WEBHOOKS]
+# Webhook events
+events:event1;event2;event3
+format:json; method:POST
+retry:retry_strategy; timeout:X_seconds
+signature:hmac_sha256; verification:required
+
+[WEBHOOKS.payload]
+# Standard webhook payload
+event:event_type
+timestamp:iso8601_timestamp
+data:{event_specific_data}
+signature:hmac_signature
+
+[VERSIONING]
+strategy:url_path|header|accept_header
+current:v1; deprecated:none
+breaking_changes:new_major_version
+sunset:deprecation_notice_6_months
+
+[RESPONSE_FORMATS]
+# Standard response formats
+success:{data:response_data;meta:metadata?}
+error:{error:error_object}
+collection:{items:[items];total:int;meta:pagination_meta}
+
+[EXAMPLES]
+# Request/response examples
+
+[EXAMPLES.create_resource]
+request:POST:/resource
+body:{field1:"value";field2:"value"}
+response:201_Created
+body:{id:"uuid";field1:"value";field2:"value";created_at:"timestamp"}
+
+[EXAMPLES.list_resources]
+request:GET:/resource?page=1&limit=10&status=active
+response:200_OK
+body:{items:[{resource}];total:100;page:1;limit:10}
+
+[EXAMPLES.error]
+request:POST:/resource
+body:{invalid:"data"}
+response:400_Bad_Request
+body:{error:{code:"validation_error";message:"Invalid data";field_errors:{field1:"Required"}}}
+
+[PERFORMANCE]
+# Performance characteristics
+avg_response:X_ms; p95:X_ms; p99:X_ms
+timeout:X_seconds; caching:cache_policy
+cdn:cdn_usage; compression:compression_enabled
+
+[CHANGELOG]
+# API changes
+YYYY-MM-DD:added_endpoint:/new_endpoint
+YYYY-MM-DD:deprecated_field:old_field_in_schema
+YYYY-MM-DD:removed_endpoint:/old_endpoint

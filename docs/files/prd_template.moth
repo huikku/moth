@@ -1,0 +1,162 @@
+# PRD Template v1.0
+intent:product_requirements; audience:developers+llms; style:technical
+version:1.0.0; updated:2025-10-22; status:template
+
+[META]
+product_name:___; owner:___; stakeholders:___
+timeline:start:___;target:___; priority:P0|P1|P2|P3
+dependencies:___; blockers:___; risks:___
+
+[PROBLEM]
+user_pain:___
+current_solution:___
+limitations:___
+impact:users:___;revenue:___;strategic:___
+
+[SOLUTION]
+approach:___
+core_value:___
+differentiation:___
+success_metrics:metric:target;metric2:target2
+
+[USERS]
+primary:role:___;needs:___;frequency:___
+secondary:role:___;needs:___;frequency:___
+personas:[persona1;persona2;persona3]
+
+[FEATURES.feature_name]
+goal:___
+user_story:as___ I_want___ so_that___
+acceptance_criteria:criterion1;criterion2;criterion3
+priority:must|should|could|wont
+effort:xs|s|m|l|xl; value:low|med|high
+dependencies:feature1;feature2
+rollout:strategy:___;percentage:___%
+
+[FEATURES.auth]
+goal:secure_user_authentication
+flows:signup;login;logout;password_reset
+methods:email_password;oauth2;magic_link
+sessions:jwt_tokens;expiry:24h;refresh:enabled
+security:bcrypt;rate_limit:5_attempts_per_min
+state:{enabled=true;rollout=100%}
+
+[FEATURES.payments]
+goal:process_transactions_securely
+provider:stripe; methods:card;ach;wallet
+currencies:[usd;eur;gbp]
+webhooks:payment_succeeded;payment_failed;refund_processed
+compliance:pci_dss;sca_required
+state:{enabled=false;rollout=0%}
+
+[TECH_STACK]
+frontend:framework:___;language:___;styling:___
+backend:framework:___;language:___;runtime:___
+database:primary:___;cache:___;queue:___
+storage:files:___;cdn:___;backup:___
+infrastructure:cloud:___;orchestration:___;ci_cd:___
+monitoring:apm:___;logs:___;alerts:___
+
+[ARCHITECTURE]
+pattern:monolith|microservices|serverless
+layers:presentation;business;data
+communication:sync:rest|graphql;async:queue|pubsub
+data_flow:client->api->db; client->api->queue->worker
+
+[API.endpoint_category]
+GET:/resource/:id -> req:{id:uuid} res:{resource_schema}
+POST:/resource -> req:{create_schema} res:{resource_schema}
+PUT:/resource/:id -> req:{id:uuid;update_schema} res:{resource_schema}
+DELETE:/resource/:id -> req:{id:uuid} res:{success:bool}
+auth:bearer_token; rate_limit:1000/hour; cache:5min
+
+[SCHEMAS.user]
+id:uuid_pk; email:str_unique; name:str
+role:enum[admin;user;guest]; status:enum[active;suspended;deleted]
+created_at:ts; updated_at:ts; last_login:ts?
+settings:{theme:str;lang:str;notifications:bool}
+
+[SCHEMAS.resource]
+id:uuid_pk; owner_id:uuid_fk_users
+type:str; status:str; data:jsonb
+created_at:ts; updated_at:ts; deleted_at:ts?
+
+[DATA]
+ownership:tenant_id; isolation:row_level_security
+retention:logs:90d;backups:365d;deleted:30d
+privacy:pii_encrypted;gdpr_compliant;ccpa_compliant
+migrations:tool:___;strategy:blue_green|rolling
+
+[SECURITY]
+authentication:method:___;provider:___
+authorization:model:rbac|abac;enforcement:api+db
+encryption:at_rest:aes256;in_transit:tls13
+secrets:vault:___;rotation:90d
+compliance:soc2|hipaa|gdpr; audit:all_mutations
+threats:addressed:___;mitigations:___
+
+[OBSERVABILITY]
+metrics:latency;throughput;errors;saturation
+logs:structured:json;retention:90d;search:___
+traces:distributed:enabled;sampling:10%
+alerts:p0:page;p1:ticket;p2:log
+dashboards:health;business;performance
+
+[TESTING]
+unit:coverage:80%;framework:___
+integration:api_tests;db_tests;queue_tests
+e2e:framework:___;critical_paths:___
+performance:load:___;stress:___;soak:___
+security:sast;dast;penetration:quarterly
+
+[DEPLOYMENT]
+environments:dev;staging;prod
+strategy:blue_green|canary|rolling
+rollback:automatic:on_error_rate>5%
+feature_flags:provider:___;default:off
+
+[PHASES]
+m0:mvp; scope:___; timeline:___; deliverables:___
+m1:beta; scope:___; timeline:___; deliverables:___
+m2:ga; scope:___; timeline:___; deliverables:___
+m3:scale; scope:___; timeline:___; deliverables:___
+
+[METRICS]
+north_star:metric:___;target:___
+engagement:dau;mau;wau;retention_d7;retention_d30
+performance:p50_latency<200ms;p99_latency<1s;uptime>99.9%
+business:mrr;arr;ltv;cac;churn_rate
+quality:bug_rate;incident_rate;mttr;customer_satisfaction
+
+[RISKS]
+technical:risk:___;likelihood:low|med|high;impact:low|med|high;mitigation:___
+business:risk:___;likelihood:___;impact:___;mitigation:___
+operational:risk:___;likelihood:___;impact:___;mitigation:___
+
+[DEPENDENCIES]
+internal:team:___;deliverable:___;date:___
+external:vendor:___;service:___;contract:___
+blockers:blocker:___;owner:___;eta:___
+
+[DECISIONS]
+decision_id:date:___;decision:___;rationale:___;alternatives:___;owner:___
+
+[OUT_OF_SCOPE]
+features:feature1;feature2;reason:___
+integrations:integration1;reason:___
+platforms:platform1;reason:___
+
+[SUCCESS_CRITERIA]
+launch:criteria1;criteria2;criteria3
+adoption:target_users:___;target_date:___
+quality:zero_p0_bugs;p99_latency<1s;uptime>99.9%
+
+[ROLLOUT]
+phase1:users:internal;duration:1w;success:no_critical_bugs
+phase2:users:beta;percentage:10%;duration:1w;success:metric_stable
+phase3:users:all;percentage:100%;duration:2w;monitoring:enhanced
+
+[SUPPORT]
+documentation:user_guide;api_docs;runbooks
+training:team_training;customer_training
+monitoring:on_call_rotation;escalation_path

@@ -1,0 +1,230 @@
+# E-Commerce Platform Architecture
+intent:system_architecture; audience:engineering_team; style:technical
+version:1.0.0; updated:2025-10-22; origin:shopflow_architecture
+
+[OVERVIEW]
+type:microservices; deployment:kubernetes; cloud:aws
+scale:100k_dau; traffic:10k_rps_peak; data:5tb_total
+
+[SERVICES]
+api_gateway:kong; rate_limit:1000_per_min
+auth:keycloak; sessions:redis_cluster
+catalog:fastapi+postgres; search:elasticsearch_8
+cart:node+redis; checkout:node+postgres+stripe
+inventory:go+postgres; warehouse:go+kafka
+orders:java+spring+postgres; events:kafka
+notifications:python+celery+ses; analytics:python+clickhouse
+admin:react+nextjs; storefront:react+nextjs
+
+[SERVICES.api_gateway]
+tech:kong_3.0; deployment:k8s_daemonset; replicas:min3
+features:rate_limit;auth;cors;logging
+plugins:jwt;rate_limit;cors;request_transformer
+routes:prefix_based; timeout:30s; retry:2
+
+[SERVICES.catalog]
+tech:fastapi_0.104+postgres_16; replicas:min5_max20
+db:rds_multi_az; cache:elasticache_redis
+read_replicas:3; writes:primary_only
+search:elasticsearch_8; indexing:async_celery
+cdn:cloudfront_images; ttl:1h
+
+[SERVICES.cart]
+tech:nodejs_20+express+redis_7; replicas:min3_max15
+storage:elasticache_cluster; ttl:24h
+persistence:postgres_backup; session:jwt+redis
+scaling:cpu>70%_add_pod
+
+[SERVICES.checkout]
+tech:nodejs_20+postgres_16+stripe_api; replicas:min5_max30
+db:rds_multi_az; transactions:acid_guaranteed
+payment:stripe_api; webhook:stripe_webhook_handler
+idempotency:idempotency_keys; retry:exponential_backoff
+timeout:60s; circuit_breaker:enabled
+
+[SERVICES.orders]
+tech:java_17+spring_boot+postgres_16; replicas:min5_max30
+db:rds_multi_az; partitioning:by_month
+events:kafka_order_events; consumer_groups:3
+saga:orchestration_pattern; compensation:rollback_handlers
+archive:s3_older_than_2y
+
+[SERVICES.notifications]
+tech:python_3.11+celery+redis+ses; workers:min10_max50
+queue:redis_celery; tasks:send_email;send_sms;send_push
+email:aws_ses; sms:twilio; push:fcm
+retry:3_attempts; rate_limit:100_per_sec
+templates:jinja2+s3; personalization:user_preferences
+
+[DATA_STORES]
+relational:postgres_16; cache:redis_7; search:elasticsearch_8
+analytics:clickhouse; queue:kafka; object:s3
+sessions:redis; logs:cloudwatch; metrics:prometheus
+
+[DATA_FLOW.read]
+client -> cloudfront -> alb -> api_gateway -> service -> cache -> db
+cache_hit:return_cached; cache_miss:fetch_db+cache
+
+[DATA_FLOW.write]
+client -> alb -> api_gateway -> service -> db -> kafka -> consumers
+async:background_jobs; sync:immediate_response
+
+[DATA_FLOW.checkout]
+# Synchronous flow
+client -> checkout_api -> validate -> payment_api -> order_create
+order_create -> kafka_event -> [inventory;notifications;analytics]
+# Saga pattern
+success:commit_all; failure:compensate_previous_steps
+
+[DATA_FLOW.search]
+user_query -> api_gateway -> search_api -> elasticsearch
+elasticsearch -> ranking_algorithm -> results
+facets:category;price;brand; filters:applied_server_side
+
+[DATABASES]
+catalog:postgres_16_rds; size:500gb; iops:10k
+users:postgres_16_rds; size:100gb; iops:5k
+orders:postgres_16_rds; size:2tb; iops:20k
+inventory:postgres_16_rds; size:50gb; iops:5k
+analytics:clickhouse_cluster; size:5tb; retention:2y
+
+[DATABASES.replication]
+pattern:primary_replica; replicas:3_per_primary
+lag:max_5s; failover:auto_promote_replica
+backup:daily_snapshot; retention:30d
+disaster_recovery:cross_region_replica
+
+[CACHING]
+layers:cdn;application;database
+cdn:cloudfront; ttl:1h; invalidation:api_triggered
+application:redis_cluster; ttl:varies_by_resource
+database:postgres_shared_buffers_8gb
+
+[CACHING.strategy]
+catalog:cache_aside; ttl:1h
+cart:write_through; ttl:24h
+session:write_through; ttl:7d
+search:refresh_ahead; ttl:15m
+
+[SEARCH]
+engine:elasticsearch_8; cluster:3_nodes_min
+indices:products;orders;users; shards:5_per_index
+replicas:2_per_shard; refresh:1s
+indexing:async_kafka_consumer; bulk:1000_docs
+query:fuzzy+semantic; ranking:bm25+custom_boost
+
+[MESSAGING]
+system:kafka_3.5; brokers:3_min; partitions:vary_by_topic
+replication:min_3; retention:7d
+topics:order_events;inventory_updates;notifications
+consumer_groups:service_specific; offset:commit_on_success
+
+[SCALING]
+strategy:horizontal; orchestrator:kubernetes
+metrics:cpu;memory;request_latency;queue_depth
+targets:cpu<70%;latency_p99<200ms
+autoscale:hpa_metrics_server; min_replicas:3; max_replicas:30
+
+[SCALING.services]
+api_gateway:cpu>70%_scale; limits:max30
+catalog:cpu>70%_or_latency>200ms; limits:max20
+checkout:queue_depth>100_or_cpu>60%; limits:max30
+notifications:queue_depth>1000; limits:max50
+
+[SECURITY]
+auth:oauth2_oidc; provider:keycloak
+tokens:jwt_access_15m+refresh_7d; signing:rs256
+api:bearer_token; rate_limit:kong_plugin
+encryption:tls_1.3; at_rest:kms_encrypted
+
+[SECURITY.network]
+vpc:isolated_per_env; subnets:public;private;data
+ingress:alb_only; egress:nat_gateway
+firewall:security_groups; rules:least_privilege
+waf:aws_waf; rules:owasp_top10
+
+[SECURITY.secrets]
+manager:aws_secrets_manager; rotation:auto_90d
+access:iam_roles; injection:k8s_secrets
+encryption:kms; audit:cloudtrail
+
+[SECURITY.compliance]
+pci_dss:payment_data; gdpr:user_data
+encryption:required_all_pii; logging:no_sensitive_data
+retention:2y_orders;7y_financial; deletion:right_to_forget
+
+[OBSERVABILITY]
+metrics:prometheus+grafana; logs:cloudwatch_logs
+traces:jaeger; errors:sentry
+dashboards:grafana; alerts:alertmanager->slack
+
+[OBSERVABILITY.metrics]
+system:cpu;memory;disk;network
+application:request_rate;latency;error_rate
+business:orders;revenue;cart_abandonment
+
+[OBSERVABILITY.logging]
+format:json_structured; level:info_prod;debug_dev
+retention:30d_prod;7d_dev; search:cloudwatch_insights
+sensitive:redacted_pii; correlation:trace_id
+
+[OBSERVABILITY.tracing]
+sampling:100%_errors;10%_success; retention:7d
+spans:service;db;external_api; attributes:user_id;order_id
+visualization:jaeger_ui; analysis:query_slow_traces
+
+[OBSERVABILITY.alerts]
+latency:p99>500ms; error_rate:>1%; availability:<99.9%
+queue:depth>1000; db:cpu>80%; cache:hit_rate<70%
+notification:slack; escalation:pagerduty; sla:5m_response
+
+[PERFORMANCE]
+targets:p50<100ms;p95<200ms;p99<500ms
+availability:99.9%; error_rate:<0.1%
+throughput:10k_rps_sustained;20k_rps_burst
+
+[PERFORMANCE.optimizations]
+cdn:static_assets+images; compression:gzip+brotli
+db:connection_pool_50;query_optimization;indices
+cache:hot_data_redis;stale_while_revalidate
+lazy_load:images+non_critical_js
+
+[DISASTER_RECOVERY]
+rto:1h; rpo:5m
+backup:daily_snapshot;continuous_wal; retention:30d
+failover:auto_primary_replica; cross_region:manual
+restore:automated_scripts; test:quarterly
+
+[DEPLOYMENT]
+strategy:blue_green; rollback:instant_dns_switch
+environments:dev;staging;prod; promotion:manual_approval
+ci_cd:github_actions; build:docker; registry:ecr
+
+[DEPLOYMENT.pipeline]
+trigger:push_main; build:docker_image; test:integration
+scan:security_vulnerabilities; push:ecr
+deploy:argocd; rollout:progressive; monitor:5m_validation
+
+[DEPLOYMENT.kubernetes]
+cluster:eks_1.28; nodes:m5.2xlarge; min_nodes:5; max_nodes:50
+networking:calico; ingress:alb_controller
+storage:ebs_gp3; scaling:cluster_autoscaler
+monitoring:prometheus_operator
+
+[COSTS]
+compute:eks_$2k_month; rds:$1.5k_month
+cache:elasticache_$500_month; s3:$300_month
+cdn:cloudfront_$400_month; monitoring:$200_month
+total:$5k_month_baseline; peak:$8k_month
+
+[DECISIONS]
+2025-09-01:microservices_vs_monolith; reason:scale+team_autonomy
+2025-09-15:postgres_vs_dynamodb; reason:relational_data+acid
+2025-10-01:kafka_vs_sqs; reason:event_sourcing+replay
+2025-10-10:kong_vs_nginx; reason:plugin_ecosystem
+
+[RISKS]
+kafka_complexity:steep_learning_curve; mitigation:training+docs; status:R
+elasticsearch_cost:large_data_volume; mitigation:retention_policy; status:R
+checkout_single_point:no_failover_yet; mitigation:active_active_m1; status:R
+vendor_lockin:aws_specific; mitigation:abstract_infra; status:D

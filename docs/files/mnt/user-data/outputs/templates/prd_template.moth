@@ -1,0 +1,133 @@
+# Product Requirements Document
+intent:product_requirements; audience:dev_team; style:technical
+version:0.1.0; updated:YYYY-MM-DD; origin:your_project
+
+[PRODUCT]
+name:ProductName; type:saas|mobile|web|desktop
+domain:your_domain; target:target_audience
+tagline:"One line description"
+pricing:free|freemium|paid
+
+[FEATURES.M0_MVP]
+# Core features for MVP launch
+feature1:description; status:P|C|R|D|X
+feature2:description; status:P|C|R|D|X
+feature3:description; status:P|C|R|D|X
+
+[FEATURES.M1]
+# Features for milestone 1
+feature1:description; status:P
+feature2:description; status:P
+
+[FEATURES.M2]
+# Features for milestone 2
+feature1:description; status:P
+
+[STACK]
+# Frontend stack
+frontend:framework+language
+ui:ui_library; state:state_management
+routing:router; forms:form_library
+
+[STACK.backend]
+# Backend stack
+api:framework+language; async:true|false
+db:database+version; orm:orm_library
+cache:cache_system; queue:queue_system
+
+[STACK.infra]
+# Infrastructure
+hosting:platform; db_hosting:platform
+auth:auth_provider; email:email_service
+monitoring:monitoring_tool; ci_cd:ci_cd_tool
+
+[SCHEMA.model_name_v1]
+# Database schema for main model
+id:uuid_pk
+field1:type_constraints
+field2:type_constraints?  # Optional field
+foreign_key:uuid_fk_other_model
+created_at:ts
+updated_at:ts
+
+[SCHEMA.related_model_v1]
+# Related model schema
+id:uuid_pk
+field1:type_constraints
+created_at:ts
+
+[API.resource]
+# API endpoints for resource
+GET:/resource -> req:{filters?} res:{items:[model];total:int} auth:policy
+GET:/resource/:id -> req:{id:uuid} res:{model} auth:policy
+POST:/resource -> req:{field1;field2} res:{model} auth:policy
+PUT:/resource/:id -> req:{id;model_partial} res:{model} auth:policy
+DELETE:/resource/:id -> req:{id} res:{success:bool} auth:policy
+
+[ARCHITECTURE]
+# System architecture patterns
+pattern:architecture_pattern
+layers:layer1;layer2;layer3
+communication:rest|graphql|grpc
+storage:databases; cache:cache_system
+
+[PERMISSIONS]
+# Access control
+model:rbac|abac
+roles:owner>admin>member
+owner:all_actions
+admin:most_actions; no:sensitive_actions
+member:read_write; no:admin_actions
+
+[SECURITY]
+# Security measures
+auth:auth_method; passwords:hashing_algorithm
+rate_limit:requests_per_period
+secrets:secret_management
+audit:logging_approach
+
+[PERFORMANCE]
+# Performance targets
+target:p95<Xms;p99<Yms
+db:connection_pool_N
+cache:cache_strategy
+cdn:cdn_usage
+
+[TESTING]
+# Testing strategy
+unit:framework; coverage:X%_min
+integration:framework; e2e:framework
+ci:run_on_pr; mocks:mocking_approach
+
+[MONITORING]
+# Observability
+errors:error_tracking; metrics:metrics_system
+logs:log_management; alerts:alerting
+uptime:uptime_monitoring
+
+[DEPLOYMENT]
+# Deployment strategy
+strategy:deployment_strategy
+environments:dev;staging;prod
+ci_cd:ci_cd_tool; deployment:deployment_method
+
+[MILESTONES]
+# Project timeline
+M0_MVP:YYYY-MM-DD; weeks:N; scope:mvp_features; status:P
+M1:YYYY-MM-DD; weeks:N; scope:milestone1_features; status:P
+M2:YYYY-MM-DD; weeks:N; scope:milestone2_features; status:P
+
+[RISKS]
+# Project risks and mitigations
+risk1:description; mitigation:mitigation_strategy; status:R|D
+risk2:description; mitigation:mitigation_strategy; status:R|D
+
+[DECISIONS]
+# Architecture decisions
+YYYY-MM-DD:decision_made; reason:rationale
+YYYY-MM-DD:decision_made; reason:rationale
+
+[DEPENDENCIES]
+# Key dependencies
+frontend:package1^version;package2^version
+backend:package1^version;package2^version

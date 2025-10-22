@@ -1,0 +1,224 @@
+# TypeScript React Coding Standards
+intent:coding_standards; audience:cursor+cline+aider+team; style:prescriptive
+version:2.0.0; updated:2025-10-22; origin:taskflow_engineering
+
+[LANGUAGE]
+primary:typescript_5.0+; strict_mode:true; target:es2022
+jsx:react_18; no_implicit_any:true; strict_null_checks:true
+
+[STYLE.formatting]
+formatter:prettier; config:.prettierrc
+line_length:100; indent:2_spaces; quotes:single
+semicolons:required; trailing_commas:all; arrow_parens:always
+
+[STYLE.naming]
+variables:camelCase; functions:camelCase
+types:PascalCase; interfaces:PascalCase; enums:PascalCase
+constants:SCREAMING_SNAKE_CASE; files:kebab-case
+components:PascalCase; hooks:use_prefix_camelCase
+private:_prefix; boolean:is_has_should_prefix
+
+[STYLE.files]
+max_lines:300; max_complexity:15
+one_component_per_file:true; index:barrel_exports_only
+extensions:.ts;.tsx; no:.js;.jsx
+
+[ARCHITECTURE]
+pattern:clean_architecture; layers:domain;application;infrastructure;presentation
+folder_structure:feature_based; no:by_type_folders
+
+[ARCHITECTURE.structure]
+src/
+  features/              # Feature-based organization
+    auth/
+      domain/           # Business logic, entities
+      application/      # Use cases, services
+      infrastructure/   # API, persistence
+      presentation/     # Components, hooks
+  shared/               # Cross-cutting concerns
+    ui/                 # Reusable components
+    utils/              # Helpers
+    types/              # Shared types
+
+[ARCHITECTURE.dependencies]
+domain:no_deps; application:domain_only
+infrastructure:domain+application
+presentation:application+infrastructure
+rule:inner_layers_no_outer_layer_deps
+
+[COMPONENTS]
+type:functional_only; no:class_components
+props:interface_definition; default_props:destructured_defaults
+composition:over_inheritance; children:ReactNode_type
+
+[COMPONENTS.patterns]
+container_component:data_fetching+state; pattern:R
+presentational_component:ui_only+props; pattern:R
+custom_hooks:logic_extraction; prefix:use
+compound_components:context_api; pattern:P
+
+[COMPONENTS.rules]
+max_props:7; exceed:split_component
+single_responsibility:one_concern_per_component
+no:inline_styles; use:tailwind_utility_classes
+conditionals:early_return_pattern; no:nested_ternaries>2
+
+[STATE]
+global:zustand; local:useState+useReducer
+server:react_query; forms:react_hook_form
+url:react_router; no:redux;mobx;recoil
+
+[STATE.zustand]
+store:feature_slice_pattern; selectors:shallow_equal
+persist:zustand_persist; devtools:enabled_dev_only
+immutability:immer_middleware
+
+[STATE.react_query]
+queries:stale_time_5min; cache_time_30min
+retry:3_attempts; retry_delay:exponential
+refetch:on_window_focus; invalidation:explicit
+
+[HOOKS]
+order:react_rules_of_hooks; dependencies:exhaustive_deps
+custom:extract_complex_logic; naming:use_prefix
+cleanup:always_cleanup_effects; no:empty_deps_array
+
+[HOOKS.patterns]
+data_fetching:react_query; no:useEffect_for_api
+side_effects:useEffect_with_cleanup
+memoization:useMemo+useCallback_for_expensive_only
+refs:useRef_for_dom+mutable_values
+
+[TYPES]
+prefer:interfaces_for_objects; types_for_unions+intersections
+generics:when_reusable; constraints:extends_keyword
+utility:Pick;Omit;Partial;Required; no:any;unknown_with_type_guard
+
+[TYPES.conventions]
+props:ComponentNameProps; state:ComponentNameState
+api:ResponseType+RequestType; errors:ErrorType
+discriminated_unions:type_field_discriminator
+
+[ERROR_HANDLING]
+pattern:Result<T,E>; no:exceptions_for_control_flow
+api_errors:typed_error_responses; display:error_boundary
+validation:zod_schemas; form:react_hook_form_validation
+
+[ERROR_HANDLING.boundaries]
+location:route_level+critical_components
+fallback:user_friendly_ui; reporting:sentry
+recovery:retry_button+reset_state
+
+[ASYNC]
+pattern:async_await; no:callbacks;promises_chains>2
+loading:loading_states; errors:error_states
+race_conditions:abort_controller; cleanup:cancel_requests
+
+[API]
+client:axios_instance; interceptors:auth+error
+base_url:env_variable; timeout:30s
+retry:axios_retry_3_attempts; cache:react_query
+
+[API.patterns]
+endpoints:typed_functions; params:typed_interfaces
+responses:typed_interfaces; errors:typed_error_types
+transforms:response_interceptors; no:inline_api_calls
+
+[FORMS]
+library:react_hook_form; validation:zod_schemas
+submission:async_with_loading; errors:field_level_display
+reset:after_success; dirty:warn_on_navigate
+
+[ROUTING]
+library:react_router_v6; pattern:nested_routes
+guards:auth_wrapper; redirects:replace_not_push
+params:typed_with_zod; query:use_search_params
+
+[TESTING]
+framework:vitest; runner:vitest
+coverage:80%_min; branches:70%_min
+mocks:msw_for_api; fixtures:factory_functions
+
+[TESTING.unit]
+pattern:arrange_act_assert; naming:describe_should_when
+mocks:prefer_stubs_over_mocks; isolation:true
+async:waitFor_utilities; no:sleep;arbitrary_waits
+
+[TESTING.integration]
+tool:playwright; pattern:page_object_model
+selectors:data_testid; no:css_selectors;xpath
+wait:auto_wait; assertions:expect_visible
+
+[TESTING.conventions]
+files:*.test.ts;*.test.tsx; location:__tests___or_colocated
+setup:before_each_cleanup; teardown:after_each_cleanup
+data:factories_not_fixtures; randomization:deterministic
+
+[PERFORMANCE]
+bundles:code_splitting_routes; lazy:React.lazy
+images:next_image+lazy_load; lists:virtualization>100_items
+memoization:React.memo_expensive_components_only
+debounce:search+autocomplete; throttle:scroll+resize
+
+[PERFORMANCE.optimization]
+re_renders:minimize_with_memo; deps:accurate_dependencies
+context:split_contexts_by_change_frequency
+queries:select_specific_data; mutations:optimistic_updates
+
+[SECURITY]
+xss:sanitize_user_input; dangerouslySetInnerHTML:never_user_content
+csrf:tokens_from_api; cors:backend_configured
+secrets:env_vars_only; no:hardcoded_keys;tokens
+auth:jwt_in_httpOnly_cookie; storage:no_sensitive_localStorage
+
+[IMPORTS]
+style:absolute_paths; alias:@/; no:relative>2_levels
+order:react;next;third_party;@/;./; sort:alphabetical
+unused:remove_imports; side_effects:explicit_import
+
+[COMMENTS]
+when:why_not_what; complex_logic:brief_explanation
+todos:JIRA-123_format; no:commented_code
+docs:jsdoc_public_api_only; type_hints:preferred_over_jsdoc
+
+[LOGGING]
+dev:console.log_ok; prod:no_console
+errors:sentry; analytics:amplitude
+debug:debug_library; no:alert;confirm
+
+[CONVENTIONS]
+null_checks:optional_chaining; defaults:nullish_coalescing
+equality:strict_===; comparisons:explicit
+booleans:boolean_over_truthy; arrays:Array.isArray
+objects:Object.keys_over_for_in; mutations:immutable_updates
+
+[CONVENTIONS.react]
+keys:unique_stable_not_index; fragments:<></>;not_array
+events:handle_prefix; callbacks:on_prefix
+children:single_child_no_array; render:no_render_methods
+
+[FORBIDDEN]
+no:var;with;eval; no:any_type;ts_ignore
+no:default_exports_except_pages; no:class_components
+no:inline_styles; no:magic_numbers>2_uses
+no:nested_ternaries>2; no:callback_hell>2_levels
+no:console_in_production; no:alert;confirm;prompt
+
+[FORBIDDEN.react]
+no:string_refs; no:find_dom_node; no:deprecated_lifecycle
+no:unsafe_lifecycle; no:legacy_context; no:mixins
+no:set_state_in_render; no:mutation_in_render
+
+[FORBIDDEN.patterns]
+no:god_objects; no:circular_deps; no:global_state_abuse
+no:premature_optimization; no:over_engineering
+no:copy_paste>2_instances; no:unused_code
+
+[CODE_REVIEW]
+auto:prettier_on_commit; lint:eslint_on_pr
+tests:required_for_new_features; coverage:must_not_decrease
+breaking:require_migration_guide; deprecation:warning_first
+
+[CI_CD]
+pr:lint+test+build; main:deploy_auto
+branch:feature/JIRA-123; commits:conventional_commits

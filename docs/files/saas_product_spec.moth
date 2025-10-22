@@ -1,0 +1,181 @@
+# TaskFlow Product Specification
+intent:product_requirements; audience:dev_team+stakeholders; style:technical
+version:1.0.0; updated:2025-10-22; origin:taskflow; scope:mvp+m1
+
+[PRODUCT]
+name:TaskFlow; type:saas_b2b; domain:project_management
+tagline:"Simple task management for small teams"
+target:teams_5-50; pricing:freemium_$10_per_user
+
+[FEATURES.M0_MVP]
+tasks:create;assign;edit;delete;status:C
+boards:list_view_only; filters:assignee+status; status:C
+auth:email+password; status:C
+
+[FEATURES.M1]
+boards:kanban+calendar; drag_drop:tasks; status:P
+comments:realtime; mentions:@user; status:P
+notifications:email+in_app; status:P
+search:full_text; tags:[str]; status:P
+
+[FEATURES.M2]
+integrations:slack;github;linear; status:P
+mobile:ios+android; status:D
+api:rest+webhooks; status:P
+analytics:time_tracking+reports; status:R
+
+[STACK]
+frontend:react_18+typescript_5+vite
+ui:tailwind_css+shadcn_ui; state:zustand
+routing:react_router; forms:react_hook_form
+api_client:axios+react_query
+
+[STACK.backend]
+api:fastapi_0.104+python_3.11; async:true
+db:postgresql_16; orm:sqlalchemy_2.0
+migrations:alembic; cache:redis_7
+queue:celery+redis; scheduler:celery_beat
+
+[STACK.infra]
+hosting:vercel_frontend+railway_backend
+db_hosting:railway_postgres; cache_hosting:railway_redis
+auth:clerk; email:resend; monitoring:sentry
+ci_cd:github_actions; deployment:main_branch_auto
+
+[SCHEMA.user_v1]
+id:uuid_pk; email:str_unique_idx; name:str
+avatar_url:str?; role:owner|admin|member
+timezone:str_default_UTC; locale:str_default_en
+created_at:ts; last_login:ts?; deleted_at:ts?
+
+[SCHEMA.workspace_v1]
+id:uuid_pk; name:str; slug:str_unique_idx
+owner_id:uuid_fk_user; plan:free|pro|enterprise
+settings:{theme:str;notifications:bool}
+created_at:ts; updated_at:ts
+
+[SCHEMA.board_v1]
+id:uuid_pk; workspace_id:uuid_fk; name:str
+view_type:list|kanban|calendar; position:int
+settings:{columns:[str];filters:{}}
+created_at:ts; updated_at:ts; archived_at:ts?
+
+[SCHEMA.task_v1]
+id:uuid_pk; board_id:uuid_fk; title:str
+description:str?; status:todo|in_progress|done|archived
+assignee_id:uuid_fk_user?; created_by:uuid_fk_user
+tags:[str]; position:float; priority:low|medium|high|urgent?
+due_at:ts?; completed_at:ts?
+created_at:ts; updated_at:ts
+
+[SCHEMA.comment_v1]
+id:uuid_pk; task_id:uuid_fk; user_id:uuid_fk
+content:str; mentions:[uuid]; edited:bool
+created_at:ts; updated_at:ts; deleted_at:ts?
+
+[API.auth]
+POST:/auth/register -> req:{email;password;name} res:{user;token} auth:none
+POST:/auth/login -> req:{email;password} res:{token;user} auth:none
+POST:/auth/refresh -> req:{refresh_token} res:{access_token} auth:none
+GET:/auth/me -> req:{} res:{user;workspaces:[workspace]} auth:bearer
+POST:/auth/logout -> req:{} res:{success:bool} auth:bearer
+
+[API.workspaces]
+GET:/workspaces -> req:{} res:{workspaces:[workspace]} auth:bearer
+POST:/workspaces -> req:{name;slug?} res:{workspace} auth:bearer
+GET:/workspaces/:id -> req:{id:uuid} res:{workspace;members:[user]} auth:member
+PUT:/workspaces/:id -> req:{id;name?;settings?} res:{workspace} auth:admin
+DELETE:/workspaces/:id -> req:{id} res:{success:bool} auth:owner
+
+[API.boards]
+GET:/workspaces/:wid/boards -> req:{wid:uuid} res:{boards:[board]} auth:member
+POST:/workspaces/:wid/boards -> req:{wid;name;view_type?} res:{board} auth:member
+GET:/boards/:id -> req:{id} res:{board;tasks:[task]} auth:member
+PUT:/boards/:id -> req:{id;name?;view_type?;settings?} res:{board} auth:member
+DELETE:/boards/:id -> req:{id} res:{success:bool} auth:admin
+POST:/boards/:id/archive -> req:{id} res:{board} auth:admin
+
+[API.tasks]
+GET:/boards/:bid/tasks -> req:{bid;filters?;sort?;limit?} res:{tasks:[task];total:int} auth:member
+POST:/boards/:bid/tasks -> req:{bid;title;description?;assignee?;tags?;priority?} res:{task} auth:member
+GET:/tasks/:id -> req:{id} res:{task;comments:[comment]} auth:member
+PUT:/tasks/:id -> req:{id;task_partial} res:{task} auth:member
+DELETE:/tasks/:id -> req:{id} res:{success:bool} auth:member
+POST:/tasks/:id/assign -> req:{id;assignee_id} res:{task} auth:member
+POST:/tasks/:id/status -> req:{id;status} res:{task} auth:member
+POST:/tasks/:id/move -> req:{id;board_id;position} res:{task} auth:member
+
+[API.comments]
+POST:/tasks/:tid/comments -> req:{tid;content;mentions?} res:{comment} auth:member
+PUT:/comments/:id -> req:{id;content} res:{comment} auth:owner
+DELETE:/comments/:id -> req:{id} res:{success:bool} auth:owner
+
+[ARCHITECTURE]
+pattern:clean_architecture; layers:domain;application;infrastructure
+frontend:spa_client_side_routing; backend:rest_api+websocket
+auth:jwt_access_1h+refresh_7d; session:stateless
+realtime:websocket_for_comments+task_updates
+
+[ARCHITECTURE.data_flow]
+# Read path
+client -> vercel_cdn -> react_app -> axios -> railway_api -> postgres
+# Write path  
+client -> api -> postgres -> websocket_broadcast -> clients
+# Background jobs
+api -> redis_queue -> celery_worker -> postgres+email
+
+[PERMISSIONS]
+model:rbac; roles:owner>admin>member
+owner:all_workspace_actions
+admin:manage_boards+members; no:billing+delete_workspace
+member:view+create_tasks+comment; no:board_settings
+
+[PERMISSIONS.rls]
+users:own_data_only; workspaces:member_of_workspace
+boards:workspace_members; tasks:board_workspace_members
+
+[SECURITY]
+auth:jwt_hs256; passwords:bcrypt_cost_12
+rate_limit:100_req_per_min_per_user; ddos:cloudflare
+secrets:env_vars+railway_secrets; api_keys:uuid_v4
+audit:log_mutations; compliance:gdpr_compliant
+
+[PERFORMANCE]
+target:p95<200ms_api; p99<500ms_api
+db:connection_pool_20; cache:redis_hot_data
+cdn:static_assets; lazy_load:images+components
+
+[TESTING]
+unit:vitest_80%_coverage; integration:playwright
+e2e:critical_paths; ci:run_on_pr
+mocks:msw_for_api; fixtures:factory_bot_pattern
+
+[MONITORING]
+errors:sentry; metrics:vercel_analytics+railway
+logs:structured_json; alerts:slack_integration
+uptime:pingdom; status_page:statuspage_io
+
+[DEPLOYMENT]
+strategy:blue_green; rollback:instant_previous_version
+environments:dev;staging;production
+db_migrations:alembic_auto_on_deploy
+ci_cd:github_actions_deploy_on_merge_main
+
+[MILESTONES]
+M0_MVP:2025-11-15; weeks:4; scope:basic_task_management; status:P
+M1:2025-12-31; weeks:6; scope:collaboration+notifications; status:P
+M2:2026-02-28; weeks:8; scope:integrations+advanced; status:P
+
+[RISKS]
+realtime_complexity:websocket_scaling; mitigation:pusher_service; status:R
+auth_provider:clerk_vendor_lockin; mitigation:auth0_backup; status:R
+mobile_timeline:resource_constraints; mitigation:defer_to_m3; status:D
+
+[DECISIONS]
+2025-10-15:use_clerk_vs_custom_auth; reason:faster_mvp
+2025-10-18:railway_vs_aws; reason:simplicity+cost
+2025-10-20:zustand_vs_redux; reason:less_boilerplate
+
+[DEPENDENCIES]
+frontend:react^18.0.0;typescript^5.0.0;tailwindcss^3.0.0
+backend:fastapi^0.104.0;sqlalchemy^2.0.0;alembic^1.12.0

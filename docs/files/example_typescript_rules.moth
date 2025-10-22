@@ -1,0 +1,274 @@
+# TypeScript React Project - Coding Rules
+intent:coding_standards; audience:cursor+cline+copilot; style:prescriptive
+version:1.0.0; updated:2025-10-22; enforcement:strict
+
+[PROJECT]
+name:taskflow_frontend; type:web_app
+languages:primary:typescript_5;secondary:css
+frameworks:nextjs_14;react_18;tailwind_3
+build:turbopack; package_manager:pnpm
+
+[STYLE]
+indent:2; line_length:100; quotes:single; semicolons:required
+trailing_commas:always; braces:same_line
+spacing:before_function_paren:false; arrow_parens:always
+
+[NAMING]
+variables:camelCase
+functions:camelCase
+classes:PascalCase
+components:PascalCase
+constants:SCREAMING_SNAKE_CASE
+files:kebab-case
+private:_prefix
+boolean_prefix:is|has|should|can|will
+event_handlers:handle|on
+
+[TYPESCRIPT]
+strict:true; no_implicit_any:true; no_unused_vars:error
+strict_null_checks:true; no_non_null_assertion:error
+prefer:const_over_let; no_var:true
+types:prefer_interfaces_for_objects; prefer_types_for_unions
+imports:absolute_paths; sort:alphabetical; group:external;internal;relative
+no_require:true; esm_only:true
+
+[REACT]
+version:18; mode:concurrent
+components:function_components_only; no_class_components
+hooks:always_use_hooks; custom_hooks_prefix:use
+props:interfaces_not_types; destructure_in_params
+state:useState_for_local; useReducer_for_complex
+effects:cleanup_always; deps_array_required
+memoization:useMemo_for_expensive; useCallback_for_callbacks
+children:explicit_children_prop; type:ReactNode
+
+[NEXTJS]
+version:14; app_router:true; no_pages_router:true
+rendering:server_components_default; client_only_when_needed
+data_fetching:server_actions; no_getServerSideProps
+routing:file_based; dynamic_routes:use_brackets
+metadata:export_metadata; no_head_component
+images:next_image_component; optimize:true
+
+[FILE_STRUCTURE]
+organization:by_feature
+pattern:feature/ui;feature/api;feature/hooks;feature/utils
+colocation:tests_colocated; styles_colocated
+barrel_exports:feature_index_only
+depth:max_3_levels; files_per_dir:max_12
+
+[IMPORTS]
+order:react;next;external;@/internal;../relative;./local
+aliases:@/*->src/*;@/components/*->src/components/*
+absolute:preferred; relative:only_within_feature
+unused:error; wildcard:avoid; side_effects:explicit
+
+[COMPONENTS]
+max_lines:200; max_props:8; max_hooks:10
+single_responsibility:one_purpose_per_component
+return:early_return_for_guards; jsx_last
+composition:prefer_composition; no_inheritance
+naming:descriptive; domain_language; no_abbreviations
+
+[FUNCTIONS]
+max_lines:50; max_params:4; max_complexity:10
+pure:preferred; side_effects:use_hooks
+return:early_return; single_responsibility
+arrow_functions:preferred; async:async_await_only
+naming:verb_phrases; descriptive
+
+[VARIABLES]
+declaration:const_preferred; let_when_needed; no_var
+initialization:declare_with_value; avoid_undefined
+scope:smallest_possible; no_global
+magic_numbers:extract_to_constants
+
+[STATE_MANAGEMENT]
+local:useState;useReducer
+global:zustand; context:sparingly; redux:no
+derived:useMemo; avoid_duplicate_state
+immutability:always; mutations:never
+
+[DATA_FETCHING]
+method:react_query; server_actions:for_mutations
+caching:stale_while_revalidate; dedupe:automatic
+error_handling:error_boundaries; retry:exponential_backoff
+loading:suspense_boundaries; skeleton_loaders
+
+[FORMS]
+library:react_hook_form; validation:zod
+controlled:fully_controlled; uncontrolled:no
+submit:async_validation; errors:field_level
+accessibility:labels_required; aria_describedby
+
+[STYLING]
+method:tailwind_utility_classes; no_inline_styles
+responsive:mobile_first; breakpoints:sm;md;lg;xl;2xl
+dark_mode:class_strategy; colors:theme_tokens
+custom_css:css_modules_only; global:minimal
+
+[ERROR_HANDLING]
+boundaries:error_boundaries_per_route; fallback_ui:required
+async:try_catch_in_actions; display_user_friendly
+logging:sentry; context:include_user_state
+validation:zod_schemas; fail_fast
+
+[TESTING]
+framework:vitest; coverage:min_80%
+pattern:arrange_act_assert; naming:should_verb_when_condition
+location:colocated; extension:.test.tsx
+mocks:msw_for_api; prefer_integration
+
+[TESTING.unit]
+scope:pure_functions;hooks;utilities
+isolation:no_external_deps; no_network
+assertions:expect_library; clear_messages
+coverage:critical_logic:100%; utils:90%
+
+[TESTING.integration]
+scope:components_with_interactions
+mocks:api_with_msw; router_mocked
+user_events:@testing-library/user-event
+queries:accessible_queries; avoid_test_ids
+
+[TESTING.e2e]
+framework:playwright; browsers:chromium;firefox
+scope:critical_user_flows; happy_paths
+environment:staging_like; seeded_data
+selectors:data_testid; stable_selectors
+
+[PERFORMANCE]
+bundle_size:track_with_bundlewatch; max:200kb_initial
+lazy_loading:route_based; components:dynamic_import
+memoization:expensive_computations_only
+images:next_image; lazy:below_fold
+fonts:next_font; preload:critical
+
+[ACCESSIBILITY]
+standard:wcag_2.1_aa; audit:axe_devtools
+semantic_html:always; divs:only_for_layout
+aria:labels_required; landmarks:explicit
+keyboard:all_interactive; focus_visible:true
+screen_readers:test_with_voiceover
+
+[SEO]
+metadata:next_metadata_api; titles:unique_descriptive
+open_graph:complete; twitter_cards:enabled
+canonical:explicit; robots:controlled
+sitemap:generated; structured_data:json_ld
+
+[SECURITY]
+xss:sanitize_user_input; dangerous_html:never
+csrf:tokens_required; cors:explicit_origins
+secrets:env_vars_only; no_client_exposure
+dependencies:audit_weekly; snyk_integration
+auth:httpOnly_cookies; secure_flag:true
+
+[API_CLIENT]
+library:fetch; base_url:env_var
+headers:content_type;authorization;accept
+timeout:30s; retry:3_attempts; backoff:exponential
+errors:typed_errors; status_codes:handle_all
+
+[COMMENTS]
+when:complex_logic;business_rules;workarounds;gotchas
+avoid:obvious_code;commented_code;outdated
+format:complete_sentences; tsdoc_for_public_apis
+todos:TODO_JIRA-123:description; FIXME:immediate
+
+[FORBIDDEN]
+no:any_type; no:ts_ignore; no:ts_expect_error
+no:console_log_in_prod; no:alert_confirm_prompt
+no:document_write; no:innerHTML_without_sanitize
+no:eval; no:Function_constructor
+no:var_keyword; no:default_exports
+no:class_components; no:componentWillMount_deprecated_lifecycle
+no:findDOMNode; no:string_refs
+no:non_null_assertion; no:type_assertion_without_reason
+
+[PREFER]
+server_components_over_client_components
+composition_over_inheritance
+hooks_over_classes
+async_await_over_promises
+early_return_over_nested_if
+explicit_over_implicit
+functional_over_oop
+immutable_over_mutable
+
+[DIRECTORY_STRUCTURE]
+src/app/**/page.tsx              # Next.js routes
+src/components/ui/**             # Reusable UI components
+src/features/**                  # Feature modules
+src/lib/**                       # Utilities and helpers
+src/hooks/**                     # Custom React hooks
+src/types/**                     # TypeScript types
+src/styles/**                    # Global styles
+public/**                        # Static assets
+
+[FEATURE_STRUCTURE]
+feature/
+├── components/                  # Feature-specific components
+│   ├── Component.tsx
+│   └── Component.test.tsx
+├── hooks/                       # Feature-specific hooks
+│   ├── useFeature.ts
+│   └── useFeature.test.ts
+├── api/                         # API client functions
+│   └── queries.ts
+├── types.ts                     # Feature types
+├── utils.ts                     # Feature utilities
+└── index.ts                     # Public exports
+
+[GIT]
+branches:main;develop;feature/*;bugfix/*;hotfix/*
+commits:conventional_commits; scope:feature_or_component
+messages:imperative_mood; subject:50_chars; body:72_chars
+pr_size:max_400_lines; one_concern; squash_merge
+
+[CI_CD]
+checks:typecheck;lint;test;build
+required:all_pass; coverage:maintain_or_increase
+preview:vercel_preview; e2e:on_preview
+deploy:main_to_prod; develop_to_staging
+
+[DOCUMENTATION]
+components:storybook; props:documented; examples:included
+hooks:tsdoc_comments; usage_examples
+apis:openapi_spec; types:generated
+readme:setup;architecture;contributing
+
+[CODE_REVIEW]
+required:1_approval; checks:must_pass
+review:functionality;performance;security;accessibility
+feedback:constructive; specific; actionable
+response:24h; no_nitpicking
+
+[LINTING]
+eslint:true; config:@next/eslint-config
+rules:typescript_recommended;react_recommended;react_hooks
+plugins:@typescript-eslint;react;react-hooks;jsx-a11y
+auto_fix:on_save; ci:enforce
+
+[FORMATTING]
+prettier:true; config:.prettierrc
+run:on_save; pre_commit:lint_staged
+ci:enforce; conflicts:prettier_wins
+
+[ENVIRONMENT]
+dev:env.local; staging:env.staging; prod:env.production
+required_vars:NEXT_PUBLIC_API_URL;DATABASE_URL;JWT_SECRET
+validation:t3_env; fail_on_missing:true
+secrets:never_commit; use:env_vars
+
+[MONITORING]
+errors:sentry; dsn:env_var
+performance:vercel_analytics; web_vitals:track
+logs:datadog; level:error+warn_in_prod
+user_feedback:posthog; events:track_critical_actions
+
+[DEPENDENCIES]
+strategy:minimal; evaluate:license;security;bundle_size
+updates:renovate; patch:auto; minor:review; major:test
+lockfile:pnpm_lock.yaml; committed:true
+audit:pnpm_audit; ci:weekly

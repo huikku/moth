@@ -1,0 +1,324 @@
+# Blog Platform - Full Stack Specification
+intent:full_stack_specification; audience:implementation_team; style:technical
+version:1.0.0; updated:2025-10-22; origin:blogflow
+
+[PRODUCT]
+name:BlogFlow; type:blogging_platform; target:individual_writers
+features:write;publish;analytics; monetization:subscriptions
+
+[STACK]
+frontend:nextjs_14+react_18+typescript; backend:fastapi+postgres
+auth:next_auth; payments:stripe; email:resend
+hosting:vercel_frontend+railway_backend
+
+[SCHEMA.user_v1]
+id:uuid_pk; email:str_unique; name:str; username:str_unique
+bio:str?; avatar_url:str?; website:str?
+subscriber_count:int_default_0; following_count:int_default_0
+stripe_customer_id:str?; subscription_tier:free|pro|premium
+created_at:ts; updated_at:ts
+
+[SCHEMA.post_v1]
+id:uuid_pk; author_id:uuid_fk_user; title:str
+slug:str_unique_idx; content:str; excerpt:str?
+cover_image:str?; status:draft|published|archived
+published_at:ts?; view_count:int_default_0
+read_time:int_minutes; tags:[str]
+seo_title:str?; seo_description:str?
+created_at:ts; updated_at:ts
+
+[SCHEMA.comment_v1]
+id:uuid_pk; post_id:uuid_fk; user_id:uuid_fk
+content:str; parent_id:uuid_fk_comment?
+likes:int_default_0; flagged:bool_default_false
+created_at:ts; updated_at:ts; deleted_at:ts?
+
+[SCHEMA.subscription_v1]
+id:uuid_pk; subscriber_id:uuid_fk_user; author_id:uuid_fk_user
+tier:free|pro|premium; stripe_subscription_id:str
+status:active|canceled|past_due
+current_period_end:ts; created_at:ts
+
+[API.auth]
+POST:/auth/register -> req:{email;password;name;username} res:{user;token} auth:none
+POST:/auth/login -> req:{email;password} res:{token;user} auth:none
+GET:/auth/me -> req:{} res:{user} auth:bearer
+
+[API.posts]
+GET:/posts -> req:{page;limit;tags?;author?} res:{posts:[post];total:int} auth:public
+GET:/posts/:slug -> req:{slug} res:{post;author:user;comments:[comment]} auth:public
+POST:/posts -> req:{title;content;tags;status} res:{post} auth:bearer
+PUT:/posts/:id -> req:{id;post_partial} res:{post} auth:author
+DELETE:/posts/:id -> req:{id} res:{success:bool} auth:author
+POST:/posts/:id/publish -> req:{id} res:{post} auth:author
+
+[API.comments]
+GET:/posts/:pid/comments -> req:{pid} res:{comments:[comment]} auth:public
+POST:/posts/:pid/comments -> req:{pid;content;parent_id?} res:{comment} auth:bearer
+DELETE:/comments/:id -> req:{id} res:{success:bool} auth:owner
+
+[API.subscriptions]
+POST:/subscribe/:author_id -> req:{author_id;tier} res:{subscription;checkout_url} auth:bearer
+GET:/subscriptions -> req:{} res:{subscriptions:[subscription]} auth:bearer
+DELETE:/subscriptions/:id -> req:{id} res:{success:bool} auth:bearer
+
+[API.analytics]
+GET:/analytics/posts/:id -> req:{id} res:{views;engagement;sources} auth:author
+GET:/analytics/overview -> req:{period} res:{metrics} auth:bearer
+
+[UI.home]
+@APP[layout:centered; max_width:1200px]
+  §HEADER
+    @NAV[sticky; bg:white; shadow]
+      [Logo]{href:/}
+      [SearchBar]{placeholder:"Search posts..."; autofocus}
+      [Button]{label:"Write"; variant:primary; href:/new}
+      [UserMenu]{items:[Profile;Settings;Logout]}
+  
+  §MAIN
+    @SPLIT[70/30; gap:2rem]
+      @MAIN
+        [PostFeed]{
+          posts:api_posts;
+          card_style:featured_image+excerpt;
+          pagination:infinite_scroll
+        }
+      @SIDE
+        [TrendingTopics]{limit:10; period:week}
+        [SuggestedAuthors]{limit:5; based_on:following}
+        [NewsletterSignup]
+
+[UI.post_detail]
+@APP[layout:article; max_width:800px]
+  §HEADER[minimal]
+    [Breadcrumb]{path:[Home;{author.name};{post.title}]}
+  
+  §MAIN
+    @ARTICLE
+      [CoverImage]{src:post.cover_image; alt:post.title; aspect:16/9}
+      [Title]{text:post.title; level:h1}
+      [Meta]{
+        author:{name;avatar;followers};
+        date:post.published_at;
+        read_time:post.read_time;
+        actions:[Share;Bookmark;More]
+      }
+      [Content]{
+        markdown:post.content;
+        syntax_highlight:prism;
+        images:lazy_load
+      }
+      [Tags]{tags:post.tags; clickable}
+      [Reactions]{likes;comments;shares; interactive}
+    
+    [Divider]
+    
+    [AuthorCard]{
+      author:{name;bio;avatar;stats};
+      cta:[Follow;Subscribe]
+    }
+    
+    [CommentSection]{
+      comments:api_comments;
+      nested:true;
+      sort:[newest;oldest;top];
+      login_required:true
+    }
+  
+  §ASIDE[sticky; top:80px]
+    [TableOfContents]{
+      headings:extracted_from_content;
+      active:scroll_spy;
+      collapsible
+    }
+    [RelatedPosts]{limit:3; algorithm:similar_tags}
+
+[UI.editor]
+@APP[layout:fullscreen]
+  §HEADER[compact]
+    [Button]{label:"Back"; icon:arrow_left; variant:ghost}
+    [AutoSave]{status:saving|saved; last_saved:timestamp}
+    @GROUP[align:right; gap:1rem]
+      [Button]{label:"Preview"; variant:secondary}
+      [Button]{label:"Publish"; variant:primary; action:open_publish_modal}
+  
+  §MAIN
+    @SPLIT[50/50; resizable]
+      @EDITOR
+        [Input]{
+          name:title;
+          placeholder:"Title...";
+          size:h1;
+          autofocus
+        }
+        [MarkdownEditor]{
+          value:post.content;
+          toolbar:[bold;italic;link;image;code;heading];
+          autosave:every_2s;
+          shortcuts:enabled
+        }
+      @PREVIEW
+        [MarkdownPreview]{
+          content:post.content;
+          theme:same_as_published;
+          scroll_sync:editor
+        }
+
+[UI.dashboard]
+@APP[layout:dashboard; sidebar:left]
+  §SIDEBAR[width:240px; bg:gray-50]
+    [Logo]
+    [NavMenu]{
+      items:[
+        {label:"Overview"; icon:home; href:/dashboard};
+        {label:"Posts"; icon:document; href:/dashboard/posts};
+        {label:"Analytics"; icon:chart; href:/dashboard/analytics};
+        {label:"Subscribers"; icon:users; href:/dashboard/subscribers};
+        {label:"Settings"; icon:settings; href:/dashboard/settings}
+      ]
+    }
+  
+  §MAIN[padding:2rem]
+    @GRID[cols:3; gap:1.5rem; responsive]
+      [MetricCard]{
+        label:"Total Views";
+        value:metrics.total_views;
+        trend:+12%;
+        period:last_30_days
+      }
+      [MetricCard]{
+        label:"Subscribers";
+        value:metrics.subscribers;
+        trend:+5%;
+        period:last_30_days
+      }
+      [MetricCard]{
+        label:"Earnings";
+        value:metrics.earnings;
+        format:currency;
+        trend:+8%;
+        period:last_30_days
+      }
+    
+    [Divider]
+    
+    @GRID[cols:2; gap:1.5rem]
+      [Card]{title:"Recent Posts"}
+        [PostList]{
+          posts:recent_posts;
+          limit:5;
+          actions:[Edit;Analytics;Delete]
+        }
+      
+      [Card]{title:"Traffic Sources"}
+        [Chart]{
+          type:pie;
+          data:traffic_sources;
+          labels:enabled;
+          interactive
+        }
+    
+    [Card]{title:"Views Over Time"; full_width}
+      [Chart]{
+        type:area;
+        data:views_time_series;
+        period:last_30_days;
+        height:300px;
+        responsive
+      }
+
+[UI.publish_modal]
+@MODAL[size:lg; close:x_button]
+  §HEADER
+    [Title]{text:"Publish Post"; level:h2}
+  
+  §BODY
+    [Form]{id:publish_form}
+      [Input]{
+        label:"SEO Title";
+        name:seo_title;
+        placeholder:post.title;
+        optional
+      }
+      [Textarea]{
+        label:"Excerpt";
+        name:excerpt;
+        rows:3;
+        hint:"Brief summary for previews"
+      }
+      [ImageUpload]{
+        label:"Cover Image";
+        name:cover_image;
+        accept:image/*;
+        max_size:5mb
+      }
+      [TagInput]{
+        label:"Tags";
+        name:tags;
+        suggestions:popular_tags;
+        max:5
+      }
+      [Select]{
+        label:"Visibility";
+        name:visibility;
+        options:[Public;Subscribers Only;Private]
+      }
+  
+  §FOOTER[align:right; gap:1rem]
+    [Button]{label:"Cancel"; variant:ghost; action:close}
+    [Button]{
+      label:"Publish";
+      variant:primary;
+      action:submit_publish_form;
+      loading:is_publishing
+    }
+
+[UI.components]
+# Reusable components library
+
+[Button]
+variants:primary;secondary;ghost;danger
+sizes:sm;md;lg
+states:default;hover;active;disabled;loading
+props:{label;icon?;onClick;variant?;size?}
+
+[Card]
+props:{title?;children;footer?;padding?}
+variants:default;bordered;elevated
+responsive:true
+
+[MetricCard]
+props:{label;value;trend?;period?;format?}
+trend:positive_green;negative_red;neutral_gray
+format:number;currency;percentage
+
+[Chart]
+types:line;bar;pie;area;scatter
+library:recharts
+props:{type;data;height?;responsive?;interactive?}
+theming:follows_app_theme
+
+[FEATURES]
+auth:next_auth_email+google+github; status:C
+editor:markdown+auto_save+preview; status:C
+publish:seo+scheduling+visibility; status:P
+comments:nested+moderation; status:P
+subscriptions:stripe_tiers; status:P
+analytics:views+sources+engagement; status:P
+monetization:paid_subscriptions; status:P
+
+[MONETIZATION]
+tiers:free_no_subscription;pro_$5_month;premium_$10_month
+pro_features:newsletter;analytics;custom_domain
+premium_features:pro+priority_support+workshops
+revenue_split:70%_author+30%_platform
+
+[PERFORMANCE]
+target:p95<200ms; lighthouse:>90
+optimization:code_split;lazy_load;image_optimization
+caching:cdn_static;api_cache;browser_cache
+
+[SEO]
+metadata:dynamic_per_post; og_tags:generated
+sitemap:auto_generated; robots:optimized
+schema:article_structured_data

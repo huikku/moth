@@ -1,0 +1,31 @@
+intent:coding_standards; audience:cursor+copilot+agents; version:1.0
+style:prescriptive; scope:repo_wide
+
+[STYLE]
+lang:typescript; fmt:prettier; lint:eslint+strict
+indent:2; line_len:100; quotes:single; semi:true
+naming:camelCase_vars;PascalCase_types;SCREAMING_SNAKE_consts
+
+[ARCHITECTURE]
+pattern:hexagonal
+layers:domain;application;infrastructure;adapters
+deps:domain->none;application->domain;infrastructure->application,domain;adapters->infrastructure
+modules:auth;assets;billing;search
+
+[TESTING]
+framework:vitest; e2e:playwright; coverage_min:80%
+principles:arrange_act_assert;golden_files_for_apis
+mocks:prefer_fakes;avoid_global_mocks
+
+[SECURITY]
+secrets:env_only; disallow:eval;exec;dangerous_fs
+authz:rbac; pii:do_not_log; ci:secret_scan=true
+
+[CONVENTIONS]
+errors:Result<T,E>_no_thrown_exceptions
+async:async_await_only
+imports:absolute_from_src; index_files:for_barrels_only
+comments:explain_why_not_what; todos:PROJECT-### format
+
+[FORBIDDEN]
+no:any_type;console_log;var_keyword;default_exports;inheritance_over_composition

@@ -1,0 +1,22 @@
+name: MOTH Validate
+
+on:
+  push:
+    paths:
+      - '**.moth'
+      - 'cli/**'
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run validation
+        run: |
+          python -m pip install --upgrade pip
+          python ./cli/intellimoth.py validate examples/*.moth pairing/*.moth

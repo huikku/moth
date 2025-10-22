@@ -1,0 +1,136 @@
+# Coding Standards and Rules
+intent:coding_standards; audience:cursor+cline+aider+team; style:prescriptive
+version:1.0.0; updated:YYYY-MM-DD; origin:your_project
+
+[LANGUAGE]
+primary:language+version; strict_mode:true|false
+target:compilation_target; jsx:jsx_variant?
+type_checking:strict|relaxed
+
+[STYLE.formatting]
+formatter:formatter_tool; config:config_file
+line_length:N; indent:N_spaces; quotes:single|double
+semicolons:required|optional; trailing_commas:always|none
+arrow_parens:always|avoid
+
+[STYLE.naming]
+variables:naming_convention; functions:naming_convention
+types:naming_convention; interfaces:naming_convention
+constants:naming_convention; files:naming_convention
+components:naming_convention; private:prefix_convention
+
+[STYLE.files]
+max_lines:N; max_complexity:N
+one_component_per_file:true|false
+extensions:allowed_extensions; no:forbidden_extensions
+
+[ARCHITECTURE]
+pattern:architecture_pattern
+layers:layer1;layer2;layer3
+folder_structure:structure_approach
+
+[ARCHITECTURE.dependencies]
+# Dependency rules between layers
+layer1:no_deps|allowed_deps
+layer2:allowed_deps
+layer3:allowed_deps
+
+[COMPONENTS]
+# Component patterns (if applicable)
+type:functional|class; no:forbidden_types
+props:prop_definition_method
+composition:composition_approach
+
+[STATE]
+# State management
+global:state_library; local:local_state_method
+server:server_state_library; forms:form_library
+url:url_state_method
+
+[TYPES]
+# Type definitions
+prefer:interfaces|types; generics:when_to_use
+utility:utility_types; no:forbidden_types
+
+[ERROR_HANDLING]
+pattern:error_handling_pattern
+api_errors:error_handling_approach
+validation:validation_method
+
+[ASYNC]
+pattern:async_pattern; no:forbidden_patterns
+loading:loading_state_handling
+race_conditions:race_condition_handling
+
+[API]
+# API client patterns
+client:api_client; interceptors:interceptor_types
+base_url:url_source; timeout:X_seconds
+retry:retry_strategy
+
+[TESTING]
+framework:test_framework; runner:test_runner
+coverage:X%_min; branches:X%_min
+mocks:mocking_approach
+
+[TESTING.unit]
+pattern:test_pattern; naming:naming_convention
+mocks:mock_preference; isolation:true|false
+
+[TESTING.integration]
+tool:integration_test_tool; pattern:test_pattern
+selectors:selector_strategy
+wait:wait_strategy
+
+[PERFORMANCE]
+# Performance guidelines
+bundles:bundling_strategy; lazy:lazy_loading
+images:image_optimization
+memoization:memoization_guidelines
+
+[SECURITY]
+# Security practices
+xss:xss_prevention; csrf:csrf_protection
+secrets:secret_handling; auth:auth_method
+storage:storage_security
+
+[IMPORTS]
+style:absolute|relative; alias:alias_prefix
+order:import_order; unused:unused_imports
+side_effects:side_effect_handling
+
+[COMMENTS]
+when:when_to_comment; complex_logic:comment_style
+todos:todo_format; no:forbidden_comment_types
+docs:documentation_style
+
+[LOGGING]
+dev:dev_logging; prod:prod_logging
+errors:error_logging; analytics:analytics_logging
+debug:debug_logging
+
+[CONVENTIONS]
+# Code conventions
+null_checks:null_check_method
+equality:equality_operator
+booleans:boolean_conventions
+arrays:array_methods
+objects:object_methods
+mutations:mutation_policy
+
+[FORBIDDEN]
+# Forbidden patterns and practices
+no:forbidden_keywords;forbidden_functions
+no:forbidden_patterns
+no:forbidden_practices
+
+[CODE_REVIEW]
+# Code review requirements
+auto:auto_checks; lint:lint_on
+tests:test_requirements
+breaking:breaking_change_policy
+
+[CI_CD]
+# CI/CD requirements
+pr:pr_checks; main:main_branch_policy
+branch:branch_naming; commits:commit_convention

@@ -1,0 +1,34 @@
+# MOTH — Minimal Overhead Technical Hierarchy
+
+Tiny, structured specs for **PRDs**, **rules**, and **architecture** that AI coding agents keep in context without wasting tokens.
+
+- Human-readable, LLM-optimized
+- Sits beside your code as `/rules/*.moth`
+- Sister project to **kablUI** (UI notation)
+
+## Quick start
+1. Drop `examples/*.moth` into your repo under `/rules`
+2. Tell your agent/IDE to always load them (Cursor, Cline, Aider)
+3. Edit the sections to match your stack and conventions
+
+## CLI (IntelliMoth) — optional
+```
+intellimoth validate rules/*.moth
+intellimoth stats rules/*.moth
+intellimoth compile ./docs → rules/prd.moth
+intellimoth expand rules/prd.moth → ./docs_generated
+```
+
+## Folder map
+```
+/
+  index.html        # landing
+  styles.css
+  scripts.js
+  /assets/logo.svg
+  /examples/*.moth  # PRD, rules, architecture samples
+  /spec/SPEC.md     # formal spec
+  /spec/GRAMMAR.ebnf
+```
+
+MIT © Alienrobot

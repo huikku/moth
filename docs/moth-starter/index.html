@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MOTH — Minimal Overhead Technical Hierarchy</title>
+  <meta name="description" content="MOTH — tiny, structured specs for PRDs, rules, and architectures that LLMs keep in context."/>
+  <link rel="icon" href="./assets/logo.svg">
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="logo" href="./">
+        <img src="./assets/logo.svg" alt="MOTH logo"/>
+        <strong>MOTH</strong>
+        <span class="badge">Minimal Overhead Technical Hierarchy</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <div class="h1">Tiny specs for big brains.</div>
+        <p class="sub">MOTH is a compact, human-readable notation for <b>PRDs</b>, <b>rules</b>, and <b>architecture</b> that AI coding agents can load <i>always-on</i> without hogging tokens. Sister project to <b>kablUI</b>.</p>
+        <div class="cta-row">
+          <a class="btn" href="./spec/SPEC.html">Read the Spec</a>
+          <a class="btn" href="./examples/">Examples</a>
+          <a class="btn" href="./README.html">Getting Started</a>
+          <a class="btn" href="./moth-starter.zip" download>Download Starter</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active" data-tab="prd">PRD</div>
+          <div class="tab" data-tab="rules">Rules</div>
+          <div class="tab" data-tab="arch">Architecture</div>
+        </div>
+        <pre class="codeblock" id="codeblock"></pre>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Always-in-context</h3>
+        <p style="color:#99b5c3">Load MOTH files first in Cursor/Cline/Aider so agents share a single source of truth.</p>
+        <div class="kv">
+          <div>Token profile</div><div>~5–10× smaller than prose</div>
+          <div>Format</div><div>sectioned <code>[TAGS]</code>, <code>key:value</code>, semicolon lists</div>
+          <div>Use</div><div><code>.moth</code> files: PRD, rules, architecture</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>LLM-first design</h3>
+        <p style="color:#99b5c3">Low-entropy tokens, deterministic structure, easy to parse with regex or PEG.</p>
+        <div class="kv">
+          <div>Reserved</div><div><code>[CORE]</code>, <code>[STACK]</code>, <code>[API.*]</code>, <code>[SCHEMAS.*]</code></div>
+          <div>Validation</div><div><code>intellimoth validate</code> (CLI)</div>
+          <div>CLI</div><div><code>compile | validate | stats | expand</code></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Part of the Alienrobot DSL stack</h3>
+        <p style="color:#99b5c3"><b>kablUI</b> for UI notation, <b>MOTH</b> for product/rules/architecture notation.</p>
+        <div class="kv">
+          <div>kablUI</div><div>Declarative UI layout (@APP, §SECTIONS)</div>
+          <div>MOTH</div><div>Declarative spec (PRD, rules, architecture)</div>
+          <div>Together</div><div>UI + intent in two tiny, expressive DSLs</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© 2025 Alienrobot — MOTH is an open format. MIT License.</div>
+  </main>
+  <script src="./scripts.js"></script>
+</body>
+</html>

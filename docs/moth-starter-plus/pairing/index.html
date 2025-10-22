@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MOTH × kablUI Pairing</title>
+  <link rel="stylesheet" href="../styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2>MOTH × kablUI — UI Contract Pairing</h2>
+      <p class="sub">MOTH declares the UI <i>contract</i>; kablUI renders the <i>layout</i>. Use <code>kablui_pair.moth</code> with your kablUI renderer.</p>
+    </div>
+    <div class="card">
+      <h3>MOTH contract</h3>
+      <pre class="codeblock">intent:ui_contract; audience:kablui+coding_llm; version:1.0
+style:technical; scope:kablUI_pairing_demo
+
+[CORE]
+goal:ui_shell_with_left_right_sidebars_and_main
+
+[UI.contract]
+layout:@APP[theme:dark]
+header:@HEADER[h:64 sticky bg:gunmetal]
+sidebar_left:@SIDEBAR_LEFT[w:280 slide state:open bg:hull]
+sidebar_right:@SIDEBAR_RIGHT[w:320 slide state:closed bg:hull]
+main:@MAIN[bg:panel]
+footer:@FOOTER[h:40 bg:gunmetal]
+
+[UI.rules]
+header_contains:LOGO;NAV;SEARCH;ACTIONS
+left_sidebar:§PROJECTS_tree
+right_sidebar:§COMMENTS_inbox
+main:accepts:any_content_type</pre>
+    </div>
+    <div class="card">
+      <h3>kablUI markup</h3>
+      <pre class="codeblock">@APP[theme:dark]
+  @HEADER[h:64 sticky bg:gunmetal]
+    @LOGO IntelliBase @LOGO
+    @NAV [Projects][Assets][Tasks] @NAV
+    @SEARCH @SEARCH
+    @ACTIONS [🔔]{badge:3} @AVATAR @ACTIONS
+  @HEADER
+
+  @SIDEBAR_LEFT[w:280 slide state:open bg:hull]
+    §PROJECTS
+      @TREE..@TREE
+  @SIDEBAR_LEFT
+
+  @SIDEBAR_RIGHT[w:320 slide state:closed bg:hull]
+    §COMMENTS
+      @INBOX[compact]..@INBOX
+  @SIDEBAR_RIGHT
+
+  @MAIN[bg:panel]
+    ...any content type...
+  @MAIN
+
+  @FOOTER[h:40 bg:gunmetal]
+    "© 2025 IntelliStory Production"
+  @FOOTER
+@APP</pre>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+# Coding Rules v1.0
+intent:coding_standards; audience:llms+developers; style:prescriptive
+version:1.0.0; updated:2025-10-22; enforcement:strict
+
+[PROJECT]
+name:___; type:web|mobile|api|library|cli
+languages:primary:___;secondary:___
+frameworks:___; libraries:___
+build_tool:___; package_manager:___
+
+[STYLE]
+indent:2|4|tab; line_length:80|100|120
+quotes:single|double; semicolons:required|omit
+trailing_commas:always|never; braces:same_line|new_line
+
+[NAMING]
+variables:camelCase|snake_case
+functions:camelCase|snake_case
+classes:PascalCase
+constants:SCREAMING_SNAKE_CASE
+files:kebab-case|snake_case|PascalCase
+private:_prefix|#prefix|no_prefix
+boolean_prefix:is|has|should|can
+
+[LANGUAGE.typescript]
+strict:true; no_implicit_any:true; no_unused_vars:error
+prefer:const_over_let; no_var:true
+types:prefer_interfaces_for_objects; prefer_types_for_unions
+null_safety:strict_null_checks; no_non_null_assertion
+imports:absolute_paths; sort:alphabetical; group:external;internal;relative
+
+[LANGUAGE.python]
+version:3.11+; typing:strict; pep8:enforced
+formatter:black; line_length:100
+imports:isort; sort:standard;third_party;local
+typing:all_functions;all_classes; mypy:strict
+docstrings:google_style|numpy_style|sphinx
+
+[LANGUAGE.javascript]
+strict_mode:true; es_version:es2022
+prefer:arrow_functions; const_over_let; template_literals
+async:async_await_no_callbacks; promise_over_callback
+modules:esm_no_commonjs
+
+[ARCHITECTURE]
+pattern:clean|hexagonal|layered|feature_sliced
+layers:domain;application;infrastructure;presentation
+dependencies:domain->nothing; application->domain; infrastructure->all
+communication:sync:rest|grpc; async:queue|event_bus
+state_management:redux|zustand|jotai|mobx
+
+[ARCHITECTURE.layers]
+domain:pure_business_logic; no_framework_deps; immutable
+application:use_cases; orchestration; validation
+infrastructure:db;api;queue;cache; framework_specific
+presentation:ui;routes;controllers; thin_layer
+
+[FILE_STRUCTURE]
+organization:by_feature|by_type
+colocation:tests_next_to_code; styles_next_to_component
+index_files:barrel_exports|avoid
+depth:max_3_levels; files_per_dir:max_15
+
+[IMPORTS]
+order:external;internal;relative; sort:alphabetical
+aliases:@/*;~/*; absolute_paths:preferred
+unused:error; wildcard:avoid_except___
+circular:forbidden; side_effects:explicit
+
+[FUNCTIONS]
+max_length:50_lines; max_params:4; max_complexity:10
+pure:preferred; side_effects:explicit_naming
+return:early_return_preferred; single_responsibility
+naming:verb_phrases; descriptive; no_abbreviations
+
+[CLASSES]
+max_length:200_lines; max_methods:15
+inheritance:prefer_composition; max_depth:2
+single_responsibility:one_reason_to_change
+naming:nouns; descriptive; domain_language
+
+[VARIABLES]
+declaration:const_preferred; let_when_needed; no_var
+initialization:declare_with_value; avoid_undefined
+scope:smallest_possible; no_global_unless_constant
+naming:descriptive; context_clear; no_single_letters_except_i_j_k
+
+[COMMENTS]
+when:why_not_what; complex_logic; business_rules; gotchas
+avoid:obvious_statements; commented_code; redundant
+format:complete_sentences; proper_grammar
+todos:TODO_JIRA-123:description; FIXME_date:description
+
+[ERROR_HANDLING]
+strategy:Result<T,E>|Either<L,R>|try_catch
+validation:at_boundaries; fail_fast; explicit_errors
+logging:all_errors; include_context; no_swallow
+recovery:graceful_degradation; retry_with_backoff
+custom_errors:domain_specific; extend_base; include_cause
+
+[TESTING]
+framework:jest|vitest|pytest|rspec
+coverage:min:80%; branches:75%; critical_paths:100%
+pattern:arrange_act_assert|given_when_then
+naming:should_verb_when_condition; descriptive
+location:colocated|separate; mirror_structure
+
+[TESTING.unit]
+scope:single_function|class; no_external_deps
+mocks:prefer_fakes; spy_when_needed; no_stubs
+assertions:one_concept_per_test; clear_failure_messages
+isolation:no_shared_state; independent_tests
+
+[TESTING.integration]
+scope:module_boundaries; real_dependencies_when_possible
+database:test_db|in_memory; cleanup:after_each
+external_apis:mocked|recorded; idempotent
+fixtures:minimal; realistic; maintainable
+
+[TESTING.e2e]
+scope:critical_user_journeys; happy_paths; edge_cases
+environment:staging_like; isolated; reproducible
+data:seeded|generated; cleanup:after_suite
+flakiness:retry:3; timeout:30s; quarantine_if_flaky
+
+[ASYNC]
+promises:preferred; async_await:use_for_readability
+error_handling:try_catch|.catch; always_handle
+parallel:Promise.all_when_independent; race_when_first_wins
+cancellation:AbortController; cleanup:finally_blocks
+
+[STATE]
+immutability:preferred; mutations:explicit_only
+global_state:minimize; context_when_needed
+updates:pure_functions; no_side_effects
+persistence:local_storage|indexed_db|remote
+
+[PERFORMANCE]
+measure:before_optimizing; profile:real_scenarios
+lazy_loading:routes;components;data
+memoization:expensive_computations_only; useMemo;useCallback
+debounce_throttle:user_input;scroll;resize
+bundle_size:track; code_split; tree_shake
+
+[SECURITY]
+authentication:jwt|session; secure:httpOnly_cookies
+authorization:check_every_request; rbac|abac
+input_validation:all_user_input; sanitize; escape
+secrets:env_vars; no_hardcode; rotate_regularly
+dependencies:audit:weekly; update:monthly; no_vulnerabilities
+
+[SECURITY.forbidden]
+no:eval; no:Function_constructor; no:innerHTML_without_sanitize
+no:dangerouslySetInnerHTML; no:setTimeout_with_string
+no:document.write; no:hardcoded_credentials; no:console.log_in_prod
+no:sql_string_concatenation; no:reflected_user_input
+
+[DATABASE]
+orm:typeorm|prisma|sqlalchemy|active_record
+migrations:versioned; reversible; tested
+queries:parameterized; no_n_plus_1; indexed
+transactions:isolation_level:read_committed; retry_on_conflict
+
+[API]
+design:rest|graphql|grpc; versioning:url|header
+validation:request_body; query_params; path_params
+response:consistent_format; include_meta; pagination
+errors:standard_codes; detailed_messages; no_stack_in_prod
+
+[API.rest]
+methods:GET_idempotent; POST_create; PUT_update; PATCH_partial; DELETE_remove
+status_codes:200_ok; 201_created; 400_bad_request; 401_unauthorized; 404_not_found; 500_error
+naming:plural_nouns; kebab-case; versioned:/api/v1/resource
+responses:json; envelope:{data;meta;error}
+
+[LOGGING]
+levels:error;warn;info;debug; prod:error+warn_only
+format:json; structured; include:timestamp;level;context;trace_id
+sensitive:no_pii; no_secrets; no_tokens
+correlation:request_id; trace_distributed
+
+[MONITORING]
+metrics:request_latency; error_rate; throughput; saturation
+alerts:error_rate>1%; latency_p99>1s; cpu>80%
+dashboards:health;performance;business
+tracing:distributed; sample_rate:10%
+
+[DEPENDENCIES]
+policy:minimal; evaluate:license;security;maintenance
+updates:patch:auto; minor:review; major:test_thoroughly
+lock_files:committed; reproducible_builds
+vulnerability_scanning:ci; block_critical
+
+[GIT]
+branches:main;develop;feature/*;bugfix/*;hotfix/*
+commits:conventional; type:feat|fix|docs|style|refactor|test|chore
+messages:imperative; 50_char_subject; body_when_needed
+pr:one_concern; small; tested; reviewed
+
+[CI_CD]
+pipeline:lint->test->build->deploy
+tests:required; coverage:gated; blocking
+deployment:staging_first; canary|blue_green
+rollback:automatic_on_failure; one_click_manual
+
+[DOCUMENTATION]
+code:self_documenting; comments_for_why
+api:openapi|graphql_schema; examples; versioned
+architecture:c4_diagrams|arc42; decision_records
+readme:setup;usage;contributing;license
+
+[FORBIDDEN]
+patterns:god_objects; circular_deps; global_mutable_state; magic_numbers
+practices:premature_optimization; copy_paste; commented_code; temp_variables_everywhere
+syntax:with_statement; var_keyword; == instead_of ===; implicit_type_coercion
+
+[PREFER]
+composition_over_inheritance; immutability_over_mutation
+explicit_over_implicit; simple_over_clever
+readable_over_concise; tested_over_perfect
+conventions_over_configuration; errors_over_warnings
+
+[CODE_REVIEW]
+required:all_code; approvers:min:1; blocking:tests_pass;no_conflicts
+checks:functionality;readability;performance;security
+feedback:constructive; specific; actionable
+timeline:24h_response; no_bikeshedding
+
+[REFACTORING]
+when:rule_of_three; complexity>10; duplication>2
+how:small_steps; tests_first; commit_often
+techniques:extract_function; extract_class; rename; inline
+safety:tests_pass; no_behavior_change
+
+[PERFORMANCE_BUDGETS]
+page_load:fcp<1.8s; lcp<2.5s; tti<3.8s
+bundle_size:initial<200kb; total<500kb
+api_latency:p50<100ms; p95<300ms; p99<500ms
+database:queries<10_per_request; query_time<50ms
+
+[ACCESSIBILITY]
+standard:wcag_2.1_aa; aria:semantic_html_first
+keyboard:all_interactive; focus_visible; tab_order
+screen_readers:alt_text; labels; landmarks
+color:contrast>4.5:1; no_color_only_info
+
+[INTERNATIONALIZATION]
+strings:extracted; keys:namespaced; plurals:handled
+dates:locale_aware; timezone:utc_storage; display:local
+numbers:locale_formatting; currency:explicit
+rtl:supported; tested; no_hardcoded_directions
+
+[MOBILE]
+responsive:mobile_first; breakpoints:320;768;1024;1440
+touch:targets>44px; gestures:standard; no_hover_only
+performance:lazy_images; prefetch:next_page; cache:aggressive
+offline:service_worker; cache_api; sync_when_online
+
+[EXCEPTIONS]
+when:performance_critical; third_party_constraint; legacy_compatibility
+how:document_in_code; approval_required; time_boxed
+review:quarterly; remove_when_possible

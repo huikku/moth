@@ -1,0 +1,40 @@
+{
+  "name": "MOTH",
+  "scopeName": "source.moth",
+  "patterns": [
+    {
+      "name": "comment.line.number-sign.moth",
+      "match": "^\\s*#.*$"
+    },
+    {
+      "name": "entity.name.section.moth",
+      "match": "^\\s*\\[[A-Z][A-Z0-9_]*(?:\\.[A-Z0-9_]+)*\\]\\s*$"
+    },
+    {
+      "name": "keyword.operator.separator.moth",
+      "match": "[:;{}=]->"
+    },
+    {
+      "name": "punctuation.section.brackets.moth",
+      "match": "[\\[\\]\\{\\}]"
+    },
+    {
+      "name": "constant.numeric.version.moth",
+      "match": "\\b\\d+(?:\\.\\d+)*\\b"
+    },
+    {
+      "name": "string.quoted.double.moth",
+      "begin": "\\\"",
+      "end": "\\\""
+    },
+    {
+      "name": "variable.parameter.key.moth",
+      "match": "\\b[a-z][a-z0-9_]*\\b"
+    }
+  ],
+  "fileTypes": [
+    "moth",
+    "str",
+    "spex"
+  ]
+}

@@ -1,0 +1,18 @@
+document      = header?, (section | comment | newline)* ;
+header        = (kvpair, sep?)+, newline+ ;
+section       = sect_hdr, newline, (kvline | comment | newline)* ;
+sect_hdr      = "[", ident, ("." , ident)*, "]" ;
+kvline        = kvpair, comment? , newline ;
+kvpair        = key, ":", value ;
+key           = ident | ident ("_" ident)* ;
+value         = scalar | list | state ;
+scalar        = quoted | bare ;
+quoted        = '"', { any_but_quote }, '"' ;
+bare          = { any_but_seps } ;
+list          = item, { ";" , item } ;
+item          = scalar | state ;
+state         = "{", key, "=", scalar, { ";" , key, "=", scalar } , "}" ;
+ident         = letter, { letter | digit | "_" } ;
+comment       = "#", { any_char }, newline ;
+sep           = ";" ;
+newline       = "\n" ;

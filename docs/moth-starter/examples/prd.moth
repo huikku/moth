@@ -1,0 +1,25 @@
+intent:product_spec; audience:coding_llm; version:1.0; updated:2025-10-22
+style:technical; scope:backend_svc:IntelliBase
+
+[CORE]
+domain:creative_production; platform:content_addressable_storage
+tenancy:multi; immutability:append_only; versioning:semantic_vNNN
+
+[STACK]
+db:postgres_16+pgvector; storage:s3_cas_sha256
+search:opensearch_bm25; api:fastapi; queue:sqs; workflow:temporal
+infra:aws_eks; observability:datadog+cloudwatch
+
+[FEATURES.m1]
+assets:video;image;doc;3d
+manifests:lockfile; provenance:hash_chain
+perms:rbac+row_level_security
+vault:e2e_optional_kms_wrapped
+
+[API.assets]
+POST:/assets -> req:{file:bin;meta:{tenant_id:uuid;type:str}} res:{asset_id:uuid;hash:str}
+GET:/assets/:id -> req:{id:uuid} res:{asset;latest_version}
+POST:/assets/:id/versions -> req:{id:uuid;file:bin} res:{version:v_int;hash:str}
+
+[SLO]
+publish_p95:<8s; search_p95:<500ms; jobs_success_p95:>99.5%_per_day
