@@ -239,8 +239,8 @@ Everything is structured and actionable.`}
               <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#888888', display: 'inline-block' }} />
               <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#aaaaaa', display: 'inline-block' }} />
             </div>
-            <div style={{ display: 'flex', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '1rem' }}>
-              {['prd', 'rules', 'arch'].map((tab) => (
+            <div style={{ display: 'flex', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '1rem', flexWrap: 'wrap' }}>
+              {['prd', 'large-prd', 'style-guide', 'deploy-rules', 'supabase-rules'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -249,19 +249,23 @@ Everything is structured and actionable.`}
                     color: activeTab === tab ? '#ffffff' : '#cccccc',
                     borderBottomColor: activeTab === tab ? '#ffffff' : 'transparent',
                     borderBottomWidth: activeTab === tab ? '2px' : '0px',
-                    padding: '0.75rem 1.5rem',
+                    padding: '0.75rem 1rem',
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: '0.9rem',
+                    fontSize: '0.85rem',
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  {tab.toUpperCase()}
+                  {tab === 'large-prd' ? 'LARGE PRD' :
+                   tab === 'style-guide' ? 'STYLE GUIDE' :
+                   tab === 'deploy-rules' ? 'DEPLOY RULES' :
+                   tab === 'supabase-rules' ? 'SUPABASE RULES' :
+                   tab.toUpperCase()}
                 </button>
               ))}
             </div>
-            <pre style={{ backgroundColor: 'transparent', color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.5, margin: 0, overflow: 'auto', maxHeight: '300px', opacity: 0.9, textAlign: 'left' }}>
+            <pre style={{ backgroundColor: 'transparent', color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.5, margin: 0, overflow: 'auto', maxHeight: '400px', opacity: 0.9, textAlign: 'left' }}>
 
 {activeTab === 'prd' && `intent:product_requirements
 audience:dev_team; version:1.0.0
@@ -278,36 +282,159 @@ realtime:websocket
 [STACK]
 frontend:react+typescript
 backend:fastapi; db:postgresql`}
-{activeTab === 'rules' && `intent:coding_rules
-audience:ai_agents; style:concise
 
-[ARCHITECTURE]
-pattern:modular; state:redux
-api:rest; auth:jwt
+{activeTab === 'large-prd' && `intent:product_requirements
+audience:engineering+design; version:2.0.0
+project:enterprise_analytics_platform
 
-[CONSTRAINTS]
-max_file_size:500_lines
-max_function:50_lines
-naming:snake_case
+[PRODUCT]
+name:DataViz Pro; type:b2b_saas
+domain:business_intelligence
+target:mid_to_enterprise
 
-[TESTING]
-coverage:80%; framework:jest`}
-{activeTab === 'arch' && `intent:system_architecture
-scope:full_stack; detail:high
+[CORE_FEATURES]
+dashboards:custom+templates+shared
+visualizations:charts;graphs;maps;tables
+data_sources:sql;nosql;api;csv;excel
+realtime:streaming+alerts+notifications
+collaboration:comments;sharing;permissions
+
+[USER_ROLES]
+admin:full_access; analyst:create+edit
+viewer:read_only; guest:limited_dashboards
+
+[TECH_STACK]
+frontend:react18+typescript+tailwind
+state:redux_toolkit+rtk_query
+backend:fastapi+celery+redis
+db:postgresql15; cache:redis7
+storage:s3; cdn:cloudflare
+
+[INTEGRATIONS]
+auth:auth0+saml+sso
+payments:stripe; analytics:mixpanel
+monitoring:datadog; errors:sentry
+
+[PERFORMANCE]
+page_load:<2s; api_response:<500ms
+concurrent_users:10000+
+uptime:99.9%
+
+[SECURITY]
+encryption:aes256; transit:tls13
+compliance:soc2+gdpr+hipaa
+auth:mfa+rbac; audit:full_logging`}
+
+{activeTab === 'style-guide' && `intent:style_guide
+audience:dev_team; scope:frontend
+
+[DESIGN_TOKENS]
+colors:primary=#232322;accent=#ffffff
+text:body=#cccccc;heading=#ffffff
+spacing:base=8px;scale=1.5x
+
+[TYPOGRAPHY]
+headings:Poppins;weight=600
+body:Barlow_Semi_Condensed;weight=400
+mono:JetBrains_Mono;weight=400-600
+line_height:headings=1.3;body=1.8
 
 [COMPONENTS]
-frontend:react_spa
-backend:python_fastapi
-db:postgresql; cache:redis
+buttons:rounded=4px;padding=0.75rem_2rem
+cards:bg=rgba(0,0,0,0.4);border=1px_solid
+inputs:height=44px;focus=outline_white
 
-[DATA_FLOW]
-user_input -> api -> db
-cache -> response
-events -> queue -> workers
+[SPACING]
+section:padding=6rem_0
+container:max_width=1400px;margin=0_auto
+grid:gap=2rem; mobile:padding=0_1rem
+
+[RESPONSIVE]
+breakpoints:mobile=768px;tablet=1024px
+mobile:stack_columns;hide_nav
+desktop:show_all;multi_column
+
+[ANIMATIONS]
+transitions:all_0.3s_ease
+hover:opacity=0.9
+loading:skeleton+fade_in`}
+
+{activeTab === 'deploy-rules' && `intent:deployment_rules
+audience:ai_agents; enforcement:strict
+
+[GIT_WORKFLOW]
+branches:main;staging;feature/*
+commits:conventional;signed=required
+push:require_tests_pass;require_review
+
+[PRE_COMMIT]
+lint:eslint+prettier; types:tsc
+tests:unit+integration; coverage:>80%
+
+[PRE_PUSH]
+build:verify_success
+security:scan_dependencies
+size:check_bundle_size
 
 [DEPLOYMENT]
-containers:docker
-orchestration:kubernetes`}
+staging:auto_on_merge_to_staging
+production:manual_approval_required
+rollback:auto_on_error_rate>5%
+
+[FORBIDDEN]
+push_to_main:direct_commits
+skip_tests:never
+deploy_friday:after_3pm
+secrets:hardcoded_in_code
+
+[NOTIFICATIONS]
+slack:on_deploy;on_failure
+email:on_production_deploy
+pagerduty:on_critical_failure
+
+[MONITORING]
+healthcheck:every_30s
+error_tracking:sentry
+performance:datadog_apm`}
+
+{activeTab === 'supabase-rules' && `intent:database_access_rules
+audience:ai_agents; scope:supabase
+
+[CONNECTION]
+url:env.SUPABASE_URL
+key:env.SUPABASE_ANON_KEY
+service_key:env.SUPABASE_SERVICE_KEY
+
+[TABLES_READABLE]
+public:users;profiles;posts;comments
+public:categories;tags;media
+analytics:page_views;events
+
+[TABLES_WRITABLE]
+public:posts;comments;media
+public:user_settings;notifications
+logs:activity;errors
+
+[TABLES_FORBIDDEN]
+auth:users;sessions;refresh_tokens
+internal:migrations;system_config
+billing:invoices;payments;subscriptions
+admin:audit_logs;system_settings
+
+[RLS_POLICIES]
+posts:user_can_edit_own
+comments:user_can_delete_own
+profiles:public_read;owner_write
+
+[FUNCTIONS]
+allowed:get_user_posts;create_comment
+allowed:upload_media;send_notification
+forbidden:delete_user;modify_billing
+
+[SECURITY]
+anon_key:client_side_only
+service_key:server_side_only;never_expose
+rls:always_enabled; validate:row_ownership`}
             </pre>
           </div>
         </div>
