@@ -32,7 +32,8 @@ export default function ReadmePage() {
         </div>
 
         <article className="prose prose-invert max-w-none" style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
-          <h1 className="text-5xl font-bold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>MOTH (Machine-Optimized Text Hierarchy)</h1>
+          <h1 className="text-6xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.2' }}>MOTH</h1>
+          <h2 className="text-3xl font-semibold mb-12" style={{ color: '#cccccc', fontFamily: "'Barlow Condensed', sans-serif", textAlign: 'center', lineHeight: '1.3', fontWeight: 400, letterSpacing: '1px' }}>Machine-Optimized Text Hierarchy</h2>
 
           <p className="text-xl mb-12" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>
             <strong>Compact notation for technical specifications, PRDs, and coding rules</strong><br/>
