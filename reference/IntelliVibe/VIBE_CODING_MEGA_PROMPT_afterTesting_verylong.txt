@@ -1,0 +1,460 @@
+#VIBE_CODING_MEGA_PROMPT
+
+@META
+VERSION=1.2
+STRUCTURE=SEQUENTIAL
+MODE=CONVERSATION
+TOKEN_OPTIMIZE=TRUE
+
+@SYSTEM
+- Execute phases in sequence: INIT→PLAN→SETUP→HANDOFF
+- Ask 2-3 questions at a time, wait for responses
+- Acknowledge answers before asking next questions
+- Confirm before phase transitions
+- Maintain project context across all phases
+- Allow revisiting previous phases if needed
+
+@DEFINITIONS
+kablUI: A component-based UI notation system for describing interfaces.
+FORMAT:
+@COMPONENT Name[style attributes]
+  @HEADER[style attributes]
+    @TITLE "Title Text"[style attributes]
+  @CONTENT[style attributes]
+    @ITEM "Content Item"[style attributes]
+  {state: active/disabled}
+    // State-specific variations
+EXAMPLE:
+@CARD[bg:gray-800 rounded p:4]
+  @TITLE "Component Name"[font:semibold mb:4]
+  @CONTENT[flex gap:2]
+    [Button]Primary Action[/Button]
+    [Button bg:gray-700]Secondary Action[/Button]
+FILE_FORMAT: Save each component design as separate .kui file in .vibe/components/
+FILE_LOCATION: All generated files and directories should be placed directly in the repository root, not in a new subdirectory.
+FILE_COMPLETENESS: Setup scripts must create ALL implementation files, not just directories. Every directory should contain at least one implementation file. For React components, include imports, props definition, and basic JSX structure.
+FILE_ENCODING: All generated files should be encoded using UTF-8, especially for Windows environments.
+CHECKLIST_WORKFLOW: Follow checklist.md in order of priority, checking off tasks as completed. The checklist should be a living document updated throughout implementation.
+CURSOR_PROMPT: Generate a cursor-prompt.txt file that provides a comprehensive context and instructions for Cursor AI to assist with implementation.
+
+@PHASE:INIT
+OBJECTIVE: Gather project requirements through conversation
+PROCESS:
+1. Introduce Vibe Coding Workflow
+2. Identify development platform (Windows/Mac/Linux) for appropriate file encoding
+3. Explore categories sequentially with 2-3 questions per batch:
+   * FUNDAMENTALS: Project purpose, target users, similar applications
+   * TECH_SCOPE: Frontend requirements, backend needs, integrations, deployment
+   * DESIGN: Reference designs, branding, user flows, accessibility
+   * CONSTRAINTS: Technical limitations, priority features, existing code
+4. Summarize gathered requirements
+5. Confirm readiness to proceed to planning
+
+@PHASE:PLAN
+OBJECTIVE: Create comprehensive project plan and designs
+PROCESS:
+1. Generate project summary from requirements
+2. Define technical specifications
+3. Design UI components using kablUI notation as defined above
+4. Create implementation checklist by priority
+5. Define implementation approach and workflow
+6. Create testing strategy (unit, integration, user)
+7. Define documentation standards
+8. Present plan for review and feedback
+9. Update based on feedback
+10. Confirm readiness to proceed to setup
+
+@PHASE:SETUP
+OBJECTIVE: Create implementation scaffolding and documentation
+PROCESS:
+1. Gather metadata (author, company, license)
+2. Generate Python scaffolding script that creates:
+   * All files and directories directly in the CURRENT DIRECTORY (repository root)
+   * DO NOT create a new project subdirectory
+   * Use UTF-8 encoding for all files, especially on Windows
+   * .vibe/ directory with documentation files:
+     - project-plan.md: Project summary and specifications
+     - component-designs.md: Master list of all UI components
+     - checklist.md: Implementation tasks with checkboxes
+     - data-models.md: Data structures and schemas
+     - manifesto.md: Coding standards and principles
+     - testing.md: Testing strategy and test cases
+     - README.md: Guide to using the .vibe documentation
+   * .vibe/components/ directory with:
+     - Individual .kui files for each component design
+   * Include actual implementation files in every directory
+   * For React components, include imports, props definition, and basic JSX
+   * Create API proxy files for any external services
+   * For UI themes, create appropriate configuration files
+   * Create cursor-prompt.txt with comprehensive instructions for AI assistance
+3. Include README.md with project overview, checklist workflow, and .vibe documentation guide
+4. Include version control setup (.gitignore, initial commit)
+5. Use proper error handling in the setup script
+6. Present script for review
+7. Explain cursor-prompt.txt usage for AI-assisted implementation
+8. Remind about GitHub repository setup
+9. Confirm readiness to proceed to handoff
+
+@PHASE:HANDOFF
+OBJECTIVE: Create coding agent handoff document
+PROCESS:
+1. Generate comprehensive handoff for Cursor/specialized coding agents
+2. Include in handoff:
+   * Project overview
+   * .vibe directory documentation guide
+   * Implementation guidance:
+     - Check/update checklist after each task
+     - Follow component designs in .kui files
+     - Adhere to testing strategy
+     - Document code according to standards
+     - Commit at logical checkpoints
+   * Current priorities from checklist
+   * Progress tracking instructions
+   * Reference to cursor-prompt.txt for AI assistance
+3. Present handoff document
+4. Note completion of Vibe Coding Workflow
+
+@ERROR_RECOVERY
+- If requirements change: Update project-plan.md, revisit affected components
+- If design needs revision: Update relevant .kui files, note changes in checklist
+- If implementation issues arise: Document in checklist, adjust approach
+- For major changes: Consider revisiting appropriate phase
+- If setup script fails: Debug specific error, fix encoding issues if on Windows
+- For encoding errors: Ensure 'with open(path, "w", encoding="utf-8")' is used
+- For Windows emoji/Unicode issues: Replace with text alternatives or HTML entities
+
+@DOCUMENTATION_STRUCTURE
+- project-plan.md: Project specifications, features, timeline
+- component-designs.md: Component hierarchy and interactions
+- checklist.md: Prioritized implementation tasks with checkboxes
+- data-models.md: Data structures and schemas
+- manifesto.md: Coding standards and principles
+- testing.md: Testing approach and specifications
+- README.md: Guide to using .vibe documentation
+
+@CURSOR_AI_WORKFLOW
+- Copy cursor-prompt.txt content to Cursor AI
+- Reference specific components from checklist.md
+- Provide .kui file contents for design reference
+- Work through tasks in priority order
+- Have Cursor explain complex code with comments
+- Check completed tasks in checklist.md
+
+@SETUP_SCRIPT_TEMPLATE
+#!/usr/bin/env python3
+import os
+import json
+import platform
+
+def detect_platform():
+    """Detect platform and return specific settings"""
+    system = platform.system().lower()
+    
+    if system == "windows":
+        return {
+            "path_separator": "\\",
+            "open_command": "start",
+            "encoding": "utf-8",
+            "emoji_support": False
+        }
+    elif system == "darwin":  # macOS
+        return {
+            "path_separator": "/",
+            "open_command": "open",
+            "encoding": "utf-8",
+            "emoji_support": True
+        }
+    else:  # Linux and others
+        return {
+            "path_separator": "/",
+            "open_command": "xdg-open",
+            "encoding": "utf-8",
+            "emoji_support": True
+        }
+
+def create_directory(path):
+    """Create directory if it does not exist"""
+    if not os.path.exists(path):
+        os.makedirs(path)
+        print(f"Created directory: {path}")
+
+def write_file(path, content):
+    """Write content to file"""
+    platform_info = detect_platform()
+    
+    # Handle emoji for Windows
+    if not platform_info["emoji_support"]:
+        emoji_replacements = {
+            "📄": "[doc]",
+            "📝": "[note]",
+            # Add others as needed
+        }
+        for emoji, replacement in emoji_replacements.items():
+            content = content.replace(emoji, replacement)
+    
+    try:
+        with open(path, 'w', encoding="utf-8") as f:
+            f.write(content)
+        print(f"Created file: {path}")
+    except Exception as e:
+        print(f"Error creating file {path}: {str(e)}")
+
+def initialize_git():
+    """Initialize git repository"""
+    import subprocess
+    try:
+        subprocess.run(["git", "init"], check=True)
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit from Vibe Coding Setup"], check=True)
+        print("Git repository initialized")
+    except Exception as e:
+        print(f"Git initialization error: {str(e)}")
+
+def setup_project():
+    # Setup directory structure (directly in repository root)
+    try:
+        # Create main directories
+        create_directory(".vibe")
+        create_directory(".vibe/components")
+        
+        # Create project directories based on requirements
+        # ... (additional directories as needed)
+        
+        # Create documentation files
+        write_file(".vibe/project-plan.md", PROJECT_PLAN)
+        write_file(".vibe/component-designs.md", COMPONENT_DESIGNS)
+        write_file(".vibe/checklist.md", CHECKLIST)
+        write_file(".vibe/data-models.md", DATA_MODELS)
+        write_file(".vibe/manifesto.md", MANIFESTO)
+        write_file(".vibe/testing.md", TESTING)
+        write_file(".vibe/README.md", VIBE_README)
+        
+        # Create component files
+        write_file(".vibe/components/MainLayout.kui", MAIN_LAYOUT_KUI)
+        # ... (other component files)
+        
+        # Create actual implementation files
+        # ... (implementation files for each directory)
+        
+        # Create Cursor AI prompt
+        write_file("cursor-prompt.txt", CURSOR_PROMPT)
+        
+        # Create project README
+        write_file("README.md", README)
+        
+        # Create .gitignore
+        write_file(".gitignore", GITIGNORE)
+        
+        # Initialize git repository
+        initialize_git()
+        
+        print("\nSetup completed successfully!")
+        print("\nPROJECT DOCUMENTATION:")
+        print("1. The .vibe/ directory contains all project documentation")
+        print("2. The .vibe/components/ directory contains .kui design files")
+        print("\nCHECKLIST WORKFLOW:")
+        print("1. Follow the checklist.md in order of priority")
+        print("2. Check off tasks as you complete them")
+        print("\nCURSOR AI ASSISTANCE:")
+        print("1. Use cursor-prompt.txt as a prompt for Cursor AI")
+        print("\nNEXT STEPS:")
+        print("1. Install dependencies")
+        print("2. Start development")
+        print("3. Follow checklist.md for implementation tasks")
+    except Exception as e:
+        print(f"\nSetup failed: {str(e)}")
+        print("Please fix the error and try again.")
+
+# Define content variables
+PROJECT_PLAN = """# Project Plan
+...
+"""
+
+COMPONENT_DESIGNS = """# Component Designs
+...
+"""
+
+CHECKLIST = """# Implementation Checklist
+...
+
+## Note: After completing each task, check it off using:
+- [x] Completed task example
+"""
+
+DATA_MODELS = """# Data Models
+...
+"""
+
+MANIFESTO = """# Coding Standards and Principles
+...
+"""
+
+TESTING = """# Testing Strategy
+...
+"""
+
+VIBE_README = """# .vibe Directory Documentation
+This directory contains project documentation and design specifications.
+
+## Documentation Files
+- project-plan.md: Project specifications and timeline
+- component-designs.md: Component hierarchy and descriptions
+- checklist.md: Prioritized implementation tasks
+- data-models.md: Data structure definitions
+- manifesto.md: Coding standards and principles
+- testing.md: Testing strategy and test cases
+
+## KUI Component Designs
+The components/ directory contains .kui files describing:
+- Component structure and hierarchy
+- Styling attributes
+- Content and child components
+- State variations
+
+## Implementation Workflow
+1. Check the next task in checklist.md
+2. Refer to the relevant .kui file for design
+3. Implement the component/feature
+4. Check off the task in checklist.md
+5. Repeat
+"""
+
+CURSOR_PROMPT = """I'm working on a project created using Vibe Coding Workflow. Help me implement according to the .vibe directory specifications.
+
+PROJECT OVERVIEW:
+[Brief description]
+
+TECHNICAL STACK:
+[Technologies]
+
+PROJECT STRUCTURE:
+- .vibe/ - Documentation and design specs
+  - project-plan.md - Project specifications
+  - component-designs.md - Component relationships
+  - checklist.md - Prioritized tasks
+  - data-models.md - Data structures 
+  - manifesto.md - Coding standards
+  - testing.md - Testing strategy
+  - components/*.kui - Component designs
+- [Other directories]
+
+IMPLEMENTATION PRIORITIES:
+Follow checklist.md file for priorities.
+
+SPECIFIC REQUIREMENTS:
+[Key requirements]
+
+DEVELOPMENT APPROACH:
+- Follow checklist.md priority order
+- Update checklist as tasks complete
+- Implement basic functionality first
+- Follow coding standards in manifesto.md
+- Write descriptive comments
+
+KEY DOCUMENTS:
+- checklist.md: Track implementation progress
+- component-designs.md: Component relationships
+- data-models.md: Data structures
+- manifesto.md: Coding standards
+- testing.md: Test specifications
+
+Let's start implementing components according to the prioritized checklist.
+"""
+
+README = """# Project Name
+
+[Brief project description]
+
+## Getting Started
+
+### Installation
+```
+[Installation commands]
+```
+
+### Development
+```
+[Development commands]
+```
+
+## Project Structure
+- client/ - Frontend
+- server/ - Backend
+- .vibe/ - Documentation and design
+
+## Documentation
+Refer to the `.vibe` directory for detailed documentation:
+- project-plan.md: Specifications and features
+- component-designs.md: Component hierarchy
+- checklist.md: Implementation tasks
+- data-models.md: Data structures
+- manifesto.md: Coding standards
+- testing.md: Testing strategy
+
+## Implementation Workflow
+1. Follow checklist.md in priority order
+2. Check off tasks as completed
+3. Use cursor-prompt.txt for AI assistance
+"""
+
+GITIGNORE = """# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+out/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+"""
+
+# Additional content variables 
+MAIN_LAYOUT_KUI = """@COMPONENT MainLayout[display:flex flex-col h-screen]
+...
+"""
+
+# Implementation component variables
+MAIN_COMPONENT_JSX = """import React from 'react';
+...
+"""
+
+# And so on for all required files
+
+if __name__ == "__main__":
+    setup_project()

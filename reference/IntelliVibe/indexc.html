@@ -1,0 +1,1620 @@
+.background-icon {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            color: var(--primary);
+            opacity: 0.5;
+            z-index: 0;
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>IntelliVibe - AI-Assisted Software Development Workflow | Alienrobot LLC</title>
+    <meta name="description" content="IntelliVibe is a structured AI-assisted development workflow with clear phases: INIT → PLAN → SETUP → HANDOFF, featuring the kablUI notation system.">
+    <meta name="keywords" content="vibe coding, intellivibe, software development workflow, AI-assisted development, kablUI, code generation, Alienrobot">
+    <meta name="author" content="John Huikku">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alienrobot.com/intellivibe.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alienrobot.com/intellivibe.html">
+    <meta property="og:title" content="IntelliVibe - AI-Assisted Software Development Workflow">
+    <meta property="og:description" content="A structured AI-assisted development workflow with clear phases: INIT → PLAN → SETUP → HANDOFF. Feature the kablUI notation system for efficient UI design.">
+    <meta property="og:image" content="https://alienrobot.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://alienrobot.com/intellivibe.html">
+    <meta name="twitter:title" content="IntelliVibe - AI-Assisted Software Development Workflow">
+    <meta name="twitter:description" content="A structured AI-assisted development workflow with clear phases: INIT → PLAN → SETUP → HANDOFF. Feature the kablUI notation system for efficient UI design.">
+    <meta name="twitter:image" content="https://alienrobot.com/twitter-image.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=Jura:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #00c8ff;
+            --primary-dark: #0077aa;
+            --primary-light: #7fdfff;
+            --dark: #121212;
+            --darker: #001020;
+            --light: #f0f0f0;
+            --gray: #555555;
+            --transition: all 0.3s ease;
+        }
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header and Navigation */
+        header {
+            padding: 1.5rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.95), rgba(8,8,8,0.85));
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 20px;
+            }
+        }
+        
+        .logo h1 {
+            display: none; /* Hide the text but keep it for accessibility */
+        }
+
+        .menu {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: var(--transition);
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+            opacity: 1;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 100;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: rgba(8,8,12,0.95);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(0, 200, 255, 0.1);
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 14rem 0 6rem;
+            position: relative;
+            z-index: 5;
+            text-align: left;
+        }
+
+        .hero-tag {
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            display: block;
+            text-align: left;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            hyphens: none;
+            word-break: normal;
+            font-family: 'Jura', sans-serif;
+            text-align: left;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            color: var(--light);
+            opacity: 0.9;
+            text-align: left;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        /* Copy prompt container */
+        .copy-prompt-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 2rem 0 3rem;
+            flex-wrap: wrap;
+        }
+
+        .copy-instructions {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            color: var(--light);
+            font-size: 1rem;
+            line-height: 1.5;
+            height: 100%;
+        }
+        
+        .cta-buttons .btn,
+        #copyPromptBtn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 200, 255, 0.3);
+            padding: 1rem 1.75rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Jura', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            height: 100%;
+            min-height: 48px;
+        }
+
+        /* Button Styles */
+        .button-group,
+        .cta-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .cta-buttons {
+            margin-top: 2rem;
+        }
+
+        .button-group .btn-primary,
+        .cta-buttons .btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 200, 255, 0.2);
+            padding: 0.75rem 1.75rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .button-group .btn-primary:hover,
+        .cta-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 200, 255, 0.3);
+            background: var(--primary-light);
+        }
+
+        @media (max-width: 768px) {
+            .button-group,
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .button-group .btn-primary,
+            .cta-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Documentation Section */
+        .documentation-section {
+            padding: 4rem 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .documentation-description {
+            text-align: left !important;
+            max-width: 800px;
+            margin: 0 0 2rem 0 !important;
+        }
+
+        .documentation-description p {
+            text-align: left !important;
+            margin-left: 0 !important;
+        }
+
+        .section-tag.mono {
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .section-heading {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .section-heading h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light);
+            margin: 0;
+            font-family: 'Jura', sans-serif;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .section-heading p {
+            font-size: 1.1rem;
+            color: var(--light);
+            opacity: 0.8;
+            margin: 1rem 0 0;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .workflow-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: var(--light);
+            opacity: 0.9;
+        }
+
+        .documentation-content {
+            background: rgba(0, 12, 24, 0.5);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .documentation-content:hover {
+            box-shadow: 0 8px 40px rgba(0, 200, 255, 0.1);
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background: rgba(0, 12, 24, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            display: block !important;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--light);
+            white-space: pre;
+            opacity: 0.9;
+            tab-size: 2;
+            display: block !important;
+        }
+
+        /* Phase Sections */
+        .phase-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.2);
+        }
+
+        .phase-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .phase-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-family: 'Jura', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+
+        .phase-title i {
+            margin-right: 0.75rem;
+        }
+
+        .phase-subtitle {
+            font-size: 1.2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0.9;
+        }
+
+        .phase-description {
+            font-size: 1rem;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            max-width: 800px;
+        }
+
+        /* Process Lists - Fixed for styling */
+        .process-list {
+            list-style-type: none;
+            counter-reset: process-counter;
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .process-list li {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            color: var(--light);
+        }
+
+        .process-list li::before {
+            content: counter(process-counter);
+            counter-increment: process-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0, 200, 255, 0.2);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        /* Sub Lists - Fixed for styling */
+        .sub-list {
+            list-style-type: none;
+            margin: 0.5rem 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .sub-list li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            color: var(--light);
+        }
+
+        .sub-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .sub-list .sub-list {
+            margin: 0.5rem 0 0.5rem 0;
+        }
+
+        .sub-list .sub-list li::before {
+            content: "◦";
+        }
+
+        /* Copy Prompt Button Animation */
+        .copy-success {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            background-color: rgba(0, 200, 255, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .copy-success.show {
+            opacity: 1;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 0;
+            position: relative;
+            z-index: 5;
+            background-color: rgba(0, 12, 24, 0.5);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background-color: rgba(0, 12, 24, 0.5);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--light);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: 4px;
+            color: var(--light);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.15);
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-control::placeholder {
+            color: rgba(240, 240, 240, 0.3);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: var(--darker);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            margin: 0 auto;
+            min-width: 140px;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 200, 255, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer Styles */
+        .footer {
+            padding: 2rem 0;
+            background-color: rgba(8, 8, 12, 0.95);
+            position: relative;
+            z-index: 5;
+            border-top: 1px solid rgba(0, 200, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-link {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--light);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .copyright a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Video Background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(0,0,0,0.92) 0%,
+                rgba(0,20,40,0.85) 50%,
+                rgba(0,15,30,0.8) 100%
+            );
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Ensure all content sections are above the video */
+        .hero,
+        .documentation-section,
+        .contact-section,
+        .footer {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Terminal typing effect */
+        .terminal-text {
+            overflow: hidden;
+            border-right: 0.15em solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+            display: inline-block;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary); }
+        }
+
+        /* Icon styling */
+        .phase-icon {
+            color: var(--primary);
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        /* Workflow Diagram Styling */
+        .workflow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem 0 1rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .workflow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 1rem;
+        }
+
+                /* Flip Card Styling */
+        .phase-box {
+            background: transparent;
+            perspective: 1000px;
+            width: 220px;
+            height: 220px;
+            flex: 1;
+            max-width: 220px;
+            min-width: 180px;
+            position: relative;
+        }
+
+        .phase-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .phase-box:hover .phase-box-inner {
+            transform: rotateY(180deg);
+        }
+
+        .phase-box-front, .phase-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            background: rgba(0, 4, 12, 0.95);
+            overflow: hidden;
+        }
+
+        .phase-box-back {
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .phase-description {
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .phase-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 200, 255, 0.1), transparent);
+            z-index: 0;
+            transition: width 0.5s ease;
+        }
+
+        .phase-box.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .phase-box.active::before {
+            width: 100%;
+        }
+
+        .phase-number {
+            font-family: 'Jura', sans-serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .phase-title {
+            font-family: 'Jura', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light);
+            position: relative;
+            z-index: 1;
+            margin-top: 0;
+            line-height: 1.4;
+        }
+        
+        .phase-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .phase-arrow {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+            margin: 0 -0.5rem;
+        }
+
+        .phase-box-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .usage-instruction {
+            text-align: center;
+            max-width: 700px;
+            margin: 2rem auto 0;
+            color: var(--light);
+            font-size: 1.1rem;
+            opacity: 0.9;
+            padding: 1rem;
+            background: rgba(0, 12, 24, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+        }
+
+        /* Copy button styles */
+        .btn.copied {
+            background-color: #00aa77;
+            transform: translateY(-2px);
+        }
+
+        .copy-success {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 170, 119, 0.2);
+            color: #00ff99;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Enhanced animation classes */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 10rem 0 4rem;
+            }
+            
+            .hero-tag {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .documentation-content {
+                padding: 1.5rem;
+            }
+            
+            .phase-title {
+                font-size: 1.8rem;
+            }
+            
+            .phase-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .code-block {
+                padding: 1rem;
+            }
+            
+            .code-block pre {
+                font-size: 0.8rem;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        /* Add an even smaller size for very small screens */
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-heading h2 {
+                font-size: 2rem;
+            }
+            
+            .phase-title {
+                font-size: 1.5rem;
+            }
+            
+            .process-list {
+                padding-left: 0;
+            }
+            
+            .process-list li {
+                padding-left: 1.8rem;
+            }
+
+        @media (max-width: 768px) {
+            .workflow-diagram {
+                flex-direction: column;
+                margin: 2rem 0;
+            }
+            
+            .workflow-row {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .phase-box {
+                min-width: 100%;
+                max-width: 100%;
+                margin-bottom: 1rem;
+                height: 180px;
+            }
+
+            .phase-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0;
+            }
+
+            .usage-instruction {
+                font-size: 0.95rem;
+                padding: 0.75rem;
+            }
+        }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="video-bg" autoplay loop muted playsinline>
+        <source src="https://alienrobot.com/Professional_Mode_energetic_pulsating_interconnect_2.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="https://alienrobot.com" class="logo">
+                <img src="logo.png" alt="ALIENROBOT">
+                <h1>ALIENROBOT</h1>
+            </a>
+            <div class="menu">
+                <a href="https://alienrobot.com" class="nav-link">Home</a>
+                <a href="https://alienrobot.com/projects-page.html" class="nav-link">Projects</a>
+                <a href="#documentation" class="nav-link">Documentation</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-tag"># AI-ASSISTED SOFTWARE DEVELOPMENT</span>
+            <h2 class="text-left">IntelliVibe - AI-Assisted <br>Software Development Workflow</h2>
+            <p class="text-left">A structured approach to AI-powered software development with clear phases and efficient notation systems.</p>
+            <div class="copy-prompt-container">
+                <button id="copyPromptBtn" class="btn"><i class="fas fa-copy" style="margin-right: 8px;"></i> Copy Prompt</button>
+                <div class="copy-instructions">
+                    Simply copy this prompt and paste it to your favorite LLM (like ChatGPT or Claude). The AI will guide you through building a structured coding project from requirements to implementation.
+                </div>
+            </div>
+            
+            <!-- Workflow Diagram -->
+            <div class="workflow-diagram">
+                <div class="workflow-row">
+                    <div class="phase-box active">
+                        <div class="phase-box-inner">
+                            <div class="phase-box-front">
+                                <div class="phase-number">Phase 1</div>
+                                <div class="phase-content">
+                                    <div class="phase-title">Project Initiation</div>
+                                </div>
+                                <i class="fas fa-rocket background-icon"></i>
+                            </div>
+                            <div class="phase-box-back">
+                                <p class="phase-description">Gather all necessary project requirements through structured conversation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phase-arrow">→</div>
+                    <div class="phase-box">
+                        <div class="phase-box-inner">
+                            <div class="phase-box-front">
+                                <div class="phase-number">Phase 2</div>
+                                <div class="phase-content">
+                                    <div class="phase-title">Plan & Design</div>
+                                </div>
+                                <i class="fas fa-drafting-compass background-icon"></i>
+                            </div>
+                            <div class="phase-box-back">
+                                <p class="phase-description">Transform requirements into detailed specifications and UI component designs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phase-arrow">→</div>
+                    <div class="phase-box">
+                        <div class="phase-box-inner">
+                            <div class="phase-box-front">
+                                <div class="phase-number">Phase 3</div>
+                                <div class="phase-content">
+                                    <div class="phase-title">Implementation Setup</div>
+                                </div>
+                                <i class="fas fa-cogs background-icon"></i>
+                            </div>
+                            <div class="phase-box-back">
+                                <p class="phase-description">Create project structure, documentation, and scaffolding for implementation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phase-arrow">→</div>
+                    <div class="phase-box">
+                        <div class="phase-box-inner">
+                            <div class="phase-box-front">
+                                <div class="phase-number">Phase 4</div>
+                                <div class="phase-content">
+                                    <div class="phase-title">Coding Agent Handoff</div>
+                                </div>
+                                <i class="fas fa-handshake background-icon"></i>
+                            </div>
+                            <div class="phase-box-back">
+                                <p class="phase-description">Prepare comprehensive guidance for specialized coding agents.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="documentation" class="documentation-section">
+        <div class="container">
+            <div class="section-tag mono"># DOCUMENTATION</div>
+            
+            <div class="section-heading">
+                <h2 class="text-left">Vibe Coding Workflow</h2>
+                <p class="text-left">A systematic approach to software development that leverages AI assistance through distinct phases.</p>
+            </div>
+            
+            <p class="text-left" style="text-align: left; max-width: 800px; margin: 0 0 2rem 0;">
+                IntelliVibe streamlines the software development process by using a structured conversation with AI to move from initial requirements to a complete project setup. The system automatically generates all necessary documentation and scaffolding, saving hours of setup time and ensuring consistent implementation.
+            </p>
+            
+            <!-- Just add the documentation content directly in the HTML - this is key to making it work -->
+            <div class="documentation-content">
+                <!-- Meta Section -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-info-circle phase-icon"></i> Meta Information</h3>
+                    <div class="code-block">
+                        <pre>@META
+VERSION=1.0
+STRUCTURE=SEQUENTIAL
+MODE=CONVERSATION
+TOKEN_OPTIMIZE=TRUE</pre>
+                    </div>
+                    
+                    <h4 class="phase-subtitle">System Guidelines</h4>
+                    <div class="code-block">
+                        <pre>@SYSTEM
+- Execute phases in sequence: INIT→PLAN→SETUP→HANDOFF
+- Ask 2-3 questions at a time, wait for responses
+- Acknowledge answers before asking next questions
+- Confirm before phase transitions
+- Maintain project context across all phases</pre>
+                    </div>
+                </div>
+                
+                <!-- Init Phase -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-rocket phase-icon"></i> INIT Phase</h3>
+                    <h4 class="phase-subtitle">OBJECTIVE: Gather project requirements through conversation</h4>
+                    <p class="phase-description">The initialization phase focuses on gathering all necessary information about the project through a structured conversation with the client.</p>
+                    
+                    <h4 class="phase-subtitle">PROCESS:</h4>
+                    <ol class="process-list">
+                        <li>Introduce Vibe Coding Workflow</li>
+                        <li>Explore categories sequentially with 2-3 questions per batch:
+                            <ul class="sub-list">
+                                <li>FUNDAMENTALS: Project purpose, target users, similar applications</li>
+                                <li>TECH_SCOPE: Frontend requirements, backend needs, integrations, deployment</li>
+                                <li>DESIGN: Reference designs, branding, user flows, accessibility</li>
+                                <li>CONSTRAINTS: Technical limitations, priority features, existing code</li>
+                            </ul>
+                        </li>
+                        <li>Summarize gathered requirements</li>
+                        <li>Confirm readiness to proceed to planning</li>
+                    </ol>
+                </div>
+                
+                <!-- Plan Phase -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-drafting-compass phase-icon"></i> PLAN Phase</h3>
+                    <h4 class="phase-subtitle">OBJECTIVE: Create comprehensive project plan and designs</h4>
+                    <p class="phase-description">The planning phase transforms gathered requirements into a detailed project specification, including UI component designs using the kablUI notation system.</p>
+                    
+                    <h4 class="phase-subtitle">PROCESS:</h4>
+                    <ol class="process-list">
+                        <li>Generate project summary from requirements</li>
+                        <li>Define technical specifications</li>
+                        <li>Design UI components using kablUI notation</li>
+                        <li>Create implementation checklist by priority</li>
+                        <li>Define implementation approach and workflow</li>
+                        <li>Create testing strategy (unit, integration, user)</li>
+                        <li>Define documentation standards</li>
+                        <li>Present plan for review and feedback</li>
+                        <li>Update based on feedback</li>
+                        <li>Confirm readiness to proceed to setup</li>
+                    </ol>
+                    
+                    <h4 class="phase-subtitle">kablUI Notation System</h4>
+                    <p class="phase-description">A component-based UI notation system for describing interfaces with minimal token usage.</p>
+                    
+                    <div class="code-block">
+                        <pre>@COMPONENT Name[style attributes]
+  @HEADER[style attributes]
+    @TITLE "Title Text"[style attributes]
+  @CONTENT[style attributes]
+    @ITEM "Content Item"[style attributes]
+  {state: active/disabled}
+    // State-specific variations</pre>
+                    </div>
+                    
+                    <p class="phase-description">EXAMPLE:</p>
+                    <div class="code-block">
+                        <pre>@CARD[bg:gray-800 rounded p:4]
+  @TITLE "Component Name"[font:semibold mb:4]
+  @CONTENT[flex gap:2]
+    [Button]Primary Action[/Button]
+    [Button bg:gray-700]Secondary Action[/Button]</pre>
+                    </div>
+                </div>
+                
+                <!-- Setup Phase -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-cogs phase-icon"></i> SETUP Phase</h3>
+                    <h4 class="phase-subtitle">OBJECTIVE: Create implementation scaffolding and documentation</h4>
+                    <p class="phase-description">The setup phase establishes the project structure and documentation framework for implementation.</p>
+                    
+                    <h4 class="phase-subtitle">PROCESS:</h4>
+                    <ol class="process-list">
+                        <li>Gather metadata (author, company, license)</li>
+                        <li>Generate Python scaffolding script that creates:
+                            <ul class="sub-list">
+                                <li>Project directory structure</li>
+                                <li>.vibe/ directory with documentation files:
+                                    <ul class="sub-list">
+                                        <li>project-plan.md: Project summary and specifications</li>
+                                        <li>component-designs.md: Master list of all UI components</li>
+                                        <li>checklist.md: Implementation tasks with checkboxes</li>
+                                        <li>data-models.md: Data structures and schemas</li>
+                                        <li>manifesto.md: Coding standards and principles</li>
+                                        <li>testing.md: Testing strategy and test cases</li>
+                                    </ul>
+                                </li>
+                                <li>.vibe/components/ directory with:
+                                    <ul class="sub-list">
+                                        <li>Individual .kui files for each component design</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Include README.md with project overview</li>
+                        <li>Include version control setup (.gitignore, initial commit)</li>
+                        <li>Present script for review</li>
+                        <li>Remind about GitHub repository setup</li>
+                        <li>Confirm readiness to proceed to handoff</li>
+                    </ol>
+                </div>
+                
+                <!-- Handoff Phase -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-handshake phase-icon"></i> HANDOFF Phase</h3>
+                    <h4 class="phase-subtitle">OBJECTIVE: Create coding agent handoff document</h4>
+                    <p class="phase-description">The handoff phase prepares comprehensive guidance for specialized coding agents, ensuring smooth implementation.</p>
+                    
+                    <h4 class="phase-subtitle">PROCESS:</h4>
+                    <ol class="process-list">
+                        <li>Generate comprehensive handoff for Cursor/specialized coding agents</li>
+                        <li>Include in handoff:
+                            <ul class="sub-list">
+                                <li>Project overview</li>
+                                <li>.vibe directory documentation guide</li>
+                                <li>Implementation guidance:
+                                    <ul class="sub-list">
+                                        <li>Check/update checklist after each task</li>
+                                        <li>Follow component designs in .kui files</li>
+                                        <li>Adhere to testing strategy</li>
+                                        <li>Document code according to standards</li>
+                                        <li>Commit at logical checkpoints</li>
+                                    </ul>
+                                </li>
+                                <li>Current priorities from checklist</li>
+                                <li>Progress tracking instructions</li>
+                            </ul>
+                        </li>
+                        <li>Present handoff document</li>
+                        <li>Note completion of Vibe Coding Workflow</li>
+                    </ol>
+                </div>
+                
+                <!-- Error Recovery Section -->
+                <div class="phase-section">
+                    <h3 class="phase-title"><i class="fas fa-shield-alt phase-icon"></i> Error Recovery</h3>
+                    <p class="phase-description">Guidelines for handling changes and issues during the development process.</p>
+                    
+                    <div class="code-block">
+                        <pre>@ERROR_RECOVERY
+- If requirements change: Update project-plan.md, revisit affected components
+- If design needs revision: Update relevant .kui files, note changes in checklist
+- If implementation issues arise: Document in checklist, adjust approach
+- For major changes: Consider revisiting appropriate phase</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2><i class="fas fa-envelope" style="color: var(--primary); margin-right: 0.75rem;"></i> Get in Touch</h2>
+                <p>Have questions about IntelliVibe? Let's connect.</p>
+            </div>
+            <form class="contact-form" action="https://formspree.io/f/xyzkrbzy" method="POST">
+                <div class="form-group">
+                    <label for="email" class="form-label">Your email:</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject:</label>
+                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject of your message" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Your message:</label>
+                    <textarea name="message" id="message" class="form-control" placeholder="Your message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/huikku/" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+                <a href="https://github.com/huikku" target="_blank" class="social-link">
+                    <i class="fab fa-github fa-lg"></i>
+                </a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 <a href="https://www.alienrobot.com">John Huikku</a> Alienrobot LLC All rights reserved. <a href="https://alienrobot.com/terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle only - no AOS
+            const menuToggle = document.querySelector('.menu-toggle');
+            const menu = document.querySelector('.menu');
+            
+            menuToggle.addEventListener('click', function() {
+                menu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Copy Prompt Button Functionality
+            const copyPromptBtn = document.getElementById('copyPromptBtn');
+            
+            copyPromptBtn.addEventListener('click', async function() {
+                try {
+                    // Define the prompt content directly as a fallback in case fetch fails
+                    const fallbackPromptText = `#VIBE_CODING_MEGA_PROMPT
+
+@META
+VERSION=1.0
+STRUCTURE=SEQUENTIAL
+MODE=CONVERSATION
+TOKEN_OPTIMIZE=TRUE
+
+@SYSTEM
+- Execute phases in sequence: INIT→PLAN→SETUP→HANDOFF
+- Ask 2-3 questions at a time, wait for responses
+- Acknowledge answers before asking next questions
+- Confirm before phase transitions
+- Maintain project context across all phases
+- Allow revisiting previous phases if needed
+
+@DEFINITIONS
+kablUI: A component-based UI notation system for describing interfaces.
+FORMAT:
+@COMPONENT Name[style attributes]
+  @HEADER[style attributes]
+    @TITLE "Title Text"[style attributes]
+  @CONTENT[style attributes]
+    @ITEM "Content Item"[style attributes]
+  {state: active/disabled}
+    // State-specific variations
+EXAMPLE:
+@CARD[bg:gray-800 rounded p:4]
+  @TITLE "Component Name"[font:semibold mb:4]
+  @CONTENT[flex gap:2]
+    [Button]Primary Action[/Button]
+    [Button bg:gray-700]Secondary Action[/Button]
+FILE_FORMAT: Save each component design as separate .kui file in .vibe/components/
+
+@PHASE:INIT
+OBJECTIVE: Gather project requirements through conversation
+PROCESS:
+1. Introduce Vibe Coding Workflow
+2. Explore categories sequentially with 2-3 questions per batch:
+   * FUNDAMENTALS: Project purpose, target users, similar applications
+   * TECH_SCOPE: Frontend requirements, backend needs, integrations, deployment
+   * DESIGN: Reference designs, branding, user flows, accessibility
+   * CONSTRAINTS: Technical limitations, priority features, existing code
+3. Summarize gathered requirements
+4. Confirm readiness to proceed to planning
+
+@PHASE:PLAN
+OBJECTIVE: Create comprehensive project plan and designs
+PROCESS:
+1. Generate project summary from requirements
+2. Define technical specifications
+3. Design UI components using kablUI notation as defined above
+4. Create implementation checklist by priority
+5. Define implementation approach and workflow
+6. Create testing strategy (unit, integration, user)
+7. Define documentation standards
+8. Present plan for review and feedback
+9. Update based on feedback
+10. Confirm readiness to proceed to setup
+
+@PHASE:SETUP
+OBJECTIVE: Create implementation scaffolding and documentation
+PROCESS:
+1. Gather metadata (author, company, license)
+2. Generate Python scaffolding script that creates:
+   * Project directory structure
+   * .vibe/ directory with documentation files:
+     - project-plan.md: Project summary and specifications
+     - component-designs.md: Master list of all UI components
+     - checklist.md: Implementation tasks with checkboxes
+     - data-models.md: Data structures and schemas
+     - manifesto.md: Coding standards and principles
+     - testing.md: Testing strategy and test cases
+   * .vibe/components/ directory with:
+     - Individual .kui files for each component design
+3. Include README.md with project overview
+4. Include version control setup (.gitignore, initial commit)
+5. Present script for review
+6. Remind about GitHub repository setup
+7. Confirm readiness to proceed to handoff
+
+@PHASE:HANDOFF
+OBJECTIVE: Create coding agent handoff document
+PROCESS:
+1. Generate comprehensive handoff for Cursor/specialized coding agents
+2. Include in handoff:
+   * Project overview
+   * .vibe directory documentation guide
+   * Implementation guidance:
+     - Check/update checklist after each task
+     - Follow component designs in .kui files
+     - Adhere to testing strategy
+     - Document code according to standards
+     - Commit at logical checkpoints
+   * Current priorities from checklist
+   * Progress tracking instructions
+3. Present handoff document
+4. Note completion of Vibe Coding Workflow
+
+@ERROR_RECOVERY
+- If requirements change: Update project-plan.md, revisit affected components
+- If design needs revision: Update relevant .kui files, note changes in checklist
+- If implementation issues arise: Document in checklist, adjust approach
+- For major changes: Consider revisiting appropriate phase`;
+
+                    let promptText;
+                    
+                    try {
+                        // First try to fetch the file
+                        const response = await fetch('VIBE_CODING_MEGA_PROMPT.txt');
+                        if (response.ok) {
+                            promptText = await response.text();
+                        } else {
+                            // If fetch fails, use the fallback
+                            promptText = fallbackPromptText;
+                            console.log('Using fallback prompt text');
+                        }
+                    } catch (fetchErr) {
+                        // If there's an error with fetch, use the fallback
+                        promptText = fallbackPromptText;
+                        console.log('Fetch error, using fallback prompt text', fetchErr);
+                    }
+                    
+                    // Copy to clipboard
+                    await navigator.clipboard.writeText(promptText);
+                    
+                    // Provide visual feedback of success
+                    copyPromptBtn.classList.add('copied');
+                    copyPromptBtn.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i> Copied!';
+                    
+                    // Show success message
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'copy-success';
+                    successMsg.textContent = 'Prompt copied to clipboard!';
+                    copyPromptBtn.parentNode.appendChild(successMsg);
+                    
+                    // Show the message
+                    setTimeout(() => {
+                        successMsg.classList.add('show');
+                    }, 10);
+                    
+                    // Remove the message and reset button after 3 seconds
+                    setTimeout(() => {
+                        successMsg.classList.remove('show');
+                        copyPromptBtn.classList.remove('copied');
+                        copyPromptBtn.innerHTML = '<i class="fas fa-copy" style="margin-right: 8px;"></i> Copy Prompt';
+                        setTimeout(() => {
+                            successMsg.remove();
+                        }, 300);
+                    }, 3000);
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy the prompt. Please try again.');
+                }
+            });
+
+            // Add hover effects to workflow diagram
+            const phaseBoxes = document.querySelectorAll('.phase-box');
+            phaseBoxes.forEach((box, index) => {
+                box.addEventListener('mouseenter', () => {
+                    phaseBoxes.forEach(b => b.classList.remove('active'));
+                    box.classList.add('active');
+                });
+            });
+
+            // Initialize all boxes as inactive and then activate them sequentially
+            phaseBoxes.forEach(box => box.classList.remove('active'));
+            let currentPhaseIndex = 0;
+            
+            function activateNextPhase() {
+                phaseBoxes.forEach(box => box.classList.remove('active'));
+                phaseBoxes[currentPhaseIndex].classList.add('active');
+                currentPhaseIndex = (currentPhaseIndex + 1) % phaseBoxes.length;
+                setTimeout(activateNextPhase, 2000);
+            }
+            
+            activateNextPhase();
+        });
+    </script>
+</body>
+</html>

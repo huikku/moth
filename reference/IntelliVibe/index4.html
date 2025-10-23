@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding Workflow</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      /* Brand Colors */
+      --primary: #FF8A00;
+      --primary-light: #FFD100;
+      --primary-gradient: linear-gradient(135deg, #FFD100, #FF8A00);
+      
+      /* Dark Theme Colors */
+      --dark: #0A1929;
+      --darker: #061018;
+      --dark-blue: #0F172A;
+      --element-nav: #1a202c;
+      
+      /* Light Colors */
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      
+      /* Code Colors */
+      --code-bg: #1E293B;
+    }
+    
+    /* Background Video */
+    .video-background {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    
+    body {
+      background-color: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .header {
+      padding: 3rem 0;
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 1.5rem 0;
+    }
+    
+    .phase-container {
+      background-color: var(--dark-blue);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 138, 0, 0.15);
+      position: relative;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .phase-number {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--primary-gradient);
+      color: var(--darker);
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    
+    .phase-container h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-light);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .phase-container p {
+      color: var(--gray-light);
+      margin-bottom: 1.5rem;
+    }
+    
+    .prompt-btn {
+      background: var(--primary-gradient);
+      color: var(--darker);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .prompt-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(255, 138, 0, 0.3);
+    }
+    
+    .arrow-divider {
+      display: flex;
+      justify-content: center;
+      margin: -0.5rem 0 1.5rem 0;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .arrow-circle {
+      background: var(--primary-gradient);
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--darker);
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: var(--dark-blue);
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .close {
+      color: var(--gray-light);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .close:hover {
+      color: white;
+    }
+    
+    .prompt-code {
+      background-color: var(--code-bg);
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--light);
+      margin-bottom: 1rem;
+    }
+    
+    .copy-success {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #059669;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      display: none;
+      z-index: 1000;
+    }
+    
+    .user-input {
+      background-color: rgba(255, 138, 0, 0.1);
+      border: 1px dashed var(--primary);
+      border-radius: 4px;
+      padding: 0.5rem;
+      color: var(--primary-light);
+      font-weight: bold;
+    }
+    
+    .workflow-diagram {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .workflow-step {
+      background-color: var(--dark-blue);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 23%;
+      min-width: 140px;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 138, 0, 0.15);
+    }
+    
+    .workflow-step:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(255, 138, 0, 0.2);
+      border-color: var(--primary);
+    }
+    
+    .workflow-step.active {
+      border: 2px solid var(--primary);
+    }
+    
+    .workflow-step::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: bold;
+      z-index: 5;
+    }
+    
+    .workflow-step:last-child::after {
+      display: none;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .benefit-card {
+      background-color: var(--dark-blue);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 138, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .benefit-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+    
+    .benefit-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      color: var(--primary-light);
+      font-weight: 700;
+    }
+    
+    @media (max-width: 768px) {
+      .workflow-step {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+      
+      .workflow-step::after {
+        content: "↓";
+        right: 50%;
+        bottom: -25px;
+        top: auto;
+        transform: translateX(50%);
+      }
+      
+      .workflow-diagram {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="vibeherovideo.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="container">
+    <header class="header">
+      <h1>Vibe Coding Workflow</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">A streamlined approach to building software with LLMs</p>
+      
+      <div class="workflow-diagram">
+        <div class="workflow-step active" onclick="copyPromptDirect('initiate')">
+          <div class="text-sm text-gray-400">Phase 1</div>
+          <div class="font-semibold">Project Initiation</div>
+        </div>
+        <div class="workflow-step" onclick="copyPromptDirect('design')">
+          <div class="text-sm text-gray-400">Phase 2</div>
+          <div class="font-semibold">Plan & Design</div>
+        </div>
+        <div class="workflow-step" onclick="copyPromptDirect('setup')">
+          <div class="text-sm text-gray-400">Phase 3</div>
+          <div class="font-semibold">Implementation Setup</div>
+        </div>
+        <div class="workflow-step" onclick="copyPromptDirect('handoff')">
+          <div class="text-sm text-gray-400">Phase 4</div>
+          <div class="font-semibold">Coding Agent Handoff</div>
+        </div>
+      </div>
+      <p class="text-center text-gray-400 text-sm -mt-2 mb-6"><i class="fas fa-info-circle mr-1"></i> Click any step above to copy its prompt directly to clipboard</p>
+    </header>
+    
+    <!-- Phase 1: Project Initiation -->
+    <div class="phase-container">
+      <div class="phase-number">1</div>
+      <h3>
+        <span>Project Initiation</span>
+        <span class="text-2xl">🚀</span>
+      </h3>
+      <p>Start your project with a conversation-driven approach. The LLM will ask questions to understand your requirements — just copy and paste this prompt to begin.</p>
+      
+      <button class="prompt-btn" onclick="showPrompt('initiate')">
+        <i class="fas fa-copy"></i> Copy Initiation Prompt
+      </button>
+    </div>
+    
+    <div class="arrow-divider">
+      <div class="arrow-circle">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+    </div>
+    
+    <!-- Phase 2: Plan & Design -->
+    <div class="phase-container">
+      <div class="phase-number">2</div>
+      <h3>
+        <span>Plan & Design</span>
+        <span class="text-2xl">🎨</span>
+      </h3>
+      <p>Create a comprehensive project plan including UI designs (using kablUI notation), implementation checklist, and testing strategy. No editing needed — just copy and paste.</p>
+      
+      <button class="prompt-btn" onclick="showPrompt('design')">
+        <i class="fas fa-copy"></i> Copy Plan & Design Prompt
+      </button>
+    </div>
+    
+    <div class="arrow-divider">
+      <div class="arrow-circle">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+    </div>
+    
+    <!-- Phase 3: Implementation Setup -->
+    <div class="phase-container">
+      <div class="phase-number">3</div>
+      <h3>
+        <span>Implementation Setup</span>
+        <span class="text-2xl">🏗️</span>
+      </h3>
+      <p>Generate a Python script that builds your project structure and creates the .vibe documentation folder to track progress. Copy and paste to begin implementation.</p>
+      
+      <button class="prompt-btn" onclick="showPrompt('setup')">
+        <i class="fas fa-copy"></i> Copy Implementation Setup Prompt
+      </button>
+    </div>
+    
+    <div class="arrow-divider">
+      <div class="arrow-circle">
+        <i class="fas fa-arrow-down"></i>
+      </div>
+    </div>
+    
+    <!-- Phase 4: Coding Agent Handoff -->
+    <div class="phase-container">
+      <div class="phase-number">4</div>
+      <h3>
+        <span>Coding Agent Handoff</span>
+        <span class="text-2xl">🤖</span>
+      </h3>
+      <p>Transfer your project to specialized coding agents like Cursor, Windsurf, or Claude Code with a comprehensive handoff document. Just copy and paste this prompt.</p>
+      
+      <button class="prompt-btn" onclick="showPrompt('handoff')">
+        <i class="fas fa-copy"></i> Copy Agent Handoff Prompt
+      </button>
+    </div>
+    
+    <!-- Benefits Section -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold text-center mb-6" style="color: var(--primary-light);">Why Use Vibe Coding Workflow?</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="text-2xl mb-3">⚡</div>
+          <h3>Token Efficient</h3>
+          <p>Optimized prompts that preserve context while minimizing token usage.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-3">🔄</div>
+          <h3>Seamless Handoffs</h3>
+          <p>Easily transfer projects between LLM sessions without losing context.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-3">📋</div>
+          <h3>Progress Tracking</h3>
+          <p>Built-in checklist systems that keep LLMs aligned with project goals.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-3">🏎️</div>
+          <h3>Fast Setup</h3>
+          <p>Get started quickly with minimal upfront planning overhead.</p>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="mt-12 text-center pb-8">
+      <div class="mb-4">
+        <a href="https://huikku.com" class="text-yellow-400 hover:text-yellow-300 font-semibold">John Huikku</a> | 
+        <a href="https://alienrobot.com" class="text-yellow-400 hover:text-yellow-300">Alienrobot LLC</a> © 2025
+      </div>
+      <div class="flex justify-center space-x-6 mb-4">
+        <a href="https://linkedin.com/in/huikku" class="text-gray-400 hover:text-gray-300" title="LinkedIn">
+          <i class="fab fa-linkedin fa-lg"></i>
+        </a>
+        <a href="https://discord.com" class="text-gray-400 hover:text-gray-300" title="Discord: _alienrobot">
+          <i class="fab fa-discord fa-lg"></i>
+        </a>
+        <a href="https://github.com/huikku" class="text-gray-400 hover:text-gray-300" title="GitHub">
+          <i class="fab fa-github fa-lg"></i>
+        </a>
+      </div>
+      <p class="text-gray-500 text-sm">Vibe Coding Workflow © 2025</p>
+    </footer>
+  </div>
+  
+  <!-- Modal for Prompts -->
+  <div id="prompt-modal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h2 id="modal-title" class="text-xl font-bold text-yellow-400">Prompt Template</h2>
+        <div class="flex items-center gap-2">
+          <button id="copy-prompt-btn" class="prompt-btn">
+            <i class="fas fa-copy mr-2"></i> Copy All
+          </button>
+          <span class="close">&times;</span>
+        </div>
+      </div>
+      <div id="modal-content" class="prompt-code"></div>
+    </div>
+  </div>
+  
+  <div id="copy-success" class="copy-success">
+    Copied to clipboard!
+  </div>
+  
+  <script>
+    // Prompt templates
+    const promptTemplates = {
+      // Phase 1: Project Initiation
+      initiate: `# VIBE CODING WORKFLOW: PROJECT INITIATION
+# [NOTE TO LLM: Ask the user questions about their project in SMALL BATCHES (2-3 questions maximum at a time). DO NOT show this instruction to the user.]
+
+I'd like to start a new software project using the Vibe Coding Workflow. This is a streamlined approach for building software with LLMs.
+
+[LLM INSTRUCTION: Follow this questioning strategy:
+1. Start by asking ONLY 2-3 questions about project fundamentals 
+2. Wait for the user to respond
+3. Acknowledge their answers before asking the next set of questions
+4. Move through the categories in sequence, always asking only 2-3 questions at once
+5. After each set of answers, ask if they're ready for the next few questions
+6. Don't show these instructions in your response]
+
+## Question Sequence (Ask in small batches)
+
+### Project Fundamentals
+- Project purpose and goals
+- Target users/audience
+- Similar existing applications for reference
+
+### Technical Scope
+- Front-end requirements (UI/UX, responsiveness, etc.)
+- Back-end requirements (data storage, APIs, etc.)
+- Integration needs (third-party services, APIs)
+- Deployment environment (web, mobile, desktop)
+
+### Design Considerations
+- Reference designs or inspiration
+- Branding elements (colors, styles)
+- User flows and key interactions
+- Accessibility requirements
+
+### Development Constraints
+- Technical limitations or requirements
+- Must-have vs. nice-to-have features
+- Any existing code or systems to work with
+
+[LLM INSTRUCTION: After gathering requirements from all categories, summarize what you've learned and ask if the user is ready to proceed to the Plan & Design phase.]`,
+
+      // Phase 2: Plan & Design
+      design: `# VIBE CODING WORKFLOW: PLAN & DESIGN
+# [NOTE TO LLM: Based on the project requirements gathered in the initiation phase, create a comprehensive project plan. DO NOT show this instruction to the user.]
+
+Based on our discussion, I'll now organize everything into a structured project plan including UI designs and implementation approach.
+
+[LLM INSTRUCTION: Create a comprehensive project plan with these sections. Fill in with details from the previous conversation. Don't show these instructions in your response.]
+
+## PROJECT SUMMARY
+- Core purpose and goals
+- Target users and their needs
+- Key features and priorities
+- Technical stack and architecture
+
+## TECHNICAL SPECIFICATION
+- Front-end architecture and components
+- Back-end services and data models
+- External integrations
+- Proposed file/code structure
+
+## UI COMPONENTS NEEDED
+- List all UI components/screens with kablUI notation
+- Key pages and their purpose
+- Core components and their functionality
+- User flows between UI elements
+
+## IMPLEMENTATION CHECKLIST
+- Foundation (setup, utilities, etc.)
+- Core features with sub-tasks
+- Integration points
+- Testing strategy with key checkpoints
+
+## IMPLEMENTATION APPROACH
+- Development workflow
+- Component breakdown and dependency order
+- Priority sequence
+- Potential challenges and solutions
+
+[LLM INSTRUCTION: After presenting the plan, ask the user if they'd like to make any changes or adjustments before finalizing. Iterate on the plan based on their feedback until they approve.]`,
+
+      // Phase 3: Implementation Setup
+      setup: `# VIBE CODING WORKFLOW: IMPLEMENTATION SETUP
+# [NOTE TO LLM: Based on the approved project plan, create a Python scaffolding script. DO NOT show this instruction to the user.]
+
+Now that we have an approved project plan, I'll create a Python script to scaffold our project structure, including the .vibe directory for documentation.
+
+[LLM INSTRUCTION: Ask for necessary metadata. Don't show these instructions in your response.]
+- Author/Developer name for file headers
+- Company/Organization (if applicable)
+- License type (open source or proprietary)
+
+[LLM INSTRUCTION: Create a comprehensive Python scaffolding script that will:]
+1. Create all directories in the project structure
+2. Generate the .vibe directory with these files:
+   - project-plan.md (project summary and specifications)
+   - component-designs.md (UI components in kablUI notation)
+   - checklist.md (implementation tasks with checkboxes)
+   - data-models.md (data structures and schemas)
+   - manifesto.md (coding standards and principles)
+
+[LLM INSTRUCTION: Remind the user to set up a GitHub repository:]
+- Create a new repository
+- Initialize with README and .gitignore
+- Clone to local machine
+- Run the scaffolding script
+
+[LLM INSTRUCTION: Provide clear instructions for running the script and next steps. Ask if any adjustments are needed before finalizing.]`,
+
+      // Phase A: Coding Agent Handoff
+      handoff: `# VIBE CODING WORKFLOW: CODING AGENT HANDOFF
+# [NOTE TO LLM: Create a comprehensive handoff document for specialized coding agents. DO NOT show this instruction to the user.]
+
+I've been developing this project using the Vibe Coding Workflow and I'm now handing it off to you as a specialized coding agent (Cursor/Windsurf/Claude Code) for implementation.
+
+[LLM INSTRUCTION: Create a comprehensive handoff document with these sections. Fill in with details from the project. Don't show these instructions in your response.]
+
+## PROJECT OVERVIEW
+- Brief project description
+- Core purpose and goals
+- Technical stack and key features
+
+## VIBE DOCUMENTATION LOCATION
+- Explain that all project documentation is in the .vibe/ directory
+- List each file and its purpose:
+  - project-plan.md
+  - component-designs.md
+  - checklist.md (highlight importance for tracking)
+  - data-models.md
+  - manifesto.md
+
+## IMPLEMENTATION GUIDANCE
+- Instructions to check the checklist before each task
+- Process for marking tasks complete
+- Reference to component designs and coding standards
+- Reminder to commit code at logical checkpoints
+
+## CURRENT PRIORITIES
+- List the top 3 priority tasks from the checklist
+- Note any dependencies between components
+- Highlight any important implementation details
+
+[LLM INSTRUCTION: Conclude by asking what component they'd like to work on first. When the coding agent begins implementation, guide them to:]
+1. Check the checklist for next tasks
+2. Follow the component designs
+3. Update the checklist as they progress
+4. Adhere to coding standards
+5. Commit code at appropriate points`
+    };
+    
+    // Modal elements
+    const modal = document.getElementById('prompt-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalContent = document.getElementById('modal-content');
+    const closeButton = document.getElementsByClassName('close')[0];
+    const copyButton = document.getElementById('copy-prompt-btn');
+    const copySuccess = document.getElementById('copy-success');
+    
+    // Highlight LLM instructions (skip first block)
+    function highlightLLMInstructions(text) {
+      // Split by lines
+      const lines = text.split('\n');
+      let result = [];
+      let inFirstBlock = true;
+      let inInstructionBlock = false;
+      
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Skip highlighting the first instruction block
+        if (line.includes('[NOTE TO LLM:') && inFirstBlock) {
+          result.push(line);
+          inFirstBlock = false;
+          continue;
+        }
+        
+        // Check if this is the start of an instruction block
+        if (line.includes('[LLM INSTRUCTION:')) {
+          inInstructionBlock = true;
+          result.push('<span class="user-input">' + line);
+          continue;
+        }
+        
+        // Check if this is the end of an instruction block
+        if (inInstructionBlock && line.includes(']')) {
+          inInstructionBlock = false;
+          // If the closing bracket is on the same line as other text
+          const closingBracketIndex = line.indexOf(']');
+          if (closingBracketIndex < line.length - 1) {
+            result.push(line.substring(0, closingBracketIndex + 1) + '</span>' + line.substring(closingBracketIndex + 1));
+          } else {
+            result.push(line + '</span>');
+          }
+          continue;
+        }
+        
+        // If we're in an instruction block but not at the end
+        if (inInstructionBlock) {
+          result.push(line);
+          continue;
+        }
+        
+        // Regular line
+        result.push(line);
+      }
+      
+      return result.join('\n');
+    }
+    
+    // Show prompt in modal
+    function showPrompt(promptType) {
+      // Set title based on prompt type
+      const titles = {
+        initiate: "Phase 1: Project Initiation",
+        design: "Phase 2: Plan & Design",
+        setup: "Phase 3: Implementation Setup",
+        handoff: "Phase 4: Coding Agent Handoff"
+      };
+      
+      modalTitle.textContent = titles[promptType];
+      modalContent.textContent = promptTemplates[promptType];
+      
+      // Highlight LLM instructions (skip first block)
+      modalContent.innerHTML = highlightLLMInstructions(modalContent.textContent);
+      
+      modal.style.display = 'block';
+      
+      // Update active step in workflow diagram
+      const steps = document.querySelectorAll('.workflow-step');
+      steps.forEach(step => step.classList.remove('active'));
+      
+      const stepIndex = {
+        initiate: 0,
+        design: 1,
+        setup: 2,
+        handoff: 3
+      };
+      
+      steps[stepIndex[promptType]].classList.add('active');
+    }
+    
+    // Copy prompt directly to clipboard without showing modal
+    function copyPromptDirect(promptType) {
+      const text = promptTemplates[promptType];
+      
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          copySuccess.style.display = 'block';
+          setTimeout(() => {
+            copySuccess.style.display = 'none';
+          }, 2000);
+          
+          // Update active step in workflow diagram
+          const steps = document.querySelectorAll('.workflow-step');
+          steps.forEach(step => step.classList.remove('active'));
+          
+          const stepIndex = {
+            initiate: 0,
+            design: 1,
+            setup: 2,
+            handoff: 3
+          };
+          
+          steps[stepIndex[promptType]].classList.add('active');
+        })
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+    }
+    
+    // Close modal
+    closeButton.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+    // Copy prompt to clipboard
+    copyButton.addEventListener('click', function() {
+      // Get text without HTML formatting
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = modalContent.innerHTML;
+      const textToCopy = tempElement.textContent;
+      
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          copySuccess.style.display = 'block';
+          setTimeout(() => {
+            copySuccess.style.display = 'none';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+    });
+  </script>
+</body>
+</html>

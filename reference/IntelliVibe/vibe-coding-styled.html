@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding Workflow</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      /* Brand Colors */
+      --primary: #FF8A00;
+      --primary-light: #FFD100;
+      --primary-gradient: linear-gradient(135deg, #FFD100, #FF8A00);
+      
+      /* Dark Theme Colors */
+      --dark: #0A1929;
+      --darker: #061018;
+      --dark-blue: #0F172A;
+      --element-nav: #1a202c;
+      
+      /* Light Colors */
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      
+      /* Code Colors */
+      --code-bg: #1E293B;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    
+    body {
+      background-color: var(--darker);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .section {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255, 138, 0, 0.1);
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    .section-title p {
+      font-size: 1.2rem;
+      color: var(--gray-light);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: var(--darker);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(255, 138, 0, 0.3);
+    }
+    
+    /* Workflow step styles */
+    .step-container {
+      background-color: var(--dark-blue);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 138, 0, 0.15);
+      position: relative;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    
+    .step-container.planning {
+      border-left: 4px solid #a855f7;
+    }
+    
+    .step-container.execution {
+      border-left: 4px solid #06b6d4;
+    }
+    
+    .step-number {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    
+    .step-container h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-light);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .step-container p {
+      color: var(--gray-light);
+      margin-bottom: 1.5rem;
+    }
+    
+    .step-container ul {
+      list-style-type: none;
+    }
+    
+    .step-container ul li {
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .step-container ul li::before {
+      content: "•";
+      color: var(--primary);
+    }
+    
+    .purple-accent {
+      color: #d8b4fe;
+    }
+    
+    .cyan-accent {
+      color: #67e8f9;
+    }
+    
+    .session-break {
+      background-color: var(--dark-blue);
+      border: 2px dashed var(--primary);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .copy-btn {
+      background: var(--primary-gradient);
+      color: var(--darker);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 138, 0, 0.3);
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: var(--dark-blue);
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .close {
+      color: var(--gray-light);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .close:hover {
+      color: white;
+    }
+    
+    .prompt-code {
+      background-color: var(--code-bg);
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: var(--light);
+      margin-bottom: 1rem;
+    }
+    
+    .copy-success {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #059669;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      display: none;
+      z-index: 1000;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .benefit-card {
+      background-color: var(--dark-blue);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 138, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .benefit-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+    
+    .benefit-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-light);
+      font-weight: 700;
+    }
+    
+    .header {
+      padding: 5rem 0;
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+      background-color: transparent;
+    }
+    
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    .video-background::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(6, 16, 24, 0.7), var(--darker));
+      z-index: 1;
+    }
+    
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7) contrast(1.2);
+    }
+    
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 2rem 0;
+      position: relative;
+      z-index: 5;
+      text-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    
+    .session-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .session-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .purple-bg {
+      background-color: #581c87;
+      color: #d8b4fe;
+    }
+    
+    .cyan-bg {
+      background-color: #0e7490;
+      color: #67e8f9;
+    }
+    
+    .session-title {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    
+    .break-btn {
+      background-color: #eab308;
+      color: var(--darker);
+      transition: all 0.2s;
+    }
+    
+    .break-btn:hover {
+      background-color: #facc15;
+      transform: translateY(-2px);
+    }
+    
+    .handover-btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="video-background">
+        <video autoplay loop muted playsinline>
+          <source src="vibeherovideo.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1>Vibe Coding Workflow</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto relative z-10">A structured approach to building software with Large Language Models</p>
+    </header>
+    
+    <div class="session-header">
+      <div class="session-icon purple-bg">1</div>
+      <h2 class="session-title purple-accent">Session 1: Planning & Design</h2>
+    </div>
+    
+    <div class="step-container planning" data-aos="fade-up">
+      <div class="step-number">1</div>
+      <h3>
+        <span>Brainstorm</span>
+        <span class="text-2xl">💭</span>
+      </h3>
+      <p>Discuss approaches, technologies, and interface ideas with the LLM</p>
+      <ul class="mt-4 space-y-2">
+        <li>Explore potential solutions without code</li>
+        <li>Consider technical constraints</li>
+        <li>Sketch out interface concepts</li>
+        <li>Identify potential challenges</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('brainstorm')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container planning" data-aos="fade-up">
+      <div class="step-number">2</div>
+      <h3>
+        <span>Create Project Checklist</span>
+        <span class="text-2xl">📋</span>
+      </h3>
+      <p>Develop a structured checklist to track progress and keep LLMs on task</p>
+      <ul class="mt-4 space-y-2">
+        <li>Break project into logical components and features</li>
+        <li>Track completion status with checkboxes</li>
+        <li>Include dependencies between components</li>
+        <li>Revisit and update at the start of each session</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('checklist')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container planning" data-aos="fade-up">
+      <div class="step-number">3</div>
+      <h3>
+        <span>Create Working Plan</span>
+        <span class="text-2xl">🗂️</span>
+      </h3>
+      <p>Design file structure and component hierarchy for the feature</p>
+      <ul class="mt-4 space-y-2">
+        <li>Map out file organization</li>
+        <li>Define component relationships</li>
+        <li>Establish data flow patterns</li>
+        <li>Identify reusable components</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('workingPlan')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container planning" data-aos="fade-up">
+      <div class="step-number">4</div>
+      <h3>
+        <span>Develop Interfaces</span>
+        <span class="text-2xl">🎨</span>
+      </h3>
+      <p>Create interface designs using <a href="https://huikku.github.io/kablUI/" target="_blank" class="text-yellow-400 hover:underline">kablUI</a> notation</p>
+      <ul class="mt-4 space-y-2">
+        <li>Define component structure with <a href="https://huikku.github.io/kablUI/" target="_blank" class="text-yellow-400 hover:underline">@COMPONENT</a> syntax</li>
+        <li>Specify styling with [] tags</li>
+        <li>Use §SECTION for logical grouping</li>
+        <li>Include state variations with {state}</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('interfaces')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="session-break" data-aos="fade-up">
+      <div class="flex items-center gap-3">
+        <div class="text-3xl">🔄</div>
+        <div>
+          <h3 class="text-xl font-bold text-yellow-400">Session Break Point</h3>
+          <p class="text-gray-300">Start a fresh LLM session here to avoid context limitations. Share checklist and interface designs.</p>
+        </div>
+      </div>
+      <button class="break-btn btn handover-btn" onclick="showPrompt('sessionHandover')">
+        <i class="fas fa-exchange-alt mr-2"></i> Copy Session Handover Prompt
+      </button>
+    </div>
+    
+    <div class="session-header">
+      <div class="session-icon cyan-bg">2</div>
+      <h2 class="session-title cyan-accent">Session 2: Implementation & Execution</h2>
+    </div>
+    
+    <div class="step-container execution" data-aos="fade-up">
+      <div class="step-number">5</div>
+      <h3>
+        <span>Generate Scaffolding Script</span>
+        <span class="text-2xl">🏗️</span>
+      </h3>
+      <p>Create a Python script to build all needed files and directories</p>
+      <ul class="mt-4 space-y-2">
+        <li>Generate directories based on component hierarchy</li>
+        <li>Create placeholder files with copyright headers</li>
+        <li>Add function/component templates</li>
+        <li>Ensure consistent file organization</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('scaffolding')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container execution" data-aos="fade-up">
+      <div class="step-number">6</div>
+      <h3>
+        <span>Create Development Prompt</span>
+        <span class="text-2xl">📝</span>
+      </h3>
+      <p>Develop a compact, LLM-readable prompt for implementation</p>
+      <ul class="mt-4 space-y-2">
+        <li>Summarize project context concisely</li>
+        <li>Include relevant interface designs</li>
+        <li>Reference file structure</li>
+        <li>Specify coding standards</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('developmentPrompt')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container execution" data-aos="fade-up">
+      <div class="step-number">7</div>
+      <h3>
+        <span>Write Project Manifesto</span>
+        <span class="text-2xl">📜</span>
+      </h3>
+      <p>Create a guiding document to keep future LLM sessions on track</p>
+      <ul class="mt-4 space-y-2">
+        <li>Define project vision and principles</li>
+        <li>Outline technical approach</li>
+        <li>Document key architecture decisions</li>
+        <li>Establish coding standards</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('manifesto')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="step-container execution" data-aos="fade-up">
+      <div class="step-number">8</div>
+      <h3>
+        <span>Complete Implementation</span>
+        <span class="text-2xl">✅</span>
+      </h3>
+      <p>Open new LLM session to implement the code based on previous steps</p>
+      <ul class="mt-4 space-y-2">
+        <li>Share manifesto and prompt with new LLM session</li>
+        <li>Implement code using established structure</li>
+        <li>Reference checklist to maintain progress</li>
+        <li>Update checklist with completed items</li>
+      </ul>
+      <button class="copy-btn" onclick="showPrompt('implementation')">
+        <i class="fas fa-copy mr-1"></i> Copy Prompt
+      </button>
+    </div>
+    
+    <div class="session-break bg-gray-800/50 border-green-500" data-aos="fade-up">
+      <div class="flex items-center gap-3">
+        <div class="text-3xl">🚀</div>
+        <div>
+          <h3 class="text-xl font-bold text-green-400">Cursor/Coding LLM Onboarding</h3>
+          <p class="text-gray-300">Bring your completed planning artifacts to a coding-focused LLM tool to implement the codebase.</p>
+        </div>
+      </div>
+      <button class="btn handover-btn bg-green-600 hover:bg-green-500 text-white" onclick="showPrompt('cursorOnboarding')">
+        <i class="fas fa-code mr-2"></i> Copy Cursor Onboarding Prompt
+      </button>
+    </div>
+    
+    <section class="section">
+      <div class="section-title">
+        <h2>Key Benefits</h2>
+      </div>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">🔄</div>
+          <h3>Maintains Context</h3>
+          <p>Preserves critical information across LLM sessions, preventing knowledge loss due to token limitations.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">📏</div>
+          <h3>Structured Code</h3>
+          <p>Produces consistent, well-organized code that follows established patterns and best practices.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">🧠</div>
+          <h3>Progress Tracking</h3>
+          <p>Prevents LLM from losing track of the project's state and completion status between sessions.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">🏗️</div>
+          <h3>Reusable Scaffolding</h3>
+          <p>Creates project templates and structures that can be reused for similar projects in the future.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">🧩</div>
+          <h3>Separation of Concerns</h3>
+          <p>Clearly divides planning from implementation, leading to better architecture and cleaner code.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="text-2xl mb-4">🌐</div>
+          <h3>LLM Agnostic</h3>
+          <p>Works across different LLM tools and models, allowing you to use the best tool for each phase.</p>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="mt-12 text-center text-gray-500 text-sm pb-8">
+      <p>Vibe Coding Workflow © 2025</p>
+    </footer>
+  </div>
+  
+  <!-- Modal for Prompts -->
+  <div id="prompt-modal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h2 id="modal-title" class="text-xl font-bold text-yellow-400">Prompt Template</h2>
+        <div class="flex items-center">
+          <button id="copy-prompt-btn" class="btn btn-primary mr-4">
+            <i class="fas fa-copy mr-2"></i> Copy to Clipboard
+          </button>
+          <span class="close">&times;</span>
+        </div>
+      </div>
+      <div id="modal-content" class="prompt-code"></div>
+    </div>
+  </div>
+  
+  <div id="copy-success" class="copy-success">
+    Copied to clipboard!
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+    
+    // Prompt templates
+    const promptTemplates = {
+      // Step 1: Brainstorming prompt
+      brainstorm: `# VIBE CODING: BRAINSTORMING PROMPT
+
+## PROJECT CONTEXT
+[Project name and purpose]
+[Target users/audience]
+[Core functionality needed]
+
+## KEY QUESTIONS
+- What problem are we solving with this [feature/component]?
+- Who are the primary users and what are their needs?
+- What existing patterns or solutions could we build on?
+- What technical constraints should we consider?
+- What are the most critical user flows?
+
+## TECHNOLOGY OPTIONS
+Let's explore our options for:
+1. Frontend framework/library
+2. UI component approach
+3. State management strategy
+4. API/data integration
+5. Performance considerations
+
+## INTERFACE CONCEPTS
+Let's sketch some initial UI concepts using plain text descriptions.
+What are the main screens/components needed?
+What interactions will users need?
+
+## POTENTIAL CHALLENGES
+What technical or UX challenges might we face?
+How might we address these challenges?
+
+## NEXT STEPS
+After our brainstorming, let's create a structured checklist of components and features to implement.`,
+
+      // Step 2: Checklist creation prompt
+      checklist: `# VIBE CODING: CHECKLIST CREATION PROMPT
+
+## PROJECT DETAILS
+[Project name]
+[Core functionality]
+[Phase of development]
+
+## CHECKLIST STRUCTURE
+Let's create a hierarchical checklist with this format:
+
+\`\`\`
+# [PROJECT NAME] CHECKLIST
+
+## CATEGORY 1
+- [ ] Major feature 1
+  - [ ] Sub-component 1.1
+  - [ ] Sub-component 1.2
+- [ ] Major feature 2
+
+## CATEGORY 2
+...and so on
+\`\`\`
+
+## CATEGORIES TO INCLUDE
+Let's organize our checklist into these categories:
+1. Core infrastructure
+2. UI components
+3. Data/state management
+4. User flows
+5. Testing & validation
+6. Documentation
+
+## FOR EACH ITEM, CONSIDER
+- Is this a must-have or nice-to-have?
+- Are there any dependencies (mark with → in checklist)?
+- Estimated complexity (Low/Medium/High)
+
+## PROGRESS TRACKING
+- [x] Completed items
+- [ ] Pending items
+- [IP] In-progress items
+
+Let's start by identifying all the major components and features needed for this project.`,
+
+      // Step 3: Working plan prompt
+      workingPlan: `# VIBE CODING: WORKING PLAN PROMPT
+
+## PROJECT OVERVIEW
+[Project name and brief description]
+[Core technologies]
+
+## FILE STRUCTURE PLANNING
+Let's design a clear, maintainable file structure.
+
+For a typical project, consider:
+\`\`\`
+project/
+├── .vibe/               # Vibe coding artifacts
+│   ├── checklist.md     # Our progress tracking
+│   ├── interfaces.md    # kablUI designs
+│   └── manifesto.md     # Project guiding principles
+├── public/              # Static assets
+├── src/                 # Source code
+│   ├── components/      # UI components
+│   │   ├── common/      # Reusable components
+│   │   └── feature/     # Feature-specific components
+│   ├── hooks/           # Custom hooks
+│   ├── services/        # API/data services
+│   ├── utils/           # Utility functions
+│   ├── pages/           # Page components
+│   └── context/         # State management
+└── tests/               # Test files
+\`\`\`
+
+## COMPONENT HIERARCHY
+Let's create a hierarchical structure of components:
+- What are the major page components?
+- What are their child components?
+- Which components can be reused?
+- How do components communicate with each other?
+
+## DATA FLOW PLANNING
+- What data needs to be managed?
+- Where does data originate?
+- How does data flow between components?
+- State management approach (Context, props, etc.)
+
+## API INTEGRATION
+- What endpoints will we need?
+- How will API services be structured?
+- Error handling approach?
+
+Let's create a detailed working plan that can guide our implementation.`,
+
+      // Step 4: Interface design prompt
+      interfaces: `# VIBE CODING: INTERFACE DESIGN PROMPT
+
+## PROJECT DETAILS
+[Project name and brief description]
+[Design style/aesthetic]
+
+## kablUI NOTATION
+Let's design our interfaces using kablUI notation: https://huikku.github.io/kablUI/
+
+Example:
+\`\`\`
+@CARD[bg:gray-800 rounded p:4]
+  @TITLE "Component Name"[font:semibold mb:4]
+  @CONTENT[flex gap:2]
+    [Button]Primary Action[/Button]
+    [Button bg:gray-700]Secondary Action[/Button]
+\`\`\`
+
+## KEY COMPONENTS TO DESIGN
+Based on our checklist, let's design:
+1. Page layout structure
+2. Navigation components
+3. Main content areas
+4. Interactive elements
+5. Data display components
+
+## FOR EACH COMPONENT
+- Consider all possible states (loading, empty, error, etc.)
+- Include responsive behavior notes
+- Define component props/configuration options
+- Note any animations or transitions
+
+## DESIGN BY USER FLOW
+Let's organize our designs by user flow:
+1. Initial experience
+2. Core functionality
+3. Secondary interactions
+4. Edge cases and error states
+
+Remember to keep designs consistent with our project's visual language.`,
+
+      // Session handover prompt
+      sessionHandover: `# VIBE CODING SESSION HANDOVER
+
+## PROJECT OVERVIEW
+[Project name and brief description]
+[Core technologies/frameworks]
+[Current feature being developed]
+
+## SESSION 1 OUTCOMES
+
+### Project Checklist
+\`\`\`
+[Insert your project checklist here with progress]
+- [x] Feature A
+- [ ] Feature B
+- [ ] Integration C
+\`\`\`
+
+### File Structure Plan
+\`\`\`
+[Insert directory structure]
+project/
+├── .vibe/
+│   ├── checklist.md
+│   └── interfaces.md
+├── src/
+│   ├── components/
+│   └── services/
+\`\`\`
+
+### Interface Design (kablUI)
+\`\`\`
+[Insert kablUI notation]
+@CARD[bg:gray-800 rounded p:4]
+  @TITLE "Component Name"[font:semibold mb:4]
+  @CONTENT[flex gap:2]
+    [Button]Primary Action[/Button]
+    [Button bg:gray-700]Secondary Action[/Button]
+\`\`\`
+
+## SESSION 2 FOCUS
+In this session, we'll focus on the implementation foundation:
+1. Creating a scaffolding script for file generation
+2. Developing a compact implementation prompt
+3. Writing a project manifesto to guide development
+4. Preparing for the final implementation
+
+Please maintain consistency with the design decisions from Session 1.`,
+
+      // Step 5: Scaffolding script prompt
+      scaffolding: `# VIBE CODING: SCAFFOLDING SCRIPT PROMPT
+
+## PROJECT DETAILS
+[Project name]
+[Programming language/framework]
+[Directory structure from planning phase]
+
+## SCAFFOLDING SCRIPT PURPOSE
+Create a Python script that will generate all necessary files and directories based on our planned structure.
+
+## SCRIPT FEATURES TO INCLUDE
+- Directory creation
+- Template file generation with appropriate placeholders
+- Copyright and header information
+- Common code patterns/boilerplate
+- Component templates based on our kablUI designs
+
+## TEMPLATE STRUCTURE
+For each file type, define a template string with placeholders:
+
+\`\`\`python
+COMPONENT_TEMPLATE = """
+/**
+ * {component_name}.js
+ * Copyright © {year} {author}. All rights reserved.
+ */
+import React from 'react';
+
+function {component_name}({{{props}}}) {
+  return (
+    <div className="{className}">
+      {content}
+    </div>
+  );
+}
+
+export default {component_name};
+"""
+\`\`\`
+
+## SCRIPT STRUCTURE
+\`\`\`python
+import os
+import sys
+from datetime import datetime
+
+# Configuration
+AUTHOR = "Your Name"
+YEAR = datetime.now().year
+PROJECT_ROOT = "."
+
+# File templates
+# ...
+
+# Directory creation functions
+# ...
+
+# File generation functions
+# ...
+
+# Main execution
+def main():
+    # Create directory structure
+    # Generate files
+    # Output summary
+    
+if __name__ == "__main__":
+    main()
+\`\`\`
+
+Let's create a complete scaffolding script that will generate our entire project structure.`,
+
+      // Step 6: Development prompt creation
+      developmentPrompt: `# VIBE CODING: DEVELOPMENT PROMPT CREATION
+
+## PROJECT OVERVIEW
+[Project name and brief description]
+[Core technologies and dependencies]
+
+## PURPOSE
+Create a compact, comprehensive prompt that will guide the implementation of our code.
+
+## PROMPT STRUCTURE
+Let's create a development prompt with these sections:
+
+1. Project Context
+   - Brief overview of project purpose
+   - Technical stack and requirements
+   - Key constraints or considerations
+
+2. Implementation Guidelines
+   - Coding style and conventions
+   - Error handling approaches
+   - Performance considerations
+   - Testing strategy
+
+3. Component Specifications
+   - Detailed requirements for each component
+   - Props and state management
+   - Interactions and behaviors
+   
+4. Data Flow
+   - How data moves through the application
+   - API integration points
+   - State management approach
+
+5. References
+   - Links to relevant documentation
+   - File paths to kablUI designs
+   - Other reference materials
+
+## IMPLEMENTATION ORDER
+Recommend a logical order for implementing components:
+1. Core utilities and services
+2. Base components
+3. Feature-specific components
+4. Integration and testing
+
+Let's create a clear, detailed prompt that will serve as a comprehensive guide for implementation.`,
+
+      // Step 7: Project manifesto prompt
+      manifesto: `# VIBE CODING: PROJECT MANIFESTO PROMPT
+
+## PROJECT DETAILS
+[Project name and brief description]
+[Core purpose and goals]
+
+## MANIFESTO PURPOSE
+Create a guiding document that defines the project's vision, principles, and technical approach. This will serve as a "north star" for development across all LLM sessions.
+
+## SECTIONS TO INCLUDE
+
+### 1. Vision Statement
+- What problem does this project solve?
+- Who are the target users?
+- What is the primary value proposition?
+
+### 2. Design Principles
+- What are the core UI/UX principles?
+- What visual language should be consistent?
+- What user experience priorities guide decisions?
+
+### 3. Technical Approach
+- What technologies were chosen and why?
+- What architectural patterns are used?
+- What performance considerations are important?
+
+### 4. Code Standards
+- Naming conventions
+- File organization principles
+- Component structure patterns
+- Documentation requirements
+
+### 5. Development Process
+- How features should be implemented
+- Testing expectations
+- Version control practices
+
+## FORMAT
+The manifesto should be clear, concise, and easily referenced. Use headings, bullet points, and examples where appropriate.
+
+Let's create a comprehensive project manifesto that will guide all future development.`,
+
+      // Step 8: Implementation prompt
+      implementation: `# VIBE CODING: IMPLEMENTATION PROMPT
+
+## PROJECT STATUS
+[Project name]
+[Current progress]
+[Next components to implement]
+
+## IMPLEMENTATION APPROACH
+Now that we have our planning artifacts, let's implement the code for this project:
+
+1. Review the project checklist to understand what needs to be built
+2. Follow the file structure defined in our working plan
+3. Implement components based on our kablUI interface designs
+4. Adhere to the coding standards in our project manifesto
+
+## COMPONENT IMPLEMENTATION STRATEGY
+For each component:
+1. Create the basic structure
+2. Add props and state management
+3. Implement core functionality
+4. Add styling and responsive behavior
+5. Handle edge cases and error states
+6. Add appropriate comments and documentation
+
+## TESTING APPROACH
+Consider how each component should be tested:
+- What are the key behaviors to verify?
+- What edge cases should be handled?
+- How should errors be managed?
+
+## CHECKLIST MANAGEMENT
+After implementing each component:
+- Update the project checklist to mark items as complete
+- Note any issues or changes to the original plan
+- Identify dependencies for the next components
+
+Let's begin implementing our code base following these guidelines.`,
+
+      // Cursor onboarding prompt
+      cursorOnboarding: `# VIBE CODING: CURSOR/CODING LLM ONBOARDING
+
+## PROJECT INTRODUCTION
+[Project name and brief description]
+[Core technologies and frameworks]
+
+## REFERENCE FILES
+This project follows the vibe coding workflow. Key reference files are located in:
+
+\`\`\`
+.vibe/
+├── checklist.md         # Project progress tracking
+├── structure.md         # File/component structure
+├── interfaces.md        # kablUI interface designs
+├── scaffold.py          # File generation script
+├── dev-prompt.md        # Development instructions
+└── manifesto.md         # Project principles
+\`\`\`
+
+## IMPLEMENTATION GUIDELINES
+Please refer to these files when implementing code:
+
+1. **checklist.md** - Shows what needs to be built and tracks progress
+2. **interfaces.md** - Contains kablUI designs for all UI components
+3. **manifesto.md** - Explains coding standards and architectural decisions
+
+## FILE ORGANIZATION
+Code should be organized according to structure.md:
+
+\`\`\`
+src/
+├── components/          # React components
+│   ├── common/          # Reusable UI elements
+│   └── feature/         # Feature-specific components
+├── hooks/               # Custom React hooks
+├── services/            # API services
+└── utils/               # Utility functions
+\`\`\`
+
+## CURRENT STATUS
+[Summary of current implementation status]
+[Which components have been completed]
+[Next priorities for implementation]
+
+## CODING STANDARDS
+- Follow the patterns in manifesto.md
+- Maintain consistent naming conventions
+- Add appropriate documentation
+- Update checklist.md as items are completed
+
+Please implement the next components from our checklist, referring to the interface designs in interfaces.md.`
+    };
+    
+    // Modal elements
+    const modal = document.getElementById('prompt-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalContent = document.getElementById('modal-content');
+    const closeButton = document.getElementsByClassName('close')[0];
+    const copyButton = document.getElementById('copy-prompt-btn');
+    const copySuccess = document.getElementById('copy-success');
+    
+    // Show prompt in modal
+    function showPrompt(promptType) {
+      // Set title based on prompt type
+      const titles = {
+        brainstorm: "Step 1: Brainstorming Prompt",
+        checklist: "Step 2: Checklist Creation Prompt",
+        workingPlan: "Step 3: Working Plan Prompt",
+        interfaces: "Step 4: Interface Design Prompt",
+        sessionHandover: "Session Handover Prompt",
+        scaffolding: "Step 5: Scaffolding Script Prompt",
+        developmentPrompt: "Step 6: Development Prompt",
+        manifesto: "Step 7: Project Manifesto Prompt",
+        implementation: "Step 8: Implementation Prompt",
+        cursorOnboarding: "Cursor/Coding LLM Onboarding Prompt"
+      };
+      
+      modalTitle.textContent = titles[promptType];
+      modalContent.textContent = promptTemplates[promptType];
+      modal.style.display = 'block';
+    }
+    
+    // Close modal
+    closeButton.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+    // Copy prompt to clipboard
+    copyButton.addEventListener('click', function() {
+      navigator.clipboard.writeText(modalContent.textContent)
+        .then(() => {
+          copySuccess.style.display = 'block';
+          setTimeout(() => {
+            copySuccess.style.display = 'none';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+    });
+  </script>
+</body>
+</html>
