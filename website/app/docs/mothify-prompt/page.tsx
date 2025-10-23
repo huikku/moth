@@ -144,6 +144,19 @@ Convert documentation → .moth format
 Maximize compression while preserving all critical information
 Output deterministic, parseable, low-entropy specifications
 
+## [FILE_EXTENSIONS]
+
+Save all MOTH files with one of these extensions:
+- .moth (PRIMARY - use this)
+- .str (alternative)
+- .spex (alternative)
+
+Example filenames:
+- product_spec.moth
+- coding_rules.moth
+- api_spec.moth
+- architecture.moth
+
 ## [MOTH_SYNTAX]
 
 ### Sections
@@ -393,6 +406,20 @@ Convert documentation → .moth format
 Maximize compression while preserving all critical information
 Extract and compress UI/interface designs using kablUI notation
 Output deterministic, parseable, low-entropy specifications
+
+## [FILE_EXTENSIONS]
+
+Save all MOTH files with one of these extensions:
+- .moth (PRIMARY - use this)
+- .str (alternative)
+- .spex (alternative)
+
+Example filenames:
+- product_spec.moth
+- coding_rules.moth
+- api_spec.moth
+- architecture.moth
+- design_system.moth
 
 ## [MOTH_SYNTAX]
 

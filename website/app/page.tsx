@@ -45,9 +45,20 @@ export default function Home() {
           <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', lineHeight: 1.2, marginBottom: '1.5rem', fontFamily: "'Poppins', sans-serif", fontWeight: 600, textAlign: 'center', maxWidth: '900px', margin: '0 auto 1.5rem' }}>
             <span style={{ color: '#ffffff' }}>Machine-Optimized Text Hierarchy</span>
           </h1>
-          <p style={{ fontSize: '1.2rem', lineHeight: 1.6, marginBottom: '2rem', color: '#cccccc', opacity: 0.9, textAlign: 'center', maxWidth: '600px', margin: '0 auto 2rem', fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
-            Convert and validate .moth specification files — the compact format for PRDs, rules, and architecture in AI-assisted development. Mothify compresses product knowledge into structured context that coding agents can keep always-on.
+          <p style={{ fontSize: '1.2rem', lineHeight: 1.6, marginBottom: '1.5rem', color: '#cccccc', opacity: 0.9, textAlign: 'center', maxWidth: '600px', margin: '0 auto 1.5rem', fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+            The compact format for PRDs, rules, and architecture in AI-assisted development. Mothify compresses product knowledge into structured context that coding agents can keep always-on.
           </p>
+
+          {/* File Extension Badge */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', padding: '0.5rem 1.25rem', borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: '#ffffff' }}>
+              <i className="fas fa-file-code" style={{ marginRight: '0.5rem', color: '#cccccc' }}></i>
+              <span style={{ fontWeight: 600 }}>.moth</span>
+            </div>
+            <span style={{ color: '#888888', fontSize: '0.875rem', fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+              (also .str, .spex)
+            </span>
+          </div>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
             <Link href="/docs/quick-reference" style={{ backgroundColor: '#ffffff', color: '#080808', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
               Read the Spec
