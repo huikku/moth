@@ -146,10 +146,7 @@ Output deterministic, parseable, low-entropy specifications
 
 ## [FILE_EXTENSIONS]
 
-Save all MOTH files with one of these extensions:
-- .moth (PRIMARY - use this)
-- .str (alternative)
-- .spex (alternative)
+Save all MOTH files with the .moth extension.
 
 Example filenames:
 - product_spec.moth
@@ -409,10 +406,7 @@ Output deterministic, parseable, low-entropy specifications
 
 ## [FILE_EXTENSIONS]
 
-Save all MOTH files with one of these extensions:
-- .moth (PRIMARY - use this)
-- .str (alternative)
-- .spex (alternative)
+Save all MOTH files with the .moth extension.
 
 Example filenames:
 - product_spec.moth

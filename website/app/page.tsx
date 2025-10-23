@@ -55,9 +55,6 @@ export default function Home() {
               <i className="fas fa-file-code" style={{ marginRight: '0.5rem', color: '#cccccc' }}></i>
               <span style={{ fontWeight: 600 }}>.moth</span>
             </div>
-            <span style={{ color: '#888888', fontSize: '0.875rem', fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
-              (also .str, .spex)
-            </span>
           </div>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
             <Link href="/docs/quick-reference" style={{ backgroundColor: '#ffffff', color: '#080808', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
