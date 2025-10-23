@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MOTH Website
 
-## Getting Started
+This is the official website for MOTH (Machine-Optimized Text Hierarchy), built with [Next.js](https://nextjs.org).
 
-First, run the development server:
+## Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build the static site:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+The static files will be generated in the `out/` directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment to GitHub Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This site is configured to deploy automatically to GitHub Pages when changes are pushed to the `main` branch.
 
-## Deploy on Vercel
+### Automatic Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The site uses GitHub Actions for automatic deployment:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push changes to the `main` branch
+2. GitHub Actions will automatically build and deploy to GitHub Pages
+3. The site will be available at: `https://huikku.github.io/moth/`
+
+### Manual Deployment
+
+To manually trigger a deployment:
+
+1. Go to the "Actions" tab in the GitHub repository
+2. Select "Deploy to GitHub Pages" workflow
+3. Click "Run workflow"
+
+### Configuration
+
+The site is configured for GitHub Pages deployment with:
+
+- **Base Path**: `/moth` (matches the repository name)
+- **Output**: Static export (`output: "export"`)
+- **Images**: Unoptimized (required for static export)
+- **Trailing Slash**: Enabled for better compatibility
+
+### GitHub Pages Settings
+
+Make sure GitHub Pages is enabled in the repository settings:
+
+1. Go to Settings → Pages
+2. Source: GitHub Actions
+3. The site will be deployed from the `gh-pages` branch automatically
+
+## Project Structure
+
+- `/app` - Next.js app directory with pages and components
+- `/public` - Static assets (images, videos, fonts)
+- `/out` - Generated static site (after build)
+- `.github/workflows/deploy.yml` - GitHub Actions deployment workflow

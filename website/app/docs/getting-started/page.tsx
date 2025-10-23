@@ -4,141 +4,130 @@ import Link from 'next/link';
 
 export default function GettingStartedPage() {
   return (
-    <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
+    <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
+      {/* Background Video and Overlay */}
+      <video className="video-bg" autoPlay loop muted playsInline>
+        <source src="/moths-slowmo.mp4" type="video/mp4" />
+      </video>
+      <div className="overlay" />
+
       {/* Header */}
-      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(255, 255, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }} className="border-b backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition">
-            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
-              M
-            </div>
-            <div>
-              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
-              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
-            </div>
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
+            <div style={{ backgroundColor: '#ffffff', color: '#080808' }} className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm">M</div>
+            <h1 className="text-lg font-bold" style={{ color: '#ffffff' }}>MOTH</h1>
           </Link>
-          <nav className="hidden md:flex gap-8">
-            <Link href="/" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Home</Link>
-            <Link href="/docs" style={{ color: '#00c8ff' }} className="font-semibold">Docs</Link>
-            <Link href="/examples" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Examples</Link>
-            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
+          <nav className="hidden md:flex gap-8 ml-auto">
+            <Link href="/" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#ffffff', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Examples</Link>
           </nav>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="mb-8">
-          <Link href="/docs" style={{ color: '#00c8ff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '8rem 2rem 4rem', position: 'relative', zIndex: 1 }}>
+        <div className="mb-8" style={{ textAlign: 'center' }}>
+          <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <h1 className="text-5xl font-bold mb-6" style={{ color: '#f0f0f0' }}>Getting Started with MOTH</h1>
-        
-        <div className="space-y-12">
-          <section>
-            <h2 className="text-3xl font-bold mb-4">Step 1: Learn the Syntax</h2>
-            <p className="text-slate-300 mb-4">
-              Start with the <Link href="/docs/quick-reference" className="text-amber-400 hover:text-orange-500">Quick Reference</Link> to learn the basic syntax in 5 minutes.
-            </p>
-            <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-              <p className="font-mono text-sm text-slate-300">
-                [SECTION_NAME]<br/>
-                key:value<br/>
-                key:item1;item2;item3<br/>
-                key:{'{k=v;k2=v2}'}
+        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
+          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Getting Started with MOTH</h1>
+
+          <div className="space-y-12" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+            <section>
+              <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 1: Learn the Syntax</h2>
+              <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
+                Start with the <Link href="/docs/quick-reference" style={{ color: '#ffffff' }} className="hover:opacity-80">Quick Reference</Link> to learn the basic syntax in 5 minutes.
               </p>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
+                <p className="font-mono text-sm" style={{ color: '#cccccc' }}>
+                  [SECTION_NAME]<br/>
+                  key:value<br/>
+                  key:item1;item2;item3<br/>
+                  key:{'{k=v;k2=v2}'}
+                </p>
+              </div>
+            </section>
+
+          <section>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 2: Choose Your Use Case</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
+                <h3 className="font-bold mb-3" style={{ color: '#ffffff' }}>📋 PRD</h3>
+                <p className="text-sm" style={{ color: '#888888', lineHeight: '1.7' }}>
+                  Writing a product specification? MOTH helps structure your requirements clearly.
+                </p>
+              </div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
+                <h3 className="font-bold mb-3" style={{ color: '#ffffff' }}>⚙️ Coding Rules</h3>
+                <p className="text-sm" style={{ color: '#888888', lineHeight: '1.7' }}>
+                  Creating .cursorrules? MOTH provides a clean format for AI instructions.
+                </p>
+              </div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
+                <h3 className="font-bold mb-3" style={{ color: '#ffffff' }}>🏗️ Architecture</h3>
+                <p className="text-sm" style={{ color: '#888888', lineHeight: '1.7' }}>
+                  Documenting your system? MOTH makes architecture docs scannable and clear.
+                </p>
+              </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold mb-4">Step 2: Choose Your Use Case</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-                <h3 className="font-bold mb-2">📋 PRD</h3>
-                <p className="text-slate-400 text-sm">
-                  Writing a product specification? Download the PRD template.
-                </p>
-              </div>
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-                <h3 className="font-bold mb-2">⚙️ Coding Rules</h3>
-                <p className="text-slate-400 text-sm">
-                  Creating .cursorrules? Use the rules template.
-                </p>
-              </div>
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-                <h3 className="font-bold mb-2">🏗️ Architecture</h3>
-                <p className="text-slate-400 text-sm">
-                  Documenting your system? Use the architecture template.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-3xl font-bold mb-4">Step 3: Download a Template</h2>
-            <p className="text-slate-300 mb-4">
-              Head to the <Link href="/templates" className="text-amber-400 hover:text-orange-500">Templates</Link> page and download the template that matches your needs.
+            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 3: Write Your Content</h2>
+            <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
+              Start with a simple structure and build from there. Check out the <Link href="/examples" style={{ color: '#ffffff' }} className="hover:opacity-80">Examples</Link> page to see real-world MOTH files.
             </p>
-            <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-              <p className="text-slate-300 mb-2">Templates available:</p>
-              <ul className="list-disc list-inside space-y-1 text-slate-400">
-                <li>prd_template.moth</li>
-                <li>rules_template.moth</li>
-                <li>architecture_template.moth</li>
-                <li>api_spec_template.moth</li>
-              </ul>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-3xl font-bold mb-4">Step 4: Customize for Your Project</h2>
-            <p className="text-slate-300 mb-4">
-              Edit the template to match your project, stack, and requirements. Replace the placeholder values with your actual data.
-            </p>
-            <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-6">
-              <p className="font-mono text-sm text-slate-300 mb-4">
-                # Before<br/>
-                name:YourApp; domain:your_domain<br/>
+            <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
+              <p className="font-mono text-sm mb-4" style={{ color: '#cccccc' }}>
+                # Example MOTH structure<br/>
+                name:TaskFlow; domain:project_management<br/>
                 <br/>
-                # After<br/>
-                name:TaskFlow; domain:project_management
+                ## Overview<br/>
+                A task management app for teams...<br/>
+                <br/>
+                ## Features<br/>
+                - Task creation and assignment<br/>
+                - Real-time collaboration
               </p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold mb-4">Step 5: Use in Your Project</h2>
-            <p className="text-slate-300 mb-4">
+            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 4: Use in Your Project</h2>
+            <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
               Add your MOTH file to your project and load it in your favorite tool:
             </p>
-            <div className="space-y-3">
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4">
-                <p className="font-bold mb-2">Cursor</p>
-                <p className="text-slate-400 text-sm">Add to .cursorrules or load as context</p>
+            <div className="space-y-4">
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-4">
+                <p className="font-bold mb-2" style={{ color: '#ffffff' }}>Cursor</p>
+                <p className="text-sm" style={{ color: '#888888' }}>Add to .cursorrules or load as context</p>
               </div>
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4">
-                <p className="font-bold mb-2">Cline</p>
-                <p className="text-slate-400 text-sm">Add to project context in settings</p>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-4">
+                <p className="font-bold mb-2" style={{ color: '#ffffff' }}>Cline</p>
+                <p className="text-sm" style={{ color: '#888888' }}>Add to project context in settings</p>
               </div>
-              <div className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4">
-                <p className="font-bold mb-2">ChatGPT / Claude</p>
-                <p className="text-slate-400 text-sm">Paste into your chat or upload as file</p>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-4">
+                <p className="font-bold mb-2" style={{ color: '#ffffff' }}>ChatGPT / Claude</p>
+                <p className="text-sm" style={{ color: '#888888' }}>Paste into your chat or upload as file</p>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold mb-4">Step 6: Learn from Examples</h2>
-            <p className="text-slate-300 mb-4">
+            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 6: Learn from Examples</h2>
+            <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
               Check out real-world examples to see how MOTH is used in practice.
             </p>
-            <Link href="/examples" className="inline-block px-6 py-2 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition">
+            <Link href="/examples" className="inline-block px-6 py-2 font-semibold rounded-lg transition" style={{ backgroundColor: '#ffffff', color: '#080808', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)' }}>
               View Examples →
             </Link>
           </section>
 
-          <section className="bg-gradient-to-r from-amber-400/10 to-orange-500/10 border border-amber-400/30 rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4">Pro Tips</h2>
-            <ul className="space-y-3 text-slate-300">
+          <section style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Pro Tips</h2>
+            <ul className="space-y-3" style={{ color: '#cccccc', lineHeight: '1.8' }}>
               <li>✓ Keep MOTH files in your project repo (e.g., /rules/prd.moth)</li>
               <li>✓ Update MOTH files as your project evolves</li>
               <li>✓ Use MOTH for all technical documentation</li>
@@ -147,12 +136,45 @@ export default function GettingStartedPage() {
             </ul>
           </section>
         </div>
+        </article>
       </div>
 
       {/* Footer */}
-      <footer style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-t mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center" style={{ color: '#555555' }}>
-          <p>© 2025 MOTH — Open notation standard. MIT License.</p>
+      <footer style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)', position: 'relative', zIndex: 10 }} className="border-t mt-20">
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '3rem 2rem' }}>
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Product</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs" className="hover:opacity-100">Documentation</Link></li>
+                <li><Link href="/examples" className="hover:opacity-100">Examples</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Resources</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs/quick-reference" className="hover:opacity-100">Quick Reference</Link></li>
+                <li><Link href="/docs/spec" className="hover:opacity-100">Full Spec</Link></li>
+                <li><Link href="/docs/integration" className="hover:opacity-100">Integration Guide</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Community</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://huikku.github.io/kablUI/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">kablUI</a></li>
+                <li><a href="https://huikku.github.io/IntelliVibe/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">IntelliVibe</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Legal</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">Alienrobot LLC</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ color: '#888888', borderTopColor: 'rgba(255, 255, 255, 0.1)', borderTopWidth: '1px', paddingTop: '2rem', textAlign: 'center' }}>
+            <p>© 2025 John Huikku • Alienrobot LLC • <a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', textDecoration: 'none' }} className="hover:opacity-70">www.alienrobot.com</a></p>
+          </div>
         </div>
       </footer>
     </div>

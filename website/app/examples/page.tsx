@@ -109,84 +109,130 @@ export default function ExamplesPage() {
   const [selectedExample, setSelectedExample] = useState(examples[0]);
 
   return (
-    <div style={{ backgroundColor: '#080808', color: '#f0f0f0' }} className="min-h-screen">
+    <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
+      {/* Background Video and Overlay */}
+      <video className="video-bg" autoPlay loop muted playsInline>
+        <source src="/moths-slowmo.mp4" type="video/mp4" />
+      </video>
+      <div className="overlay" />
+
       {/* Header */}
-      <header style={{ borderBottomColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-b backdrop-blur-sm sticky top-0 z-50">
+      <header style={{ borderBottomColor: 'rgba(255, 255, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }} className="border-b backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition">
-            <div style={{ backgroundColor: '#00c8ff', color: '#080808' }} className="w-8 h-8 rounded-lg flex items-center justify-center font-bold">
-              M
-            </div>
-            <div>
-              <h1 className="text-xl font-bold" style={{ color: '#00c8ff' }}>MOTH</h1>
-              <p className="text-xs" style={{ color: '#555555' }}>Minimal Overhead Technical Hierarchy</p>
-            </div>
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
+            <div style={{ backgroundColor: '#ffffff', color: '#080808' }} className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm">M</div>
+            <h1 className="text-lg font-bold" style={{ color: '#ffffff' }}>MOTH</h1>
           </Link>
-          <nav className="hidden md:flex gap-8">
-            <Link href="/" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Home</Link>
-            <Link href="/docs" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Docs</Link>
-            <Link href="/examples" style={{ color: '#00c8ff' }} className="font-semibold">Examples</Link>
-            <Link href="/templates" style={{ color: '#f0f0f0' }} className="hover:opacity-80 transition">Templates</Link>
+          <nav className="hidden md:flex gap-8 ml-auto">
+            <Link href="/" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#ffffff', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Examples</Link>
           </nav>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-5xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Examples</h1>
-        <p className="text-xl mb-12" style={{ color: '#f0f0f0', opacity: 0.9 }}>Real-world MOTH files to learn from and use as templates.</p>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '8rem 2rem 4rem', position: 'relative', zIndex: 10 }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          {/* Logo */}
+          <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
+            <img src="/logo-mono.png" alt="MOTH Logo" style={{ height: '100px', width: 'auto' }} />
+          </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+          <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 600, color: '#f0f0f0', marginBottom: '1.5rem', fontFamily: "'Poppins', sans-serif" }}>
+            Examples
+          </h1>
+          <p style={{ fontSize: '1.25rem', color: '#f0f0f0', opacity: 0.9, maxWidth: '700px', margin: '0 auto', fontFamily: "'Barlow Condensed', sans-serif" }}>
+            Real-world MOTH files to learn from and adapt for your projects.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
           {/* Example List */}
-          <div className="lg:col-span-1">
-            <div className="space-y-3">
+          <div style={{ gridColumn: '1' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {examples.map((example) => (
                 <button
                   key={example.id}
                   onClick={() => setSelectedExample(example)}
                   style={{
-                    backgroundColor: selectedExample.id === example.id ? 'rgba(0, 200, 255, 0.1)' : 'rgba(0, 12, 24, 0.4)',
-                    borderColor: selectedExample.id === example.id ? 'rgba(0, 200, 255, 0.5)' : 'rgba(0, 200, 255, 0.2)',
-                    color: '#f0f0f0'
+                    backgroundColor: selectedExample.id === example.id ? 'rgba(0, 200, 255, 0.15)' : 'rgba(0, 12, 24, 0.6)',
+                    border: selectedExample.id === example.id ? '2px solid rgba(0, 200, 255, 0.5)' : '1px solid rgba(0, 200, 255, 0.2)',
+                    borderRadius: '8px',
+                    padding: '1rem',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    width: '100%'
                   }}
-                  className="w-full text-left p-4 rounded-lg border transition hover:opacity-90"
+                  className="hover:opacity-90"
                 >
-                  <div className="font-semibold">{example.title}</div>
-                  <div className="text-sm mt-1" style={{ color: '#555555' }}>{example.category}</div>
+                  <div style={{ fontWeight: 600, color: '#f0f0f0', fontFamily: "'Poppins', sans-serif" }}>
+                    {example.title}
+                  </div>
+                  <div style={{ fontSize: '0.875rem', marginTop: '0.25rem', color: '#f0f0f0', opacity: 0.6 }}>
+                    {example.category}
+                  </div>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Code Display */}
-          <div className="lg:col-span-2">
-            <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="border rounded-lg overflow-hidden">
-              <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderBottomColor: 'rgba(0, 200, 255, 0.2)' }} className="px-4 py-3 border-b">
-                <h3 className="font-semibold text-lg" style={{ color: '#f0f0f0' }}>{selectedExample.title}</h3>
-                <p className="text-sm mt-1" style={{ color: '#555555' }}>{selectedExample.description}</p>
+          <div style={{ gridColumn: 'span 2' }}>
+            <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', border: '1px solid rgba(0, 200, 255, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
+              <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderBottom: '1px solid rgba(0, 200, 255, 0.2)', padding: '1rem 1.5rem' }}>
+                <h3 style={{ fontWeight: 600, fontSize: '1.125rem', color: '#f0f0f0', fontFamily: "'Poppins', sans-serif" }}>
+                  {selectedExample.title}
+                </h3>
+                <p style={{ fontSize: '0.875rem', marginTop: '0.25rem', color: '#f0f0f0', opacity: 0.7 }}>
+                  {selectedExample.description}
+                </p>
               </div>
-              <pre style={{ color: '#f0f0f0', opacity: 0.9 }} className="p-4 text-sm overflow-x-auto font-mono max-h-96">
+              <pre style={{ color: '#f0f0f0', opacity: 0.9, padding: '1.5rem', fontSize: '0.875rem', overflow: 'auto', maxHeight: '500px', fontFamily: "'JetBrains Mono', monospace", lineHeight: 1.6, margin: 0 }}>
                 <code>{selectedExample.code}</code>
               </pre>
             </div>
           </div>
         </div>
 
-        {/* More Examples CTA */}
-        <div style={{ backgroundColor: 'rgba(0, 200, 255, 0.05)', borderColor: 'rgba(0, 200, 255, 0.2)' }} className="mt-20 border rounded-lg p-12 text-center">
-          <h3 className="text-2xl font-bold mb-4" style={{ color: '#f0f0f0' }}>Want more examples?</h3>
-          <p className="text-lg mb-8" style={{ color: '#f0f0f0', opacity: 0.9 }}>
-            Check out the full documentation and templates for more real-world MOTH files.
-          </p>
-          <Link href="/templates" style={{ backgroundColor: '#00c8ff', color: '#080808', boxShadow: '0 4px 15px rgba(0, 200, 255, 0.2)' }} className="px-8 py-3 font-semibold rounded-lg hover:opacity-90 transition inline-block">
-            View Templates
-          </Link>
-        </div>
       </div>
 
       {/* Footer */}
-      <footer style={{ borderTopColor: 'rgba(0, 200, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)' }} className="border-t mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center" style={{ color: '#555555' }}>
-          <p>© 2025 MOTH — Open notation standard. MIT License.</p>
+      <footer style={{ borderTopColor: 'rgba(255, 255, 255, 0.1)', backgroundColor: 'rgba(8, 8, 8, 0.95)', position: 'relative', zIndex: 10 }} className="border-t mt-20">
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '3rem 2rem' }}>
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Product</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs" className="hover:opacity-100">Documentation</Link></li>
+                <li><Link href="/examples" className="hover:opacity-100">Examples</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Resources</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs/quick-reference" className="hover:opacity-100">Quick Reference</Link></li>
+                <li><Link href="/docs/spec" className="hover:opacity-100">Full Spec</Link></li>
+                <li><Link href="/docs/integration" className="hover:opacity-100">Integration Guide</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Community</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://huikku.github.io/kablUI/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">kablUI</a></li>
+                <li><a href="https://huikku.github.io/IntelliVibe/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">IntelliVibe</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Legal</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">Alienrobot LLC</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ color: '#888888', borderTopColor: 'rgba(255, 255, 255, 0.1)', borderTopWidth: '1px', paddingTop: '2rem', textAlign: 'center' }}>
+            <p>© 2025 John Huikku • Alienrobot LLC • <a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', textDecoration: 'none' }} className="hover:opacity-70">www.alienrobot.com</a></p>
+          </div>
         </div>
       </footer>
     </div>
