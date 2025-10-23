@@ -360,7 +360,7 @@ Everything is structured and actionable.`}
               <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#aaaaaa', display: 'inline-block' }} />
             </div>
             <div style={{ display: 'flex', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '1rem', flexWrap: 'wrap' }}>
-              {['prd', 'large-prd', 'style-guide', 'deploy-rules', 'supabase-rules'].map((tab) => (
+              {['prd', 'large-prd', 'prd-with-ui', 'style-guide', 'deploy-rules', 'supabase-rules'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -378,6 +378,7 @@ Everything is structured and actionable.`}
                   }}
                 >
                   {tab === 'large-prd' ? 'LARGE PRD' :
+                   tab === 'prd-with-ui' ? 'PRD + kablUI' :
                    tab === 'style-guide' ? 'STYLE GUIDE' :
                    tab === 'deploy-rules' ? 'DEPLOY RULES' :
                    tab === 'supabase-rules' ? 'SUPABASE RULES' :
@@ -444,6 +445,84 @@ uptime:99.9%
 encryption:aes256; transit:tls13
 compliance:soc2+gdpr+hipaa
 auth:mfa+rbac; audit:full_logging`}
+
+{activeTab === 'prd-with-ui' && `intent:product_requirements
+audience:engineering+design; version:1.0.0
+project:asset_management_platform
+
+[PRODUCT]
+name:AssetHub; type:saas
+domain:digital_asset_management
+target:creative_teams+studios
+
+[FEATURES]
+upload:drag_drop+bulk+api
+organize:folders;tags;collections
+preview:images;video;3d;audio
+search:metadata+ai_visual+tags
+share:links;embed;download
+
+[STACK]
+frontend:react+typescript
+backend:fastapi; db:postgresql
+storage:s3; cdn:cloudflare
+
+# kablUI UI Contract
+[UI.contract]
+@APP[theme:dark]
+  @HEADER[h:64;bg:#1a1a1a]
+    @LOGO AssetHub @LOGO
+    @NAV [Assets][Collections][Upload][Settings]
+    @SEARCH[w:300;placeholder:"Search assets..."]
+    @AVATAR[align:right]
+
+  @SIDEBAR[w:240;bg:#232323]
+    §FOLDERS
+      +Projects
+        -Project_Alpha
+        -Project_Beta
+      +Archive
+    §TAGS
+      #product #marketing #video
+
+  @MAIN[bg:#2a2a2a]
+    @TOOLBAR[h:48]
+      @BUTTON "Upload" [primary]
+      @BUTTON "New Folder"
+      @DROPDOWN "Sort by: Date"
+      @TOGGLE "Grid/List"
+
+    @GRID[cols:4;gap:16]
+      @CARD[asset]
+        @THUMB "image.jpg"
+        @META "2.4 MB • JPG"
+        @TAGS #product
+      @CARD[asset]
+        @THUMB "video.mp4"
+        @META "45 MB • MP4"
+        @TAGS #marketing
+      @CARD[asset]
+        @THUMB "model.glb"
+        @META "12 MB • GLB"
+        @TAGS #3d
+
+  @PANEL[position:right;w:320;collapsed]
+    @TABS [Details][History][Share]
+    @SECTION "File Info"
+      name: hero_image.jpg
+      size: 2.4 MB
+      uploaded: 2025-01-15
+    @SECTION "Metadata"
+      dimensions: 1920x1080
+      format: JPEG
+      color: RGB
+
+[UI.rules]
+components:APP;HEADER;NAV;SIDEBAR;MAIN;GRID;CARD
+theme:dark_mode_only
+accessibility:aria_labels;keyboard_nav
+feature_ref:FEATURES.upload;FEATURES.organize
+responsive:mobile=stack;tablet=2col;desktop=4col`}`}
 
 {activeTab === 'style-guide' && `intent:style_guide
 audience:dev_team; scope:frontend
