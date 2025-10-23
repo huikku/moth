@@ -10,7 +10,7 @@ export default function Home() {
     <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
       {/* Background Video and Overlay */}
       <video className="video-bg" autoPlay loop muted playsInline>
-        <source src="/moths-slowmo.mp4" type="video/mp4" />
+        <source src="/moth/moths-slowmo.mp4" type="video/mp4" />
       </video>
       <div className="overlay" />
 
@@ -36,7 +36,7 @@ export default function Home() {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem', textAlign: 'center' }}>
           {/* Logo */}
           <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
-            <img src="/logo-mono.png" alt="MOTH Logo" style={{ height: '120px', width: 'auto' }} />
+            <img src="/moth/logo-mono.png" alt="MOTH Logo" style={{ height: '120px', width: 'auto' }} />
           </div>
 
           <div style={{ color: '#cccccc', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '0.875rem', marginBottom: '1rem', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '2px' }}>

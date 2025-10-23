@@ -7,7 +7,7 @@ export default function QuickReferencePage() {
     <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
       {/* Background Video and Overlay */}
       <video className="video-bg" autoPlay loop muted playsInline>
-        <source src="/moths-slowmo.mp4" type="video/mp4" />
+        <source src="/moth/moths-slowmo.mp4" type="video/mp4" />
       </video>
       <div className="overlay" />
 

@@ -38,7 +38,7 @@ export default function TemplatesPage() {
     <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
       {/* Background Video and Overlay */}
       <video className="video-bg" autoPlay loop muted playsInline>
-        <source src="/moths-slowmo.mp4" type="video/mp4" />
+        <source src="/moth/moths-slowmo.mp4" type="video/mp4" />
       </video>
       <div className="overlay" />
 
@@ -61,7 +61,7 @@ export default function TemplatesPage() {
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           {/* Logo */}
           <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
-            <img src="/logo-mono.png" alt="MOTH Logo" style={{ height: '100px', width: 'auto' }} />
+            <img src="/moth/logo-mono.png" alt="MOTH Logo" style={{ height: '100px', width: 'auto' }} />
           </div>
 
           <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 600, color: '#f0f0f0', marginBottom: '1.5rem', fontFamily: "'Poppins', sans-serif" }}>
