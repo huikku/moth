@@ -80,9 +80,19 @@ a, button {
   pointer-events: none;
 }
 
+/* Hide video on slow connections */
+.slow-connection .video-bg {
+  display: none;
+}
+
+/* Fallback background when video is hidden */
+.slow-connection body {
+  background: #232322;
+}
+
 @media (max-width: 768px) {
-  .video-bg { display: none; }
+  /* Keep video on mobile unless slow connection */
   body {
-    background: linear-gradient(45deg, #000510 0%, #001428 50%, #001020 100%);
+    background: #232322;
   }
 }

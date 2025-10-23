@@ -22,6 +22,18 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              if ('connection' in navigator) {
+                const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                if (conn && (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.saveData)) {
+                  document.documentElement.classList.add('slow-connection');
+                }
+              }
+            })();
+          `
+        }} />
       </head>
       <body className="antialiased">
         {children}
