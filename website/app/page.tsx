@@ -533,7 +533,7 @@ components:APP;HEADER;NAV;SIDEBAR;MAIN;GRID;CARD
 theme:dark_mode_only
 accessibility:aria_labels;keyboard_nav
 feature_ref:FEATURES.upload;FEATURES.organize
-responsive:mobile=stack;tablet=2col;desktop=4col`}`}
+responsive:mobile=stack;tablet=2col;desktop=4col`}
 
 {activeTab === 'style-guide' && `intent:style_guide
 audience:dev_team; scope:frontend
