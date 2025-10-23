@@ -114,10 +114,10 @@ export default function OnboardingPage() {
           </div>
         </article>
 
-        <div className="space-y-8" style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
+        <div className="space-y-12" style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
           <section>
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>How to Use This Prompt</h2>
-            <ol className="space-y-4" style={{ color: '#cccccc', fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }}>
+            <h2 className="text-2xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>How to Use This Prompt</h2>
+            <ol className="space-y-5" style={{ color: '#cccccc', fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }}>
               <li><strong>1. Copy the prompt above</strong> using the button</li>
               <li><strong>2. Open your LLM</strong> (ChatGPT, Claude, etc.)</li>
               <li><strong>3. Paste the prompt</strong> into a new conversation</li>

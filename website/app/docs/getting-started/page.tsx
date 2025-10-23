@@ -31,13 +31,13 @@ export default function GettingStartedPage() {
           <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
-          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Getting Started with MOTH</h1>
+        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
+          <h1 className="text-5xl font-bold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Getting Started with MOTH</h1>
 
-          <div className="space-y-12" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+          <div className="space-y-16" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
             <section>
-              <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 1: Learn the Syntax</h2>
-              <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
+              <h2 className="text-3xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 1: Learn the Syntax</h2>
+              <p className="mb-6" style={{ color: '#cccccc', lineHeight: '2.0' }}>
                 Start with the <Link href="/docs/quick-reference" style={{ color: '#ffffff' }} className="hover:opacity-80">Quick Reference</Link> to learn the basic syntax in 5 minutes.
               </p>
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">

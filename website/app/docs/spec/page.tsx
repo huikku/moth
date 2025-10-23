@@ -31,11 +31,11 @@ export default function SpecPage() {
           <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
-          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>MOTH v1.0 Specification</h1>
+        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
+          <h1 className="text-5xl font-bold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>MOTH v1.0 Specification</h1>
 
-          <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6 mb-8">
-            <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.7' }}>
+          <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6 mb-12">
+            <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }}>
               <strong>Full technical specification</strong> for implementers and advanced users. This document covers all syntax rules, type systems, validation requirements, and best practices.
             </p>
           </div>
@@ -59,26 +59,26 @@ export default function SpecPage() {
             </ul>
           </section>
 
-          <section>
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>File Format</h2>
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>File Format</h2>
             <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
-              <p className="mb-4" style={{ lineHeight: '1.7' }}><strong>Extensions:</strong></p>
-              <ul className="list-disc list-inside space-y-2 mb-4" style={{ lineHeight: '1.7' }}>
+              <p className="mb-5" style={{ lineHeight: '2.0' }}><strong>Extensions:</strong></p>
+              <ul className="list-disc list-inside space-y-3 mb-6" style={{ lineHeight: '2.0' }}>
                 <li>.moth - Primary extension</li>
                 <li>.str - Alternative (STRAND)</li>
                 <li>.spex - Specification variant</li>
               </ul>
-              <p className="mb-4" style={{ lineHeight: '1.7' }}><strong>MIME Types:</strong></p>
-              <ul className="list-disc list-inside space-y-2" style={{ lineHeight: '1.7' }}>
+              <p className="mb-5" style={{ lineHeight: '2.0' }}><strong>MIME Types:</strong></p>
+              <ul className="list-disc list-inside space-y-3" style={{ lineHeight: '2.0' }}>
                 <li>text/x-moth</li>
                 <li>text/x-moth+plain</li>
               </ul>
             </div>
           </section>
 
-          <section>
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Core Syntax</h2>
-            <div className="space-y-6">
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Core Syntax</h2>
+            <div className="space-y-8">
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
                 <h3 className="font-bold mb-3" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Comments</h3>
                 <pre style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded text-sm overflow-x-auto">

@@ -31,9 +31,9 @@ export default function IntegrationPage() {
           <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
-          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Integration Guide</h1>
-          <p className="text-xl mb-12" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.6' }}>
+        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
+          <h1 className="text-5xl font-bold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Integration Guide</h1>
+          <p className="text-xl mb-16" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>
             For IDE vendors and plugin developers. Learn how to integrate MOTH into your tools.
           </p>
 

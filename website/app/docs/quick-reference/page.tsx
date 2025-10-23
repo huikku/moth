@@ -31,15 +31,15 @@ export default function QuickReferencePage() {
           <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
-          <h1 className="text-5xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Quick Reference</h1>
-          <p className="text-xl mb-12" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.6' }}>One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
+        <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
+          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Quick Reference</h1>
+          <p className="text-xl mb-16" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
 
-          <div className="space-y-8" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+          <div className="space-y-12" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
           {/* Syntax */}
           <section style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Syntax Patterns</h2>
-            <div className="space-y-4 font-mono text-sm">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Syntax Patterns</h2>
+            <div className="space-y-5 font-mono text-sm">
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="p-3 rounded">
                 <div style={{ color: '#ffffff' }}># Comments</div>
                 <div style={{ color: '#cccccc', opacity: 0.9 }}># Full line comment</div>

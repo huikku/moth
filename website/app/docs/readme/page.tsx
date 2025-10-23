@@ -31,30 +31,30 @@ export default function ReadmePage() {
           <Link href="/docs" style={{ color: '#ffffff' }} className="hover:opacity-80 transition">← Back to Docs</Link>
         </div>
 
-        <article className="prose prose-invert max-w-none" style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '1.8' }}>
-          <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>MOTH (Machine-Optimized Text Hierarchy)</h1>
+        <article className="prose prose-invert max-w-none" style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
+          <h1 className="text-5xl font-bold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>MOTH (Machine-Optimized Text Hierarchy)</h1>
 
-          <p className="text-xl mb-8" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.6' }}>
+          <p className="text-xl mb-12" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>
             <strong>Compact notation for technical specifications, PRDs, and coding rules</strong><br/>
             <em>Companion to kablUI for complete application specification</em>
           </p>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>What is MOTH?</h2>
-          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }} className="mb-6">
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>What is MOTH?</h2>
+          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }} className="mb-8">
             MOTH is a line-based notation system designed for technical documentation that needs to stay in LLM context windows. It compresses verbose specs into dense, scannable formats optimized for AI coding agents.
           </p>
 
-          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6 my-8">
-            <p className="font-semibold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>From the kablUI family:</p>
-            <ul className="space-y-3" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }}>
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6 my-12">
+            <p className="font-semibold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>From the kablUI family:</p>
+            <ul className="space-y-4" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }}>
               <li><strong>kablUI</strong> → Describe what users SEE (UI components, layouts, interactions)</li>
               <li><strong>MOTH</strong> → Describe what systems DO (APIs, data models, business logic, architecture)</li>
             </ul>
-            <p className="mt-4" style={{ color: '#888888', fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.7' }}>Together, they let you specify entire applications in a fraction of the tokens.</p>
+            <p className="mt-6" style={{ color: '#888888', fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }}>Together, they let you specify entire applications in a fraction of the tokens.</p>
           </div>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>The Problem</h2>
-          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9, lineHeight: '1.8' }} className="border rounded-lg p-6 font-mono text-sm mb-8">
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>The Problem</h2>
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9, lineHeight: '2.0' }} className="border rounded-lg p-6 font-mono text-sm mb-10">
             <div>Traditional PRD:           156KB, 42K tokens</div>
             <div>Architecture docs:          89KB, 24K tokens</div>
             <div>.cursorrules:               47KB, 12K tokens</div>
@@ -62,33 +62,33 @@ export default function ReadmePage() {
             <div style={{ color: '#ffffff' }}>Remaining for code:        122K / 200K tokens (39% wasted!)</div>
           </div>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>The Solution</h2>
-          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9, lineHeight: '1.8' }} className="border rounded-lg p-6 font-mono text-sm mb-8">
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>The Solution</h2>
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9, lineHeight: '2.0' }} className="border rounded-lg p-6 font-mono text-sm mb-10">
             <div>PRD.moth:                   12KB, 3.5K tokens</div>
             <div>architecture.moth:           8KB, 2.1K tokens</div>
             <div>.cursorrules.moth:           4KB, 1.2K tokens</div>
-            <div style={{ borderTopColor: 'rgba(255, 255, 255, 0.2)' }} className="border-t my-2 pt-2">Total context used:         24KB, 6.8K tokens</div>
+            <div style={{ borderTopColor: 'rgba(255, 255, 255, 0.2)' }} className="border-t my-3 pt-3">Total context used:         24KB, 6.8K tokens</div>
             <div style={{ color: '#ffffff' }}>Remaining for code:        193K / 200K tokens (91% efficient!)</div>
           </div>
 
-          <p className="text-lg font-semibold mb-8" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.5' }}>Result: 91% compression, same information density.</p>
+          <p className="text-lg font-semibold mb-12" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.5' }}>Result: 91% compression, same information density.</p>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Use Cases</h2>
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Use Cases</h2>
 
-          <h3 className="text-2xl font-bold mt-8 mb-3" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>1. PRDs for AI Agents</h3>
-          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }} className="mb-6">Spec entire products in a format that stays in context while coding.</p>
+          <h3 className="text-2xl font-bold mt-10 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>1. PRDs for AI Agents</h3>
+          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }} className="mb-8">Spec entire products in a format that stays in context while coding.</p>
 
-          <h3 className="text-2xl font-bold mt-8 mb-3" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>2. Coding Rules (.cursorrules replacement)</h3>
-          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }} className="mb-6">Replace 50KB rules files with 5KB MOTH specs.</p>
+          <h3 className="text-2xl font-bold mt-10 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>2. Coding Rules (.cursorrules replacement)</h3>
+          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }} className="mb-8">Replace 50KB rules files with 5KB MOTH specs.</p>
 
-          <h3 className="text-2xl font-bold mt-8 mb-3" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>3. Architecture Docs</h3>
-          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }} className="mb-6">System designs that guide implementation.</p>
+          <h3 className="text-2xl font-bold mt-10 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>3. Architecture Docs</h3>
+          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }} className="mb-8">System designs that guide implementation.</p>
 
-          <h3 className="text-2xl font-bold mt-8 mb-3" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>4. Combined with kablUI</h3>
-          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }} className="mb-6">Full application specification (UI + backend).</p>
+          <h3 className="text-2xl font-bold mt-10 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>4. Combined with kablUI</h3>
+          <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }} className="mb-8">Full application specification (UI + backend).</p>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Core Syntax</h2>
-          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9 }} className="border rounded-lg p-6 font-mono text-sm mb-8 overflow-x-auto">
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Core Syntax</h2>
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#cccccc', opacity: 0.9, lineHeight: '2.0' }} className="border rounded-lg p-6 font-mono text-sm mb-10 overflow-x-auto">
             <pre>{`# Comments start with hash
 [SECTION_NAME]           # Sections in ALL_CAPS
 key:value                # Primary data pattern
@@ -100,15 +100,15 @@ state:{k=v;k2=v2}        # Configuration objects
   nested_key:value       # 2-space indentation`}</pre>
           </div>
 
-          <h2 className="text-3xl font-bold mt-12 mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Getting Started</h2>
-          <ol className="space-y-4 mb-8" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '1.8' }}>
+          <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Getting Started</h2>
+          <ol className="space-y-5 mb-10" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0' }}>
             <li><strong>1. Read the Quick Reference</strong> - Learn the syntax in 5 minutes</li>
             <li><strong>2. Check Examples</strong> - Review real-world MOTH files for inspiration</li>
             <li><strong>3. Customize</strong> - Edit to match your project</li>
             <li><strong>4. Use</strong> - Load in Cursor, Cline, or your LLM</li>
           </ol>
 
-          <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8 mt-12">
+          <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8 mt-16">
             <h3 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif" }}>Ready to start?</h3>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/docs/quick-reference" style={{ backgroundColor: '#ffffff', color: '#080808', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)' }} className="px-6 py-2 font-semibold rounded-lg hover:opacity-90 transition text-center">
