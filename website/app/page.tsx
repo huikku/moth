@@ -193,11 +193,131 @@ Everything is structured and actionable.`}
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
             <Link href="/docs/onboarding" style={{ color: '#ffffff', border: '2px solid rgba(255, 255, 255, 0.3)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
-              Full Onboarding Guide
+              LLM Reading Prompt
             </Link>
-            <Link href="/examples" style={{ color: '#cccccc', border: '2px solid rgba(255, 255, 255, 0.2)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
-              See Examples
+            <Link href="/docs/mothify-prompt" style={{ backgroundColor: '#ffffff', color: '#080808', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block', boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)' }} className="hover:opacity-90 transition">
+              <i className="fas fa-wand-magic-sparkles" style={{ marginRight: '0.5rem' }}></i>
+              Mothify Conversion Prompt
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Mothify Conversion Section */}
+      <section style={{ paddingTop: '6rem', paddingBottom: '6rem', position: 'relative', zIndex: 10, backgroundColor: 'rgba(255, 255, 255, 0.02)' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+              <i className="fas fa-wand-magic-sparkles" style={{ color: '#ffffff' }}></i>
+            </div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', color: '#ffffff', marginBottom: '1rem', fontWeight: 600, fontFamily: "'Poppins', sans-serif" }}>
+              Convert Docs to MOTH
+            </h2>
+            <p style={{ fontSize: '1.2rem', color: '#cccccc', opacity: 0.9, maxWidth: '700px', margin: '0 auto 2rem', lineHeight: 1.6, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+              Teach any LLM to transform verbose documentation into compact MOTH format. Works with Claude, Gemini, ChatGPT, and all major AI models.
+            </p>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', padding: '2rem', maxWidth: '900px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.2rem', color: '#ffffff', fontFamily: "'Poppins', sans-serif", margin: 0, marginBottom: '0.5rem' }}>
+                  Mothify LLM Prompt
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: '#cccccc', opacity: 0.7, margin: 0, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                  Complete conversion guide with examples and validation rules
+                </p>
+              </div>
+              <Link
+                href="/docs/mothify-prompt"
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#080808',
+                  border: 'none',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '4px',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  fontFamily: "'Poppins', sans-serif",
+                  textDecoration: 'none',
+                  display: 'inline-block',
+                  boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)'
+                }}
+                className="hover:opacity-90 transition"
+              >
+                <i className="fas fa-arrow-right" style={{ marginRight: '0.5rem' }}></i>
+                View Full Prompt
+              </Link>
+            </div>
+
+            <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '4px', padding: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div>
+                  <div style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                    <i className="fas fa-file-lines"></i>
+                  </div>
+                  <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: 600, marginBottom: '0.25rem', fontFamily: "'Poppins', sans-serif" }}>
+                    PRD Conversion
+                  </h4>
+                  <p style={{ color: '#cccccc', fontSize: '0.85rem', opacity: 0.7, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                    Transform product docs into structured specs
+                  </p>
+                </div>
+                <div>
+                  <div style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                    <i className="fas fa-code"></i>
+                  </div>
+                  <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: 600, marginBottom: '0.25rem', fontFamily: "'Poppins', sans-serif" }}>
+                    Rules Files
+                  </h4>
+                  <p style={{ color: '#cccccc', fontSize: '0.85rem', opacity: 0.7, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                    Convert style guides to coding rules
+                  </p>
+                </div>
+                <div>
+                  <div style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                    <i className="fas fa-diagram-project"></i>
+                  </div>
+                  <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: 600, marginBottom: '0.25rem', fontFamily: "'Poppins', sans-serif" }}>
+                    Architecture
+                  </h4>
+                  <p style={{ color: '#cccccc', fontSize: '0.85rem', opacity: 0.7, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                    Compress system architecture docs
+                  </p>
+                </div>
+                <div>
+                  <div style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+                    <i className="fas fa-check-circle"></i>
+                  </div>
+                  <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: 600, marginBottom: '0.25rem', fontFamily: "'Poppins', sans-serif" }}>
+                    Validation
+                  </h4>
+                  <p style={{ color: '#cccccc', fontSize: '0.85rem', opacity: 0.7, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                    Built-in syntax and structure checks
+                  </p>
+                </div>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1.5rem' }}>
+                <p style={{ color: '#cccccc', fontSize: '0.9rem', marginBottom: '1rem', fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+                  <strong style={{ color: '#ffffff' }}>What you get:</strong> Complete prompt with MOTH syntax rules, conversion strategies, examples, and validation guidelines. Achieves 70-90% compression while preserving all critical information.
+                </p>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', fontFamily: "'JetBrains Mono', monospace" }}>
+                    Claude
+                  </span>
+                  <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', fontFamily: "'JetBrains Mono', monospace" }}>
+                    ChatGPT
+                  </span>
+                  <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', fontFamily: "'JetBrains Mono', monospace" }}>
+                    Gemini
+                  </span>
+                  <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', fontFamily: "'JetBrains Mono', monospace" }}>
+                    Any LLM
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

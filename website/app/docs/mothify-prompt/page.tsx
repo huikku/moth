@@ -1,0 +1,396 @@
+'use client';
+
+import Link from 'next/link';
+
+export default function MothifyPromptPage() {
+  return (
+    <div style={{ minHeight: '100vh', position: 'relative' }}>
+      {/* Background Video and Overlay */}
+      <video className="video-bg" autoPlay loop muted playsInline>
+        <source src="/moth/moths-slowmo.mp4" type="video/mp4" />
+      </video>
+      <div className="overlay" />
+
+      {/* Header */}
+      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '1rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <h1 className="text-lg font-bold" style={{ color: '#ffffff' }}>MOTH</h1>
+          </Link>
+          <nav className="hidden md:flex gap-8 ml-auto">
+            <Link href="/" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Home</Link>
+            <Link href="/docs" style={{ color: '#ffffff', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Docs</Link>
+            <Link href="/examples" style={{ color: '#cccccc', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.5px' }} className="text-sm font-medium hover:opacity-90 transition">Examples</Link>
+          </nav>
+        </div>
+      </header>
+
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '8rem 2rem 4rem', position: 'relative', zIndex: 10 }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          {/* Logo */}
+          <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
+            <img src="/moth/logo-mono.png" alt="MOTH Logo" style={{ height: '100px', width: 'auto' }} />
+          </div>
+
+          <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 600, color: '#f0f0f0', marginBottom: '1.5rem', fontFamily: "'Poppins', sans-serif" }}>
+            Mothify LLM Prompt
+          </h1>
+          <p style={{ fontSize: '1.25rem', color: '#cccccc', opacity: 0.8, maxWidth: '800px', margin: '0 auto', lineHeight: 1.7, fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
+            Complete onboarding prompt for LLMs to convert text/markdown documentation into MOTH format
+          </p>
+        </div>
+
+        {/* Copy Prompt Button */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <button
+            onClick={(e) => {
+              const prompt = document.getElementById('mothify-prompt-content')?.textContent || '';
+              navigator.clipboard.writeText(prompt);
+              const btn = e.target as HTMLButtonElement;
+              const originalText = btn.textContent;
+              btn.textContent = '✓ Copied to Clipboard!';
+              btn.style.backgroundColor = '#888888';
+              setTimeout(() => {
+                btn.textContent = originalText || 'Copy Full Prompt';
+                btn.style.backgroundColor = '#ffffff';
+              }, 2000);
+            }}
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#080808',
+              border: 'none',
+              padding: '1rem 2.5rem',
+              borderRadius: '4px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              fontFamily: "'Poppins', sans-serif",
+              boxShadow: '0 4px 20px rgba(255, 255, 255, 0.3)'
+            }}
+            className="hover:opacity-90 transition"
+          >
+            <i className="fas fa-copy" style={{ marginRight: '0.5rem' }}></i>
+            Copy Full Prompt
+          </button>
+        </div>
+
+        {/* Prompt Content */}
+        <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', padding: '3rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <pre id="mothify-prompt-content" style={{ 
+            backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+            color: '#cccccc', 
+            fontFamily: "'JetBrains Mono', monospace", 
+            fontSize: '0.9rem', 
+            lineHeight: 1.6, 
+            padding: '2rem', 
+            borderRadius: '4px', 
+            overflow: 'auto', 
+            maxHeight: '600px',
+            whiteSpace: 'pre-wrap',
+            wordWrap: 'break-word'
+          }}>
+{`# MOTHIFY LLM Onboarding Prompt
+
+You are now a MOTH (Machine-Optimized Text Hierarchy) conversion expert. Your role is to transform verbose text and markdown documentation into compact, structured .moth files optimized for AI coding agents.
+
+## [CORE_MISSION]
+Convert documentation → .moth format
+Maximize compression while preserving all critical information
+Output deterministic, parseable, low-entropy specifications
+
+## [MOTH_SYNTAX]
+
+### Sections
+[SECTION] - Top-level section in ALL_CAPS
+[SECTION.subsection] - Nested subsection
+
+### Key-Value Pairs
+key:value - Basic assignment
+key:item1;item2;item3 - Semicolon-separated lists
+key:{k=v;k2=v2} - State maps for configuration
+
+### Comments
+# Comment lines start with hash
+
+### Naming Conventions
+- Keys: snake_case
+- Sections: UPPERCASE with optional .subsection
+- Values: lowercase, use underscores for multi-word
+
+## [RESERVED_SECTIONS]
+
+### Product Specs
+[CORE] - Fundamental product intent
+[PRODUCT] - Product metadata (name, type, domain)
+[FEATURES] - Feature specifications
+[FEATURES.module] - Feature groups by module
+[STACK] - Technology choices
+[INTEGRATIONS] - Third-party integrations
+[PERFORMANCE] - Performance targets
+[SECURITY] - Security requirements
+
+### API Specs
+[API] or [API.module] - Endpoint contracts
+Format: METHOD:/path -> req:{...} res:{...}
+
+### Data Models
+[SCHEMAS] or [SCHEMAS.module] - Data models
+Format: field:type;field2:type2
+
+### Rules Files
+[STYLE] - Code style conventions
+[ARCHITECTURE] - Architectural patterns
+[CONVENTIONS] - Naming and structure rules
+[TESTING] - Test requirements
+[FORBIDDEN] - Prohibited patterns (critical!)
+[CONSTRAINTS] - Technical constraints
+
+### Operations
+[SLO] - Service level objectives
+[MONITORING] - Monitoring requirements
+[DEPLOYMENT] - Deployment configuration
+
+### UI (Optional - kablUI integration)
+[UI.contract] - kablUI design blocks
+[UI.rules] - UI constraints and theming
+
+## [CONVERSION_RULES]
+
+### Compression Strategies
+1. Remove all prose and filler words
+2. Convert sentences to key:value pairs
+3. Group related items with semicolons
+4. Use abbreviations: db→database, auth→authentication, env→environment
+5. Combine related concepts: frontend:react+typescript (not separate lines)
+6. Target 70-90% size reduction vs original
+
+### Structure Mapping
+- **Headings** → [SECTIONS]
+- **Bullet lists** → key:item1;item2;item3
+- **Tables** → Multiple key:value pairs or state maps
+- **Paragraphs** → Extract facts into key:value
+- **Code blocks** → Summarize intent, not implementation
+
+### Validation
+- No duplicate keys within same section
+- All sections must be [UPPERCASE] or [UPPERCASE.lowercase]
+- Keys must be snake_case
+- Lists use semicolons, not commas
+- State maps use {k=v;k2=v2} format
+
+## [OUTPUT_MODES]
+
+### Mode 1: PRD Conversion
+Input: Product requirements document (text/markdown)
+Output: .moth file with sections:
+- [CORE] or [PRODUCT]
+- [FEATURES] or [FEATURES.module]
+- [STACK]
+- [INTEGRATIONS] (if applicable)
+- [PERFORMANCE] (if applicable)
+- [SECURITY] (if applicable)
+
+### Mode 2: Rules File Generation
+Input: Coding standards, style guides
+Output: .moth rules file with:
+- intent:coding_rules header
+- [STYLE]
+- [ARCHITECTURE]
+- [CONVENTIONS]
+- [TESTING]
+- [FORBIDDEN] - Critical! Always include
+
+### Mode 3: API Specification
+Input: API documentation
+Output: .moth with [API] or [API.module] sections
+Format: GET:/users/:id -> req:{auth=jwt} res:{user;profile}
+
+### Mode 4: Architecture Doc
+Input: System architecture description
+Output: .moth with:
+- [COMPONENTS]
+- [DATA_FLOW] - Use arrows: user -> api -> db
+- [DEPLOYMENT]
+- [INTEGRATIONS]
+
+## [KABLUI_INTEGRATION]
+
+### When to Ask
+On every PRD conversion, ask user ONCE:
+"Do you want compact kablUI UI designs added to the PRD?"
+
+### If Yes
+- Add [UI.contract] section with kablUI blocks
+- Add [UI.rules] for UI constraints
+- Keep kablUI blocks under 200 lines
+- Link to features: feature_ref:FEATURES.module
+
+### If No
+- Skip UI sections entirely
+- Continue with standard PRD conversion
+
+### kablUI Format
+@APP[theme:dark]
+  @HEADER[h:64]
+    @LOGO AppName @LOGO
+    @NAV [Link1][Link2]
+  @MAIN
+    @PANEL "Content"
+
+## [EXAMPLES]
+
+### Example 1: PRD Conversion
+
+INPUT (Markdown):
+# TaskFlow - Project Management SaaS
+
+TaskFlow is a modern project management tool for development teams. It supports Kanban boards, list views, and calendar views. Users can create tasks, assign them to team members, and track progress in real-time using WebSocket connections.
+
+**Tech Stack:**
+- Frontend: React with TypeScript
+- Backend: FastAPI
+- Database: PostgreSQL
+
+OUTPUT (.moth):
+intent:product_requirements
+audience:dev_team; version:1.0.0
+
+[PRODUCT]
+name:TaskFlow; type:saas
+domain:project_management
+target:dev_teams
+
+[FEATURES]
+boards:kanban+list+calendar
+tasks:create;assign;track
+realtime:websocket
+
+[STACK]
+frontend:react+typescript
+backend:fastapi
+db:postgresql
+
+### Example 2: Rules File
+
+INPUT (Text):
+All TypeScript code must use Prettier for formatting and ESLint with strict mode. Use camelCase for variables and PascalCase for types. Never use 'any' type, console.log in production, or the 'var' keyword.
+
+OUTPUT (.moth):
+intent:coding_rules
+audience:ai_agents; version:1.0
+
+[STYLE]
+lang:typescript
+fmt:prettier; lint:eslint+strict
+naming:camelCase_vars;PascalCase_types
+
+[FORBIDDEN]
+no:any_type;console_log;var_keyword
+
+### Example 3: Deployment Rules
+
+INPUT:
+We use conventional commits and require all commits to be signed. Tests must pass before pushing. Staging deploys automatically on merge to staging branch. Production requires manual approval. Never deploy to production after 3pm on Fridays.
+
+OUTPUT (.moth):
+intent:deployment_rules
+audience:ai_agents; enforcement:strict
+
+[GIT_WORKFLOW]
+commits:conventional;signed=required
+push:require_tests_pass
+
+[DEPLOYMENT]
+staging:auto_on_merge_to_staging
+production:manual_approval_required
+
+[FORBIDDEN]
+deploy_friday:after_3pm
+
+## [BEST_PRACTICES]
+
+1. **Always include intent header**: intent:type; audience:target
+2. **Favor specificity**: "db:postgresql15" not "db:postgres"
+3. **Use state maps for config**: {enabled=true;timeout=30s}
+4. **Group related items**: frontend:react+typescript+tailwind
+5. **FORBIDDEN section is critical**: Always include for rules files
+6. **Keep files focused**: Split large specs into modules
+7. **Validate output**: Check for duplicates, proper formatting
+8. **Preserve all requirements**: Compression ≠ information loss
+
+## [WORKFLOW]
+
+1. **Analyze input**: Identify document type (PRD, rules, API, architecture)
+2. **Extract structure**: Map headings to sections, content to key:value
+3. **Compress**: Remove prose, combine related items, use abbreviations
+4. **Validate**: Check syntax, no duplicates, proper section names
+5. **Output**: Clean .moth file with proper formatting
+
+## [READY]
+
+You are now ready to convert documentation to MOTH format!
+
+When given input:
+1. Identify the document type
+2. Ask about kablUI if it's a PRD
+3. Convert to appropriate .moth structure
+4. Validate syntax
+5. Output clean, compressed .moth file
+
+Respond with: "Ready to mothify! Paste your documentation."`}
+          </pre>
+        </div>
+
+        {/* Navigation */}
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '3rem', flexWrap: 'wrap' }}>
+          <Link href="/docs" style={{ color: '#ffffff', border: '2px solid rgba(255, 255, 255, 0.3)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
+            ← Back to Docs
+          </Link>
+          <Link href="/docs/onboarding" style={{ color: '#cccccc', border: '2px solid rgba(255, 255, 255, 0.2)', padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }} className="hover:opacity-90 transition">
+            LLM Reading Prompt →
+          </Link>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', borderTop: '1px solid rgba(255, 255, 255, 0.1)', padding: '3rem 2rem', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Product</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs" className="hover:opacity-100">Documentation</Link></li>
+                <li><Link href="/examples" className="hover:opacity-100">Examples</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Resources</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><Link href="/docs/spec" className="hover:opacity-100">Specification</Link></li>
+                <li><Link href="/docs/quick-reference" className="hover:opacity-100">Quick Reference</Link></li>
+                <li><Link href="/docs/onboarding" className="hover:opacity-100">LLM Onboarding</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Community</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://huikku.github.io/kablUI/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">kablUI</a></li>
+                <li><a href="https://huikku.github.io/IntelliVibe/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">IntelliVibe</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4" style={{ color: '#ffffff' }}>Legal</h4>
+              <ul className="space-y-2" style={{ color: '#cccccc', opacity: 0.8 }}>
+                <li><a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100">Alienrobot LLC</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', color: '#888888', fontSize: '0.9rem' }}>
+            <p>© 2025 John Huikku • Alienrobot LLC • <a href="https://www.alienrobot.com" target="_blank" rel="noopener noreferrer" style={{ color: '#888888' }} className="hover:opacity-100">www.alienrobot.com</a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+

@@ -117,10 +117,24 @@ export default function DocsPage() {
             <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', border: '1px solid rgba(0, 200, 255, 0.2)', borderRadius: '8px', padding: '2rem', height: '100%', transition: 'all 0.3s ease' }} className="hover:opacity-90">
               <div style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#cccccc' }}><i className="fa-solid fa-robot"></i></div>
               <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#f0f0f0', fontFamily: "'Poppins', sans-serif" }}>
-                LLM Onboarding
+                LLM Reading Prompt
               </h3>
               <p style={{ color: '#f0f0f0', opacity: 0.7, marginBottom: '1rem', lineHeight: 1.6 }}>
-                Paste this into your LLM to teach it MOTH format. Works with ChatGPT, Claude, and more.
+                Teach your LLM to READ MOTH files. Works with ChatGPT, Claude, Gemini, and more.
+              </p>
+              <span style={{ color: '#ffffff', fontWeight: 600 }}>Read →</span>
+            </div>
+          </Link>
+
+          {/* Mothify Prompt */}
+          <Link href="/docs/mothify-prompt" style={{ textDecoration: 'none' }} className="group">
+            <div style={{ backgroundColor: 'rgba(0, 12, 24, 0.6)', border: '1px solid rgba(0, 200, 255, 0.2)', borderRadius: '8px', padding: '2rem', height: '100%', transition: 'all 0.3s ease' }} className="hover:opacity-90">
+              <div style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#cccccc' }}><i className="fa-solid fa-wand-magic-sparkles"></i></div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem', color: '#f0f0f0', fontFamily: "'Poppins', sans-serif" }}>
+                Mothify LLM Prompt
+              </h3>
+              <p style={{ color: '#f0f0f0', opacity: 0.7, marginBottom: '1rem', lineHeight: 1.6 }}>
+                Teach your LLM to CONVERT docs to MOTH. Transform verbose text/markdown into compact .moth files.
               </p>
               <span style={{ color: '#ffffff', fontWeight: 600 }}>Read →</span>
             </div>
@@ -145,6 +159,8 @@ export default function DocsPage() {
                 <li><Link href="/docs/quick-reference" className="hover:opacity-100">Quick Reference</Link></li>
                 <li><Link href="/docs/spec" className="hover:opacity-100">Full Spec</Link></li>
                 <li><Link href="/docs/integration" className="hover:opacity-100">Integration Guide</Link></li>
+                <li><Link href="/docs/onboarding" className="hover:opacity-100">LLM Reading Prompt</Link></li>
+                <li><Link href="/docs/mothify-prompt" className="hover:opacity-100">Mothify LLM Prompt</Link></li>
               </ul>
             </div>
             <div>
