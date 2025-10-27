@@ -2,73 +2,166 @@
 
 import Link from 'next/link';
 
-const MOTH_PROMPT = `You now understand MOTH notation. When you see .moth files or MOTH format:
+const MOTH_PROMPT = `You now understand MOTH (Minimal Overhead Technical Hierarchy) notation - a compact specification format optimized for LLM context windows and actionable development.
 
-PARSING RULES:
-- [SECTIONS] are logical blocks (ALL_CAPS for top-level)
-- key:value is the primary data pattern
-- semicolon separates list items
-- k=v;k2=v2 represents configuration objects
-- [SECTION.subsection] uses dot notation for hierarchy
-- 2-space indentation for nested content
+## Core Philosophy
+MOTH is a BLUEPRINT, not a specification document. It answers "what" and "why", not "how" in exhaustive detail.
+- Add detail ONLY where ambiguity would cause architectural problems
+- Trust developers to figure out validation rules, error messages, exact formats
+- 80% compression is the goal - if you're writing more than 200 lines, you're over-specifying
 
-SYNTAX ELEMENTS:
-- Comments: # Full line or key:value  # inline
-- Types: str, int, float, bool, uuid, ts, hex, vec, bits, blob
-- Collections: [type] for arrays, key:type for objects, type|type2 for unions
-- Status: C=Complete, P=Planned, R=Risk, D=Deferred, X=Deprecated
+## Core Syntax
+- [SECTIONS] in ALL_CAPS denote logical blocks
+- key:value for simple data
+- {key=value;another=value} for objects
+- [item1;item2;item3] for lists
+- key→value for flows/relationships
+- *required_field vs (optional_field) for modality
+- Semicolons (;) separate items
+- # for comments
 
-COMMON SECTIONS:
-- [SCHEMA.name] - Data models with field definitions
-- [API.category] - REST endpoints with METHOD:/path
-- [FEATURES] - Product features and capabilities
-- [STACK] - Technology stack components
-- [ARCHITECTURE] - System design and data flows
+## Schema Syntax (Minimal but Unambiguous)
+Use types and relationships, skip exhaustive constraints:
 
-WRITING RULES:
-- Use key:value for all data (not markdown)
-- Favor compactness over verbosity
-- One concept per line when possible
-- No markdown formatting
-- Use [SECTIONS] not markdown headers
-- Semicolons for inline lists, not commas
+*field:type          # required field with type
+(field):type         # optional field
+field:enum[a,b,c]    # enumerated values (prevents ambiguity)
+field:jsonb          # complex nested data (don't expand unless critical)
+field→table.id       # foreign key relationship
+*id:uuid             # required ID field
 
-EXAMPLE:
-[PRODUCT]
-name:TaskFlow; type:saas; domain:project_management
+Example:
+users:{
+  *id:uuid;
+  *email:string;
+  (phone):string;
+  *role:enum[admin,user,guest];
+  *tenant_id→tenants.id;
+  settings:jsonb
+}
 
-[FEATURES]
-boards:kanban+list+calendar; tasks:create;assign;track
-realtime:websocket; notifications:email+push
+When to add constraints:
+✅ File size limits (affects infrastructure)
+✅ Enum values (affects state machines)
+✅ Foreign keys (affects data model)
+❌ Max string lengths (developer decision)
+❌ Regex patterns (belongs in validation layer)
+❌ Exact error codes (belongs in API docs)
 
-[STACK]
-frontend:react+typescript; backend:fastapi
-db:postgresql; cache:redis
+## Workflow Syntax (State Machines Only)
+Use for complex lifecycle states, skip for simple CRUD:
 
-[SCHEMA.task]
-id:uuid_pk; title:str; status:todo|doing|done
-assignee:uuid_fk; created_at:ts; updated_at:ts
+workflow_name:{
+  initial:state;
+  stateA→stateB[on:event,if:condition,after:duration];
+  any→stateX[on:event]
+}
 
-[API.tasks]
-GET:/tasks req:board_id;filters res:tasks
-POST:/tasks req:title;assignee res:task
+## Relationship Syntax
+- A→B: A references B (foreign key)
+- A→*B: A has many B (one-to-many, note in comment if needed)
 
-When generating MOTH files:
-1. Use [SECTIONS] for organization
-2. Use key:value for all data
-3. Use semicolons to separate list items
-4. Use k=v for configuration
-5. Keep it compact and scannable
-6. No prose or markdown formatting
+## API Syntax (Endpoints Only)
+List endpoints with auth/rate limits, skip full request/response bodies:
 
-When reading MOTH files:
-1. Parse [SECTIONS] as logical blocks
-2. Extract key:value pairs as structured data
-3. Split semicolon-separated values into lists
-4. Treat k=v as configuration objects
-5. Understand the semantic meaning of each section
+entity:{GET,POST:/v1/entity;auth:required;rate:100/hour}
 
-You are now fluent in MOTH notation.`;
+Full specs only if there's architectural significance:
+POST:/v1/orders→req:{*items;*payment};res:{*order_id;*stripe_secret}
+
+## Validation & Business Logic
+Define ONLY when it affects architecture or is non-obvious:
+
+✅ refunds:{auto_approve=true;window=30d;if=[not_shipped,provider_error]}
+✅ ai:{upscale_threshold=300dpi;cost_cap=$1000/tenant}
+❌ email_format:regex  # developer knows this
+❌ password_strength:8chars+special  # standard practice
+
+## Resource Annotations
+Add for critical constraints:
+cost:{cap=$X/period;alert=80%}
+latency:{target=<Xms}
+rate_limit:{N/period}
+
+Skip if it's standard/obvious.
+
+## When Reading MOTH Files
+Parse as structured data:
+- [FEATURES] → Requirements to implement
+- [SCHEMAS] → Data models with relationships
+- [WORKFLOWS] → State machines for complex flows
+- [API] → Endpoint inventory
+- [RISKS] → Known issues and mitigations
+
+## When Writing MOTH Files
+Ask yourself for each line: "Would omitting this cause an architectural mistake?"
+- ✅ If yes → include it
+- ❌ If no → omit it
+
+Prioritize:
+1. Relationships between entities (foreign keys)
+2. State machines for complex workflows
+3. Architectural constraints (cost caps, size limits)
+4. Non-obvious business logic
+5. Integration points (APIs, webhooks)
+
+De-prioritize:
+1. Validation rules (standard stuff)
+2. Error messages
+3. UI/UX details
+4. Implementation details
+5. Obvious constraints
+
+## Anti-Patterns
+
+❌ Over-specification:
+users:{
+  *id:uuid;
+  *email:string!max=255!format=email!unique=true;
+  *password:string!min=8!max=128!must_have_special_chars;
+  *created_at:timestamp!immutable;
+  *updated_at:timestamp!auto_update_on_change
+}
+
+✅ Right amount of detail:
+users:{
+  *id:uuid;
+  *email:string;
+  *password_hash:string;
+  *role:enum[admin,user];
+  *tenant_id→tenants.id;
+  *created_at:timestamp
+}
+
+❌ Verbose APIs:
+POST:/v1/orders
+  auth:required
+  rate_limit:10/min/user
+  req:{*tenant_id:uuid;*items:[{variant_id:uuid;quantity:int!>0,!<=100}];*payment_intent:string;*shipping:{*street:string!max=200;*city:string!max=100}}
+  res:{*order_id:uuid;*stripe_client_secret:string}
+  errors:[400:invalid_address;402:payment_failed;429:rate_limit;500:server_error]
+
+✅ Right amount of detail:
+orders:{POST,GET:/v1/orders;auth:user;rate:10/min}
+
+(Full specs in OpenAPI, not MOTH)
+
+❌ Obvious validation:
+email_validation:{format=email;required=true;unique_per_tenant=true}
+
+✅ Implied by schema:
+users:{*email:string;*tenant_id→tenants.id}
+
+(Uniqueness and format are obvious)
+
+## Key Principle
+MOTH is 70-90% more compact than markdown. Every line should answer: "What architectural decision does this inform?"
+
+If it's a standard practice, implementation detail, or obvious constraint - omit it.
+
+Target: 100-200 lines for a complex backend. If you're at 300+ lines, you're writing a spec document, not MOTH.
+
+You are now ready to work with MOTH notation!`;
 
 export default function OnboardingPage() {
   return (
