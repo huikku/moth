@@ -45,8 +45,21 @@ export default function SpecPage() {
           <section>
             <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Abstract</h2>
             <p style={{ lineHeight: '1.8' }}>
-              MOTH (Minimal Overhead Technical Hierarchy) is a line-based notation system for technical documentation optimized for LLM context efficiency. It achieves 90%+ compression versus traditional markdown while preserving full semantic information.
+              MOTH (Minimal Overhead Technical Hierarchy) is a line-based notation system for technical documentation optimized for LLM context efficiency. It achieves 70-90% compression versus traditional markdown while preserving full semantic information.
             </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Core Philosophy</h2>
+            <p style={{ lineHeight: '1.8', marginBottom: '1rem' }}>
+              MOTH is a <strong>BLUEPRINT</strong>, not a specification document. It answers "what" and "why", not "how" in exhaustive detail.
+            </p>
+            <ul className="list-disc list-inside space-y-3" style={{ lineHeight: '1.8' }}>
+              <li>Add detail ONLY where ambiguity would cause architectural problems</li>
+              <li>Trust developers to figure out validation rules, error messages, exact formats</li>
+              <li>80% compression is the goal - if you're writing more than 200 lines, you're over-specifying</li>
+              <li>Every line should answer: "What architectural decision does this inform?"</li>
+            </ul>
           </section>
 
           <section>
@@ -57,6 +70,7 @@ export default function SpecPage() {
               <li>Human readable/writable</li>
               <li>Minimal syntax overhead</li>
               <li>Self-documenting structure</li>
+              <li>Blueprint-level detail, not implementation specs</li>
             </ul>
           </section>
 

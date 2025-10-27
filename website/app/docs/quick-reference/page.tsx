@@ -34,7 +34,13 @@ export default function QuickReferencePage() {
 
         <article style={{ maxWidth: '900px', margin: '0 auto', lineHeight: '2.0' }}>
           <h1 className="text-5xl font-bold mb-6" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", textAlign: 'center', lineHeight: '1.3' }}>Quick Reference</h1>
-          <p className="text-xl mb-16" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
+          <p className="text-xl mb-8" style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", textAlign: 'center', lineHeight: '1.7' }}>One-page cheat sheet for MOTH syntax. Print and keep near your keyboard!</p>
+
+          <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6 mb-16">
+            <p style={{ color: '#cccccc', opacity: 0.9, fontFamily: "'Barlow Semi Condensed', sans-serif", lineHeight: '2.0', textAlign: 'center' }}>
+              <strong>Remember:</strong> MOTH is a BLUEPRINT, not a specification. Add detail only where ambiguity would cause architectural problems. Target 80% compression.
+            </p>
+          </div>
 
           <div className="space-y-12" style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}>
           {/* Syntax */}
@@ -66,6 +72,12 @@ export default function QuickReferencePage() {
                 <div style={{ color: '#cccccc', opacity: 0.9 }}>key:{'{k=v;k2=v2}'}</div>
                 <div style={{ color: '#cccccc', opacity: 0.9 }}>key:{'{k=v;nested:{x=y}}'}</div>
               </div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="p-3 rounded">
+                <div style={{ color: '#ffffff' }}>Modality & Relationships</div>
+                <div style={{ color: '#cccccc', opacity: 0.9 }}>*required_field:type</div>
+                <div style={{ color: '#cccccc', opacity: 0.9 }}>(optional_field):type</div>
+                <div style={{ color: '#cccccc', opacity: 0.9 }}>field→table.id  # foreign key</div>
+              </div>
             </div>
           </section>
 
@@ -76,8 +88,8 @@ export default function QuickReferencePage() {
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="p-4 rounded">
                 <div className="font-bold mb-2" style={{ color: '#ffffff' }}>Primitives</div>
                 <div className="font-mono text-sm space-y-1" style={{ color: '#cccccc', opacity: 0.9 }}>
-                  <div>str, int, float, bool</div>
-                  <div>uuid, ts, hex, vec, bits</div>
+                  <div>string, int, float, bool</div>
+                  <div>uuid, timestamp, jsonb</div>
                 </div>
               </div>
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="p-4 rounded">
@@ -86,6 +98,7 @@ export default function QuickReferencePage() {
                   <div>[type] - Array</div>
                   <div>{'{key:type}'} - Object</div>
                   <div>type|type2 - Union</div>
+                  <div>enum[a,b,c] - Enumeration</div>
                 </div>
               </div>
             </div>
@@ -107,39 +120,50 @@ export default function QuickReferencePage() {
           <section style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8">
             <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Common Sections</h2>
             <div className="space-y-3 font-mono text-sm">
-              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[SCHEMA.name]</span> - Data models</div>
-              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[API.category]</span> - API endpoints</div>
-              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[FEATURES]</span> - Product features</div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[SCHEMAS]</span> - Data models with relationships</div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[API]</span> - Endpoint inventory</div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[FEATURES]</span> - Requirements to implement</div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[WORKFLOWS]</span> - State machines for complex flows</div>
               <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[STACK]</span> - Technology stack</div>
-              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[ARCHITECTURE]</span> - System design</div>
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc' }} className="p-3 rounded"><span style={{ color: '#ffffff' }}>[RISKS]</span> - Known issues and mitigations</div>
             </div>
           </section>
 
-          {/* Example */}
+          {/* Schema Example */}
           <section style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Quick Example</h2>
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Schema Example</h2>
             <pre style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc', opacity: 0.9 }} className="p-4 rounded font-mono text-sm overflow-x-auto">
-{`intent:product_requirements; audience:dev_team
-version:1.0.0; updated:2025-10-22
+{`[SCHEMAS]
+users:{
+  *id:uuid;
+  *email:string;
+  (phone):string;
+  *role:enum[admin,user,guest];
+  *tenant_id→tenants.id;
+  settings:jsonb
+}
 
-[PRODUCT]
-name:MyApp; type:saas; domain:project_management
+orders:{
+  *id:uuid;
+  *user_id→users.id;
+  *status:enum[pending,paid,shipped];
+  *total:float;
+  *created_at:timestamp
+}`}
+            </pre>
+          </section>
 
-[FEATURES]
-auth:login+register; dashboard:analytics+reports
-realtime:websocket; notifications:email+push
-
-[STACK]
-frontend:react+typescript; backend:fastapi
-db:postgresql; cache:redis
-
-[SCHEMA.user]
-id:uuid_pk; email:str_unique; name:str
-created_at:ts; updated_at:ts
-
-[API.users]
-GET:/users/:id -> req:{id:uuid} res:{user}
-POST:/users -> req:{email;name} res:{user}`}
+          {/* Workflow Example */}
+          <section style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Workflow Example</h2>
+            <pre style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#cccccc', opacity: 0.9 }} className="p-4 rounded font-mono text-sm overflow-x-auto">
+{`[WORKFLOWS]
+order_lifecycle:{
+  initial:pending;
+  pending→paid[on:payment_success];
+  paid→shipped[on:fulfillment];
+  any→cancelled[on:user_cancel,if:not_shipped]
+}`}
             </pre>
           </section>
 
