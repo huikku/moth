@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const examples = [
   {
@@ -819,6 +819,40 @@ Client <span style="color: #ffd93d;">→</span> API <span style="color: #ffd93d;
 export default function ExamplesPage() {
   const [selectedExample, setSelectedExample] = useState(examples[0]);
   const [viewMode, setViewMode] = useState<'moth' | 'expanded'>('moth');
+
+  // Track page view on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'page_view',
+        page_path: '/examples',
+        page_title: 'MOTH Examples',
+      });
+    }
+  }, []);
+
+  // Track example selection
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'view_example',
+        example_id: selectedExample.id,
+        example_title: selectedExample.title,
+        example_category: selectedExample.category,
+      });
+    }
+  }, [selectedExample]);
+
+  // Track view mode toggle
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'toggle_view_mode',
+        view_mode: viewMode,
+        example_id: selectedExample.id,
+      });
+    }
+  }, [viewMode, selectedExample.id]);
 
   return (
     <div style={{ backgroundColor: 'transparent', color: '#f0f0f0' }} className="min-h-screen">
