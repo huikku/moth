@@ -78,28 +78,41 @@ export default function GettingStartedPage() {
           <section>
             <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff', fontFamily: "'Poppins', sans-serif", lineHeight: '1.3' }}>Step 3: Write Your Content</h2>
             <p className="mb-4" style={{ color: '#cccccc', lineHeight: '1.8' }}>
-              Start with a simple structure and build from there. Remember: MOTH is a blueprint, not a spec. Add detail only where needed. Check out the <Link href="/examples" style={{ color: '#ffffff' }} className="hover:opacity-80">Examples</Link> page to see real-world MOTH files.
+              Start with a simple structure and build from there. Remember: MOTH is a blueprint, not a spec. Add detail only where needed. Check out the <Link href="/examples" style={{ color: '#ffffff' }} className="hover:opacity-80">Examples</Link> page to see the full MediaHub DAM example with expanded PRD.
             </p>
             <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(255, 255, 255, 0.2)' }} className="border rounded-lg p-6">
-              <pre className="font-mono text-sm" style={{ color: '#cccccc' }}>
-{`# Example MOTH file
-name:TaskFlow; type:saas; domain:project_management
+              <pre className="font-mono text-sm" style={{ color: '#cccccc', maxHeight: '400px', overflow: 'auto' }}>
+{`#MOTH:repo
+meta:{project:MediaHub-DAM;version:1.0}
+
+[GOAL]
+Build a multi-tenant Digital Asset Management backend
+with vector search, rights, and automation.
 
 [FEATURES]
-tasks:create;assign;track;complete
-boards:kanban+list; realtime:websocket
+TenantAuth:P0; RBAC:P0; Assets:P0; Search:P0
+Rights:P0; Reviews:P0; Jobs:P0; Audit:P0
 
 [SCHEMAS]
-tasks:{
-  *id:uuid;
-  *title:string;
-  *status:enum[todo,doing,done];
-  *assignee_id→users.id;
-  *created_at:timestamp
+tenants:{*id=uuid;*name=string;*domain=hostname}
+users:{*id=uuid;*email=email;(name)=string}
+assets:{
+  *id=uuid;
+  *tenant_id=uuid;
+  *kind=enum[image,video,doc];
+  *uri=url;
+  *bytes=int;
+  status=enum[active,deleted]
 }
 
+[WORKFLOWS]
+ingest:{received→scanned→registered→ready}
+review:{open→approved|changes→closed}
+
 [API]
-tasks:{GET,POST:/v1/tasks;auth:required}`}
+POST:/v1/assets{project_id,kind}→{asset_id,upload_url}
+GET:/v1/assets/{id}→{asset,versions,renditions}
+POST:/v1/search/text{q,limit}→{asset_ids}`}
               </pre>
             </div>
           </section>
